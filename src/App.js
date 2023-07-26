@@ -3,9 +3,11 @@
 import React from 'react';
 import Main from "./pages/main";
 import Header from "./partials/header";
+import Footer from "./partials/footer";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from "./pages/Login"
 import SignUp from "./pages/SignUp"
+import ScrollToTop from "./pages/routes/scrollTop";
 
 function App() {
   // const [hello, setHello] = useState('')
@@ -21,6 +23,7 @@ function App() {
       //   백엔드에서 가져온 데이터입니다 : {hello}
       // </div>
       <BrowserRouter>
+          <ScrollToTop />
           <div className='App'>
               <Header />
               <Routes>
@@ -28,6 +31,7 @@ function App() {
                   <Route path='/Login' element={<Login />} />
                   <Route path='/SignUp' element={<SignUp />} />
               </Routes>
+              <Footer />
           </div>
       </BrowserRouter>
   );
