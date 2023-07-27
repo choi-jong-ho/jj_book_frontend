@@ -3,7 +3,7 @@ import { useNavigate  } from 'react-router-dom';
 import AuthContext from "../store/AuthContext";
 import {Form, Button, Container, Alert} from 'react-bootstrap';
 import '../css/pages/Login.css';
-import {calculateRemainingTime, createTokenHeader, getUserActionHandler, loginTokenHandler} from '../store/auth'
+import {calculateRemainingTime, getUserActionHandler, loginTokenHandler} from '../store/auth'
 
 import axios from 'axios';
 const Login = () => {
@@ -33,7 +33,6 @@ const Login = () => {
             setIsLoggedIn(true); // 로그인 상태 변경 추가
             const check = await getUserActionHandler(localStorage.getItem('token'));
             setUser(check.data); // 받아온 유저 정보 저장
-            console.log('check', check);
 
             setError(''); // 에러 메시지 초기화
             navigate('/'); // 로그인 후 페이지 이동
