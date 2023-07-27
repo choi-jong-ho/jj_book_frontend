@@ -1,20 +1,10 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
-import { useNavigate } from "react-router-dom";
 import ShopSection from "../partials/ShopSection";
-const Main = () => {
-    const movePage = useNavigate();
-    const goLogin = () =>{
-        movePage('/auth/login')
-    }
 
-    const goSignUp = () =>{
-        movePage('/auth/signUp')
-    }
+const Main = () => {
+
     return(
         <div>
-            <Button variant="primary" onClick={goLogin}>로그인</Button>
-            <Button variant="primary" onClick={goSignUp}>회원가입</Button>
             <div className="bg-dark py-5">
                 <div className="container px-4 px-lg-5 my-5">
                     <div className="text-center text-white">

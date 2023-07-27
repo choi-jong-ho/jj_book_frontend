@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Form, Button, Container } from 'react-bootstrap';
+import { useNavigate  } from 'react-router-dom';
+import { Form, Button, Container, Alert } from 'react-bootstrap';
 import AddressSearch from "../modal/AddressSearch";
 import '../css/pages/SignUp.css'
 
@@ -12,7 +13,9 @@ const SignUp = () => {
     const [phone, setPhone] = useState('');
     const [passwordError, setPasswordError] = useState(false);
     const [detailedAddress, setDetailedAddress] = useState('');
+    const [error, setError] = useState('');
 
+    const navigate  = useNavigate ();
     const handleSubmit = async (e) => {
         e.preventDefault();
         let address = add + detailedAddress
@@ -36,8 +39,12 @@ const SignUp = () => {
             });
             const data = await response.json();
             console.log('Success:', data);
+            setError('');
+            navigate('/');
         } catch (error) {
             console.error('Error:', error);
+            setError('회원가입에 실패했습니다.');
+            navigate('/auth/signUp');
         }
     };
 
@@ -65,8 +72,8 @@ const SignUp = () => {
 
         <Container className="container-SignUp">
             <h1>회원가입</h1>
+            {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={handleSubmit}>
-
                 <Form.Group className='info-box'>
                     <Form.Label>아이디</Form.Label>
                     <Form.Control
