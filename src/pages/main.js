@@ -5,11 +5,11 @@ import ShopSection from "../partials/ShopSection";
 const Main = () => {
     const movePage = useNavigate();
     const goLogin = () =>{
-        movePage('/Login')
+        movePage('/auth/login')
     }
 
     const goSignUp = () =>{
-        movePage('/SignUp')
+        movePage('/auth/signUp')
     }
     return(
         <div>

@@ -28,8 +28,8 @@ function App() {
               <Header />
               <Routes>
                   <Route path='/' element={<Main />} />
-                  <Route path='/Login' element={<Login />} />
-                  <Route path='/SignUp' element={<SignUp />} />
+                  <Route path='/auth/login' element={<Login />} />
+                  <Route path='/auth/signup' element={<SignUp />} />
               </Routes>
               <Footer />
           </div>
