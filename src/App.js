@@ -22,7 +22,7 @@ function App() {
       // <div>
       //   백엔드에서 가져온 데이터입니다 : {hello}
       // </div>
-      <BrowserRouter basename='/main'>
+      <BrowserRouter>
           <ScrollToTop />
           <div className='App'>
               <Header />

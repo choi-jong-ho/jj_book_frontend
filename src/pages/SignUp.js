@@ -6,7 +6,7 @@ import '../css/pages/SignUp.css'
 const SignUp = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [name, setName] = useState('');
+    const [userName, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [add, setAdd] = useState('');
     const [phone, setPhone] = useState('');
@@ -19,10 +19,12 @@ const SignUp = () => {
         const formData = {
             email,
             password,
-            name,
+            userName,
             phone,
             address,
         };
+
+        console.log('formData', formData);
 
         try {
             const response = await fetch('/auth/signup', {
@@ -103,8 +105,8 @@ const SignUp = () => {
                     <Form.Label>사용자 이름</Form.Label>
                     <Form.Control
                         type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={userName}
+                        onChange={(e) => setUserName(e.target.value)}
                         required
                     />
                 </Form.Group>
