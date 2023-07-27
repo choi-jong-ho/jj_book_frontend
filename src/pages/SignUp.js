@@ -4,19 +4,39 @@ import AddressSearch from "../modal/AddressSearch";
 import '../css/pages/SignUp.css'
 
 const SignUp = () => {
-    const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [address, setAddress] = useState('');
+    const [add, setAdd] = useState('');
     const [phone, setPhone] = useState('');
     const [passwordError, setPasswordError] = useState(false);
     const [detailedAddress, setDetailedAddress] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(`회원가입 정보: 이메일(${email}), 비밀번호(${password}), 이름(${name})`);
+        let address = add + detailedAddress
+        const formData = {
+            email,
+            password,
+            name,
+            phone,
+            address,
+        };
+
+        try {
+            const response = await fetch('/auth/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+            const data = await response.json();
+            console.log('Success:', data);
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     const handlePasswordChange = (e) => {
@@ -44,19 +64,18 @@ const SignUp = () => {
         <Container className="container-SignUp">
             <h1>회원가입</h1>
             <Form onSubmit={handleSubmit}>
-                <Form.Group className='info-box
-                '>
+
+                <Form.Group className='info-box'>
                     <Form.Label>아이디</Form.Label>
                     <Form.Control
-                        type="text"
-                        value={id}
-                        onChange={(e) => setId(e.target.value)}
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                 </Form.Group>
 
-                <Form.Group className='info-box
-                '>
+                <Form.Group className='info-box'>
                     <Form.Label>비밀번호</Form.Label>
                     <Form.Control
                         type="password"
@@ -80,8 +99,7 @@ const SignUp = () => {
                     </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group className='info-box
-                '>
+                <Form.Group className='info-box'>
                     <Form.Label>사용자 이름</Form.Label>
                     <Form.Control
                         type="text"
@@ -91,8 +109,7 @@ const SignUp = () => {
                     />
                 </Form.Group>
 
-                <Form.Group className='info-box
-                '>
+                <Form.Group className='info-box'>
                     <Form.Label>핸드폰 번호</Form.Label>
                     <Form.Control
                         type="tel"
@@ -102,27 +119,14 @@ const SignUp = () => {
                     />
                 </Form.Group>
 
-                <Form.Group className='info-box
-                '>
-                    <Form.Label>이메일</Form.Label>
-                    <Form.Control
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </Form.Group>
-
-                <Form.Group className='info-box
-                '>
+                <Form.Group className='info-box'>
                     <Form.Label>거주지</Form.Label>
-                    <AddressSearch address={address} setAddress={ setAddress}/>
+                    <AddressSearch address={add} setAddress={ setAdd}/>
                 </Form.Group>
 
                 {/* 주소 값이 있을 때만 상세 주소 입력 상자 표시 */}
-                {address && (
-                    <Form.Group className='info-box
-                    '>
+                {add && (
+                    <Form.Group className='info-box'>
                         <Form.Label>상세 주소</Form.Label>
                         <Form.Control
                             type="text"
