@@ -1,0 +1,20 @@
+.my-page-aside {
+    width: 200px;
+    background-color: #dcdde1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.my-page-aside ul {
+    position: relative;
+    list-style: none;
+    padding: 0;
+}
+
+.my-page-aside ul li {
+    position: relative;
+    list-style: none;
+}

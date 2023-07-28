@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.my-page-wrap {
+    display: flex;
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    height: 100vh;
+    width: 50%;
+    background: #1a1d20;
+    margin: 0 auto;
+}
+
+/*.my-page-aside {*/
+/*    width: 200px;*/
+/*    background-color: #dcdde1;*/
+/*    padding: 20px;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*}*/
+
+.my-page-content {
+    flex: 1;
+    background-color: #f2f2f2;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

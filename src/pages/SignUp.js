@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate  } from 'react-router-dom';
-import { Form, Button, Container, Alert } from 'react-bootstrap';
+import React, {useState, useCallback} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {Form, Button, Container, Alert} from 'react-bootstrap';
 import AddressSearch from "../modal/AddressSearch";
 import '../css/pages/SignUp.css'
 
@@ -14,8 +14,10 @@ const SignUp = () => {
     const [passwordError, setPasswordError] = useState(false);
     const [detailedAddress, setDetailedAddress] = useState('');
     const [error, setError] = useState('');
+    const [validation, setValidation] = useState({address: '', email: '', userName: '', password: '', phone: ''});
 
-    const navigate  = useNavigate ();
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         let address = add + detailedAddress
@@ -27,7 +29,14 @@ const SignUp = () => {
             address,
         };
 
-        console.log('formData', formData);
+        // setValidation 새 객체로 초기화하여 이전 검사 결과를 제거합니다.
+        setValidation({
+            address: '',
+            email: '',
+            userName: '',
+            password: '',
+            phone: '',
+        });
 
         try {
             const response = await fetch('/auth/signup', {
@@ -37,39 +46,55 @@ const SignUp = () => {
                 },
                 body: JSON.stringify(formData),
             });
+
             const data = await response.json();
-            console.log('Success:', data);
+
+            // 네트워크 에러 발생 시 상태 받아오기
+            if (!response.ok) {
+                await validationResultUpdater(data);
+                throw Error(`${response.status}: ${response.statusText}`);
+            }
+
             setError('');
             navigate('/');
         } catch (error) {
-            console.error('Error:', error);
-            setError('회원가입에 실패했습니다.');
+            if (error.message.startsWith('400')) {
+                // 회원가입 실패시 (네트워크 400 에러시) 처리
+                setError('회원 가입에 실패하였습니다. 회원 정보를 다시 입력해주세요.')
+            } else if (error.message.startsWith('500')) {
+
+            } else {
+                setError('회원가입에 실패했습니다. 잠시 후 다시 시도해주세요.');
+            }
             navigate('/auth/signUp');
         }
     };
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-
-        if (e.target.value !== confirmPassword) {
-            setPasswordError(true);
-        } else {
-            setPasswordError(false);
+    const validationResultUpdater  = (data) => {
+        for (let i = 0; i < data.length; i++) {
+            setValidation((cur) => {
+                let newValidation = {...cur};
+                newValidation[data[i].field] = data[i].defaultMessage;
+                return newValidation;
+            });
         }
+    }
+
+    const handlePasswordChange = (e, isConfirmPassword) => {
+        if (isConfirmPassword) {
+            setConfirmPassword(e.target.value);
+        } else {
+            setPassword(e.target.value);
+        }
+
+        const currentPassword = isConfirmPassword ? e.target.value : password;
+        const comparingPassword = isConfirmPassword ? password : confirmPassword;
+
+        setPasswordError(currentPassword !== comparingPassword);
     };
 
-    const handleConfirmPasswordChange = (e) => {
-        setConfirmPassword(e.target.value);
-
-        if (password !== e.target.value) {
-            setPasswordError(true);
-        } else {
-            setPasswordError(false);
-        }
-    };
 
     return (
-
         <Container className="container-SignUp">
             <h1>회원가입</h1>
             {error && <Alert variant="danger">{error}</Alert>}
@@ -80,8 +105,11 @@ const SignUp = () => {
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        required
+                        isInvalid={validation.email !== ''}
                     />
+                    <Form.Control.Feedback type="invalid" className='sign-err-msg'>
+                        {validation.email}
+                    </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group className='info-box'>
@@ -89,9 +117,12 @@ const SignUp = () => {
                     <Form.Control
                         type="password"
                         value={password}
-                        onChange={handlePasswordChange}
-                        required
+                        onChange={(e) => handlePasswordChange(e, false)}
+                        isInvalid={validation.password !== ''}
                     />
+                    <Form.Control.Feedback type="isValid" className='sign-err-msg'>
+                        {validation.password}
+                    </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group className='info-box'>
@@ -99,9 +130,8 @@ const SignUp = () => {
                     <Form.Control
                         type="password"
                         value={confirmPassword}
-                        onChange={handleConfirmPasswordChange}
+                        onChange={(e)=> handlePasswordChange(e, true)}
                         isInvalid={passwordError}
-                        required
                     />
                     <Form.Control.Feedback type="invalid">
                         비밀번호가 일치하지 않습니다.
@@ -114,8 +144,11 @@ const SignUp = () => {
                         type="text"
                         value={userName}
                         onChange={(e) => setUserName(e.target.value)}
-                        required
+                        isInvalid={validation.userName !== ''}
                     />
+                    <Form.Control.Feedback type="invalid" className='sign-err-msg'>
+                        {validation.userName}
+                    </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group className='info-box'>
@@ -124,13 +157,23 @@ const SignUp = () => {
                         type="tel"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        required
+                        isInvalid={validation.phone !== ''}
                     />
+                    <Form.Control.Feedback type="invalid" className='sign-err-msg'>
+                        {validation.phone}
+                    </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group className='info-box'>
                     <Form.Label>거주지</Form.Label>
-                    <AddressSearch address={add} setAddress={ setAdd}/>
+                    <Form.Control
+                        className='address'
+                        type="text"
+                        value={null}
+                        isInvalid={validation.address !== ''}
+                        disabled={true}
+                    />
+                    <AddressSearch address={add} setAddress={setAdd} validation={validation}/>
                 </Form.Group>
 
                 {/* 주소 값이 있을 때만 상세 주소 입력 상자 표시 */}
@@ -145,7 +188,6 @@ const SignUp = () => {
                         />
                     </Form.Group>
                 )}
-
                 <Button
                     variant="primary"
                     type="submit"

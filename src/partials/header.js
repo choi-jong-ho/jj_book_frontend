@@ -1,12 +1,11 @@
-import React, {useState, useCallback, useContext, useEffect} from 'react';
+import React, { useCallback, useContext} from 'react';
 import { useNavigate } from "react-router-dom";
 import { Navbar, Container, Nav, NavDropdown, Button } from 'react-bootstrap';
-import { getUserActionHandler, logoutActionHandler } from '../store/auth';
+import { logoutActionHandler } from '../store/auth';
 import AuthContext from "../store/AuthContext";
 
 const Header = () => {
     const { isLoggedIn, setIsLoggedIn, user, setUser } = useContext(AuthContext); // 로그인 상태 관리
-    const [token, setToken] = useState(localStorage.getItem('token'));
     const navigate = useNavigate();
 
     const navigateToLogin = useCallback(() => {
