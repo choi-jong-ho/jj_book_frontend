@@ -1,11 +1,11 @@
-import React, { useCallback, useContext} from 'react';
-import { useNavigate } from "react-router-dom";
-import { Navbar, Container, Nav, NavDropdown, Button } from 'react-bootstrap';
-import { logoutActionHandler } from '../store/auth';
-import AuthContext from "../store/AuthContext";
+import React, {useCallback, useContext} from 'react';
+import {useNavigate} from "react-router-dom";
+import {Navbar, Container, Nav, NavDropdown, Button} from 'react-bootstrap';
+import {logoutActionHandler} from '../../store/auth';
+import AuthContext from "../../store/AuthContext";
 
 const Header = () => {
-    const { isLoggedIn, setIsLoggedIn, user, setUser } = useContext(AuthContext); // 로그인 상태 관리
+    const {isLoggedIn, setIsLoggedIn, user, setUser} = useContext(AuthContext); // 로그인 상태 관리
     const navigate = useNavigate();
 
     const navigateToLogin = useCallback(() => {
@@ -26,19 +26,19 @@ const Header = () => {
         <Navbar bg='light' expand="lg">
             <Container className="px-4 px-lg-5">
                 <Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
-                <Navbar.Toggle aria-controls="navbarSupportedContent" />
+                <Navbar.Toggle aria-controls="navbarSupportedContent"/>
                 <Navbar.Collapse id="navbarSupportedContent">
                     <Nav
                         className="me-auto my-2 my-lg-0"
-                        style={{ maxHeight: '100px' }}
+                        style={{maxHeight: '100px'}}
                         navbarScroll
                     >
                         <Nav.Link href="/">Home</Nav.Link>
                         <Nav.Link href="/">About</Nav.Link>
                         <NavDropdown title="Shop" id="navbarDropdown">
                             <NavDropdown.Item href="/">홈페이지</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="#!">Popular Items</NavDropdown.Item>
+                            <NavDropdown.Divider/>
+                            <NavDropdown.Item href="/mypage">마이페이지(임시)</NavDropdown.Item>
                             <NavDropdown.Item href="#!">New Arrivals</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>

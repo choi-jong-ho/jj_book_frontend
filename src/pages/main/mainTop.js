@@ -1,9 +1,8 @@
 import React from 'react';
-import ShopSection from "../partials/ShopSection";
+import ShopSection from "../../partials/ShopSection";
 
-const Main = () => {
-
-    return(
+const MainTop = () => {
+    return (
         <div>
             <div className="bg-dark py-5">
                 <div className="container px-4 px-lg-5 my-5">
@@ -18,4 +17,4 @@ const Main = () => {
     )
 }
 
-export default Main;
+export default MainTop;

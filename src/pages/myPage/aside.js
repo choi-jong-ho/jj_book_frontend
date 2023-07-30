@@ -29,7 +29,6 @@ const Aside = () => {
                             <li className='sub-list'>1:1 문의</li>
                             <li className='sub-list'>자주 묻는 질문 FAQ</li>
                         </ul>
-
                     </li>
                 </div>
             </ul>

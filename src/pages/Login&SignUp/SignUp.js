@@ -1,8 +1,8 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Form, Button, Container, Alert} from 'react-bootstrap';
-import AddressSearch from "../modal/AddressSearch";
-import '../css/pages/SignUp.css'
+import AddressSearch from "../../modal/AddressSearch";
+import '../../css/pages/Login&SignUp/SignUp.css'
 
 const SignUp = () => {
     const [password, setPassword] = useState('');

@@ -18,3 +18,14 @@
     position: relative;
     list-style: none;
 }
+
+.logo {
+    margin-bottom: 2rem;
+}
+
+.menu-list li ul li {
+    font-weight: bold;
+}
+.aside-item {
+    margin-bottom: 1rem;
+}

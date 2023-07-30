@@ -1,9 +1,9 @@
 import React, { useState, useContext  } from 'react';
 import { useNavigate  } from 'react-router-dom';
-import AuthContext from "../store/AuthContext";
+import AuthContext from "../../store/AuthContext";
 import {Form, Button, Container, Alert} from 'react-bootstrap';
-import '../css/pages/Login.css';
-import {calculateRemainingTime, getUserActionHandler, loginTokenHandler} from '../store/auth'
+import '../../css/pages/Login&SignUp/Login.css';
+import {calculateRemainingTime, getUserActionHandler, loginTokenHandler} from '../../store/auth'
 
 import axios from 'axios';
 const Login = () => {
