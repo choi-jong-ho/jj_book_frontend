@@ -9,29 +9,30 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [userName, setUserName] = useState('');
     const [email, setEmail] = useState('');
-    const [add, setAdd] = useState('');
+    const [address1, setAddress1] = useState('');
     const [phone, setPhone] = useState('');
     const [passwordError, setPasswordError] = useState(false);
-    const [detailedAddress, setDetailedAddress] = useState('');
+    const [address2, setAddress2] = useState('');
     const [error, setError] = useState('');
-    const [validation, setValidation] = useState({address: '', email: '', userName: '', password: '', phone: ''});
+    const [validation, setValidation] = useState({address1: '', address2: '', email: '', userName: '', password: '', phone: ''});
 
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let address = add + detailedAddress
         const formData = {
             email,
             password,
             userName,
             phone,
-            address,
+            address1,
+            address2,
         };
 
         // setValidation 새 객체로 초기화하여 이전 검사 결과를 제거합니다.
         setValidation({
-            address: '',
+            address1: '',
+            address2: '',
             email: '',
             userName: '',
             password: '',
@@ -173,17 +174,17 @@ const SignUp = () => {
                         isInvalid={validation.address !== ''}
                         disabled={true}
                     />
-                    <AddressSearch address={add} setAddress={setAdd} validation={validation}/>
+                    <AddressSearch address={address1} setAddress={setAddress1} validation={validation}/>
                 </Form.Group>
 
                 {/* 주소 값이 있을 때만 상세 주소 입력 상자 표시 */}
-                {add && (
+                {address1 && (
                     <Form.Group className='info-box'>
                         <Form.Label>상세 주소</Form.Label>
                         <Form.Control
                             type="text"
-                            value={detailedAddress}
-                            onChange={(e) => setDetailedAddress(e.target.value)}
+                            value={address2}
+                            onChange={(e) => setAddress2(e.target.value)}
                             placeholder="상세 주소를 입력해주세요"
                         />
                     </Form.Group>
