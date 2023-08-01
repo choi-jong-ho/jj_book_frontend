@@ -16,6 +16,10 @@ const Header = () => {
         navigate('/auth/signUp');
     }, [navigate]);
 
+    const addlist = useCallback(() => {
+        navigate('/mypage');
+    }, [navigate]);
+
     const handleLogout = () => {
         setIsLoggedIn(false);
         setUser([]);
@@ -34,12 +38,12 @@ const Header = () => {
                         navbarScroll
                     >
                         <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="/">About</Nav.Link>
+                        <Nav.Link href="/mypage">마이페이지(임시)</Nav.Link>
                         <NavDropdown title="Shop" id="navbarDropdown">
                             <NavDropdown.Item href="/">홈페이지</NavDropdown.Item>
                             <NavDropdown.Divider/>
                             <NavDropdown.Item href="/mypage">마이페이지(임시)</NavDropdown.Item>
-                            <NavDropdown.Item href="#!">New Arrivals</NavDropdown.Item>
+                            <NavDropdown.Item href="/auth/signUp">회원가입</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                     {user.userName && (
@@ -62,6 +66,10 @@ const Header = () => {
                             </Button>
                         </>
                     )}
+                    <Button onClick={addlist} variant="outline-dark" type="submit">
+                        <i className="bi-cart-fill me-1"></i>
+                        마이페이지
+                    </Button>
                 </Navbar.Collapse>
             </Container>
         </Navbar>

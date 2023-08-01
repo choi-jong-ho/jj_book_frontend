@@ -20,8 +20,8 @@ const Aside = () => {
                     </li>
                     <li className='aside-item'>
                         <ul className='sub-list'>회원정보관리
-                            <li className='sub-list'><Link to="/member/mypage/profile">회원정보 수정</Link></li>
-                            <li className='sub-list'><Link to="/member/mypage/addresslist">배송주소록</Link></li>
+                            <li className='sub-list'><Link to="/mypage/profile">회원정보 수정</Link></li>
+                            <li className='sub-list'><Link to="/mypage/addresslist">배송주소록</Link></li>
                             <li className='sub-list'>회원 탈퇴</li>
                         </ul>
                     </li>

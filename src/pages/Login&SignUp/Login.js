@@ -8,6 +8,7 @@ import {calculateRemainingTime, getUserActionHandler, loginTokenHandler} from '.
 import axios from 'axios';
 const Login = () => {
     const { setIsLoggedIn, setUser } = useContext(AuthContext); // 로그인 상태 관리를 위한 AuthContext 추가
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');

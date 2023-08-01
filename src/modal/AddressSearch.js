@@ -37,12 +37,12 @@ const AddressSearch = ({address, setAddress, validation}) => {
                     readOnly
                     onClick={() => handleModalToggle(true)}
                     style={{ cursor: 'pointer' }} // 입력 상자를 클릭하여 검색 모달을 여는 것을 나타내기 위해 마우스 포인터 스타일 변경
-                    isInvalid={validation.address !== ''}
+                    isInvalid={validation.address1 !== ''}
                 />
                 {/* 유저가 버튼을 클릭하면 handleShowModal 함수가 호출되어 모달창이 열림 */}
                 <Button onClick={()=> handleModalToggle(true)}>주소 검색</Button>
                 <Form.Control.Feedback type="invalid" className='sign-err-msg'>
-                    {validation.address}
+                    {validation.address1}
                 </Form.Control.Feedback>
             </InputGroup>
 

@@ -9,18 +9,11 @@ import Profile from "../pages/myPage/profile";
 
 const Routing = () => {
     return (
-            // <Routes>
-            //     <Route path="/" element={<Main/>}/>
-            //     <Route path="/auth/login" element={<Login/>}/>
-            //     <Route path="/auth/signup" element={<SignUp/>}/>
-            //     <Route path="/member/mypage" element={<MyPageMain/>}/>
-            //     <Route path="/member/mypage/addresslist" element={<AddressList/>}/>
-            // </Routes>
         <Routes>
             <Route path="/" element={<Main/>}/>
             <Route path="/auth/login" element={<Login/>}/>
             <Route path="/auth/signup" element={<SignUp/>}/>
-            <Route path="/member/mypage" element={<MyPageMain/>}>
+            <Route path="/mypage" element={<MyPageMain/>}>
                 <Route path='profile' element={<Profile/>}></Route>
                 <Route path="addresslist" element={<AddressList/>}/>
             </Route>

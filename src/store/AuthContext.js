@@ -1,14 +1,16 @@
-import React, { useState, createContext, useEffect } from 'react';
+import React, {useState, createContext, useEffect} from 'react';
 import {getUserActionHandler} from "./auth";
 
 const AuthContext = createContext({
     isLoggedIn: false,
-    setIsLoggedIn: () => {},
+    setIsLoggedIn: () => {
+    },
     user: null,
-    setUser: () => {},
+    setUser: () => {
+    },
 });
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({children}) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState([]);
 
@@ -26,7 +28,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, user, setUser }}>
+        <AuthContext.Provider value={{isLoggedIn, setIsLoggedIn, user, setUser}}>
             {children}
         </AuthContext.Provider>
     );
