@@ -1,8 +1,11 @@
 import React from "react";
+import '../../css/pages/myPage/myPageHeader.css';
 
 const MyPageHeader = () => {
     return (
-        <div>마이페이지 헤드</div>
+        <div className='my-page-header'>
+            <div className='my-page-header-inner'></div>
+        </div>
     )
 }
 

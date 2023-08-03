@@ -17,7 +17,7 @@ const Header = () => {
     }, [navigate]);
 
     const navigateToMypage = useCallback(() => {
-        navigate('/mypage');
+        navigate('/mypage/main');
     }, [navigate]);
 
     const handleLogout = () => {
@@ -42,7 +42,7 @@ const Header = () => {
                         <NavDropdown title="Shop" id="navbarDropdown">
                             <NavDropdown.Item href="/">홈페이지</NavDropdown.Item>
                             <NavDropdown.Divider/>
-                            <NavDropdown.Item href="/mypage">마이페이지(임시)</NavDropdown.Item>
+                            <NavDropdown.Item href="/mypage/main">마이페이지(임시)</NavDropdown.Item>
                             <NavDropdown.Item href="/auth/signUp">회원가입</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>

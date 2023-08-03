@@ -1,8 +1,11 @@
 import React from "react";
+import '../../css/pages/myPage/myPageFooter.css'
 
 const MyPageFooter = () => {
     return (
-        <h1>마이페이지 풋터</h1>
+        <div className='my-page-footer'>
+            <div className='my-page-footer-inner'></div>
+        </div>
     )
 }
 
