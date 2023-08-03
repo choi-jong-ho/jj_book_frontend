@@ -16,7 +16,7 @@ const Header = () => {
         navigate('/auth/signUp');
     }, [navigate]);
 
-    const addlist = useCallback(() => {
+    const navigateToMypage = useCallback(() => {
         navigate('/mypage');
     }, [navigate]);
 
@@ -66,7 +66,7 @@ const Header = () => {
                             </Button>
                         </>
                     )}
-                    <Button onClick={addlist} variant="outline-dark" type="submit">
+                    <Button onClick={navigateToMypage} variant="outline-dark" type="submit">
                         <i className="bi-cart-fill me-1"></i>
                         마이페이지
                     </Button>

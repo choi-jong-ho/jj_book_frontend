@@ -23,9 +23,27 @@
     margin-bottom: 2rem;
 }
 
-/*.menu-list li ul li {*/
+.aside-item {
+    margin-bottom: 2rem;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+.sub-title {
+    margin-top: 1rem;
+}
+
+.sub-list {
+    font-size: 1rem;
+    font-weight: lighter;
+    list-style: none;
+}
+
+.mylink {
+    text-decoration: none;
+    color: black;
+}
+
+/*.sub-title{*/
 /*    font-weight: bold;*/
 /*}*/
-.aside-item {
-    margin-bottom: 1rem;
-}

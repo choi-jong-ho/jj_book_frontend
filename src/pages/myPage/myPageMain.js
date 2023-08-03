@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import '../../css/pages/myPage/myPageMain.css';
 import Aside from "./aside";
 import {Route, Routes} from "react-router-dom";
@@ -6,13 +6,17 @@ import Profile from "./profile";
 import AddressList from "./addressList";
 import {useNavigate} from "react-router-dom";
 import AuthContext from "../../store/AuthContext";
+import MyPageHeader from "./myPageHeader";
+import MyPageFooter from "./myPageFooter";
 
 const MyPageMain = () => {
-    const { isLoggedIn, user } = useContext(AuthContext);
+    const { isLoggedIn } = useContext(AuthContext);
     const navigate = useNavigate();
 
+    const [isEdit, setIsEdit] = useState(false);
+
     useEffect(() => {
-        checkUser();
+        // checkUser();
     }, []);
 
     const checkUser = () => {
@@ -22,14 +26,19 @@ const MyPageMain = () => {
     }
 
     return (
-        <div className='my-page-wrap'>
+        <div className='my-page'>
+            <MyPageHeader />
+            <div className='my-page-wrap'>
             <Aside/>
             <div className='my-page-container'>
-                <Routes path="/mypage" element={<MyPageMain/>}>
+                <h1>마이페이지 메인</h1>
+                <Routes path="/mypage" >
                     <Route path='profile' element={<Profile/>}/>
                     <Route path="addresslist" element={<AddressList/>}/>
                 </Routes>
             </div>
+            </div>
+            <MyPageFooter />
         </div>
     )
 }

@@ -5,15 +5,18 @@ import ScrollToTop from './pages/util/scrollTop';
 import Routing from "./routes/Routing";
 import Header from "./components/Layout/header";
 import Footer from "./components/Layout/footer";
+import './css/App.css'
 
 const App = () => {
     return (
         <AuthProvider>
             <BrowserRouter>
                 <ScrollToTop/>
-                <Header />
+                <div className='App'>
+                <Header/>
                 <Routing/>
-                <Footer />
+                <Footer/>
+                </div>
             </BrowserRouter>
         </AuthProvider>
     );

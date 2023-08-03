@@ -3,6 +3,7 @@ import {Form, Button, Container} from 'react-bootstrap';
 import AddressSearch from "../../modal/AddressSearch";
 import {useNavigate} from "react-router-dom";
 import AuthContext from "../../store/AuthContext";
+import '../../css/pages/myPage/addressList.css'
 
 const AddressList = () => {
     const { isLoggedIn, user } = useContext(AuthContext);
@@ -15,7 +16,7 @@ const AddressList = () => {
     const [validation, setValidation] = useState({address1: ''});
 
     useEffect(() => {
-        checkUser();
+        // checkUser();
     }, []);
 
     const checkUser = () => {
@@ -52,14 +53,6 @@ const AddressList = () => {
                 body: JSON.stringify(formData),
             });
 
-            const data = await response.json();
-
-            // 네트워크 에러 발생 시 상태 받아오기
-            // if (!response.ok) {
-            //     await validationResultUpdater(data);
-            //     throw Error(`${response.status}: ${response.statusText}`);
-            // }
-
             // setError('');
             // navigate('/');
         } catch (error) {
@@ -76,7 +69,7 @@ const AddressList = () => {
         }
     };
     return (
-        <Container className="container-SignUp">
+        <Container className="container-AddressList">
             <h1>주소지 추가</h1>
             <Form onSubmit={handleSubmit}>
                 <Form.Group className='info-box'>
