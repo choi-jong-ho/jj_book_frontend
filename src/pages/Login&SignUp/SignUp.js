@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import {Form, Button, Container, Alert} from 'react-bootstrap';
 import AddressSearch from "../../modal/AddressSearch";
 import '../../css/pages/Login&SignUp/SignUp.css'
+import axios from "axios";
 
 const SignUp = () => {
     const [password, setPassword] = useState('');
@@ -17,7 +18,6 @@ const SignUp = () => {
     const [validation, setValidation] = useState({address1: '', address2: '', email: '', userName: '', password: '', phone: ''});
 
     const navigate = useNavigate();
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = {
@@ -40,38 +40,23 @@ const SignUp = () => {
         });
 
         try {
-            const response = await fetch('/auth/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
+            const response = await axios.post('/auth/signup', formData);
 
-            const data = await response.json();
-
-            // 네트워크 에러 발생 시 상태 받아오기
-            if (!response.ok) {
-                await validationResultUpdater(data);
-                throw Error(`${response.status}: ${response.statusText}`);
-            }
+            console.log('response', response);
 
             setError('');
             navigate('/');
-        } catch (error) {
-            if (error.message.startsWith('400')) {
-                // 회원가입 실패시 (네트워크 400 에러시) 처리
-                setError('회원 가입에 실패하였습니다. 회원 정보를 다시 입력해주세요.')
-            } else if (error.message.startsWith('500')) {
-
-            } else {
-                setError('회원가입에 실패했습니다. 잠시 후 다시 시도해주세요.');
+        } catch (e) {
+            if (e.response.status === 400) {
+                validationResultUpdater(e.response.data);
+                setError('회원 가입에 실패하였습니다. 회원 정보를 다시 입력해주세요.');
             }
+            console.log(e);
             navigate('/auth/signUp');
         }
     };
 
-    const validationResultUpdater  = (data) => {
+    const validationResultUpdater = (data) => {
         for (let i = 0; i < data.length; i++) {
             setValidation((cur) => {
                 let newValidation = {...cur};
@@ -170,7 +155,7 @@ const SignUp = () => {
                     <Form.Control
                         className='address'
                         type="text"
-                        value={null}
+                        value={address1}
                         isInvalid={validation.address !== ''}
                         disabled={true}
                     />

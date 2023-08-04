@@ -12,21 +12,26 @@ const AuthContext = createContext({
 
 export const AuthProvider = ({children}) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [user, setUser] = useState([]);
+    const [user, setUser] = useState(null);
 
     // 로컬 저장소에서 로그인 상태 및 사용자 정보 존재 여부 확인
     useEffect(() => {
-        if (localStorage.getItem('token')) {
+        const token = localStorage.getItem('token');
+        if (token) {
+            const handleLoginCheck = async () => {
+                const userData = await getUserActionHandler(token);
+                setIsLoggedIn(true);
+                setUser(userData.data);
+            };
             handleLoginCheck();
         }
+
+        const value = {
+            state: {isLoggedIn,  user},
+            actions: {setIsLoggedIn,  setUser},
+        }
     }, []);
-
-    const handleLoginCheck = async () => {
-        const check = await getUserActionHandler(localStorage.getItem('token'));
-        setIsLoggedIn(true);
-        setUser(check.data);
-    };
-
+;
     return (
         <AuthContext.Provider value={{isLoggedIn, setIsLoggedIn, user, setUser}}>
             {children}

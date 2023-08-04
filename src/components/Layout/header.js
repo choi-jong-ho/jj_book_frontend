@@ -16,7 +16,7 @@ const Header = () => {
         navigate('/auth/signUp');
     }, [navigate]);
 
-    const navigateToMypage = useCallback(() => {
+    const navigateToMyPage = useCallback(() => {
         navigate('/mypage/main');
     }, [navigate]);
 
@@ -46,8 +46,8 @@ const Header = () => {
                             <NavDropdown.Item href="/auth/signUp">회원가입</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
-                    {user.userName && (
-                        <span>{user.userName}님</span>
+                    {user?.userName && (
+                        <span>{user?.userName}님</span>
                     )}
                     {isLoggedIn ? (
                         <Button onClick={handleLogout} variant="outline-dark ml-1" type="submit">
@@ -66,7 +66,7 @@ const Header = () => {
                             </Button>
                         </>
                     )}
-                    <Button onClick={navigateToMypage} variant="outline-dark" type="submit">
+                    <Button onClick={navigateToMyPage} variant="outline-dark" type="submit">
                         <i className="bi-cart-fill me-1"></i>
                         마이페이지
                     </Button>
