@@ -4,7 +4,7 @@ import {Button} from 'react-bootstrap';
 import AuthContext from "../../store/AuthContext";
 
 const Profile = () => {
-    const { user } = useContext(AuthContext);
+    const {user} = useContext(AuthContext);
 
     const [isEdit, setIsEdit] = useState(false);
 

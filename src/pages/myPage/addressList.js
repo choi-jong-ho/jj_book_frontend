@@ -6,13 +6,15 @@ import AuthContext from "../../store/AuthContext";
 import '../../css/pages/myPage/addressList.css'
 
 const AddressList = () => {
-    const { isLoggedIn, user } = useContext(AuthContext);
+    const {isLoggedIn, user} = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
     const [address1, setAddress1] = useState('');
     const [address2, setAddress2] = useState('');
     const [nickname, setNickname] = useState('');
+    const [selectedOption, setSelectedOption] = useState('');
+    const [isBasic, setIsBasic] = useState('N');
     const [validation, setValidation] = useState({address1: ''});
 
     useEffect(() => {
@@ -20,7 +22,7 @@ const AddressList = () => {
     }, []);
 
     const checkUser = () => {
-        if(!isLoggedIn) {
+        if (!isLoggedIn) {
             navigate('/auth/login');
         } else {
             setEmail(user.email);
@@ -34,6 +36,7 @@ const AddressList = () => {
             address1,
             address2,
             nickname,
+            isBasic,
         };
 
         // setValidation 새 객체로 초기화하여 이전 검사 결과를 제거합니다.
@@ -42,6 +45,7 @@ const AddressList = () => {
             address1: '',
             address2: '',
             nickname: '',
+            isBasic: '',
         });
 
         try {
@@ -68,24 +72,31 @@ const AddressList = () => {
             console.log('에러 발생');
         }
     };
+
+    const handleChangeCheckBox = (event) => {
+        setSelectedOption(event.target.value);
+    };
+
+    const handleChangeBasicPath = (event) => {
+        console.log(event);
+        if (isBasic === 'N') {
+            setIsBasic('Y');
+        }
+        if (isBasic === 'Y') {
+            setIsBasic('N');
+        }
+    };
+
     return (
-        <Container className="container-AddressList">
+        <Container className="addressList-container">
             <h1>주소지 추가</h1>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} className= 'addressList-info'>
                 <Form.Group className='info-box'>
                     <Form.Label>아이디</Form.Label>
                     <Form.Control
                         type="email"
                         value={email}
                         readOnly={true}
-                    />
-                </Form.Group>
-                <Form.Group className='info-box'>
-                    <Form.Label>배송지명</Form.Label>
-                    <Form.Control
-                        type="text"
-                        value={nickname}
-                        onChange={(e) => setNickname(e.target.value)}
                     />
                 </Form.Group>
                 <AddressSearch address={address1} setAddress={setAddress1} validation={validation}/>
@@ -102,6 +113,44 @@ const AddressList = () => {
                         />
                     </Form.Group>
                 )}
+
+                <Form.Group className='info-box'>
+                    <Form.Label>배송지 분류</Form.Label>
+                    <div className='check-box-container'>
+                        <Form.Check
+                            className='check-box'
+                            type="radio"
+                            label='집'
+                            value="집"
+                            checked={selectedOption === '집'}
+                            onChange={handleChangeCheckBox}
+                        />
+                        <Form.Check
+                            className='check-box'
+                            type="radio"
+                            label='회사'
+                            value="회사"
+                            checked={selectedOption === '회사'}
+                            onChange={handleChangeCheckBox}
+                        />
+                        <Form.Check
+                            className='check-box'
+                            type="radio"
+                            label='친적'
+                            value="친적"
+                            checked={selectedOption === '친적'}
+                            onChange={handleChangeCheckBox}
+                        />
+                    </div>
+                </Form.Group>
+
+                <Form.Group className='info-box'>
+                    <Form.Check
+                        type="switch"
+                        label="기본 배송지로 저장"
+                        onChange={handleChangeBasicPath}
+                    />
+                </Form.Group>
 
                 <Button
                     variant="primary"
