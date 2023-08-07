@@ -1,11 +1,13 @@
-.addressList-container {
+.add-address-container {
     max-width: 800px;
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 2rem;
     box-sizing: border-box;
+    border-radius: 8px;
+    border: black solid 1px;
+    margin: 0 auto;
 }
 
 .addressList-info {
@@ -25,6 +27,14 @@
 
 .check-box {
     margin-right: 2rem;
+}
+
+.check-box > input:hover {
+    cursor: pointer;
+}
+
+.switch > input:hover {
+    cursor: pointer;
 }
 
 .address {

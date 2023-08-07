@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import '../../css/pages/myPage/myPageMain.css';
 import Aside from "./aside";
 import Profile from "./profile";
-import AddressList from "./addressList";
+import AddAdress from "./addAdress";
 import {useNavigate} from "react-router-dom";
 import AuthContext from "../../store/AuthContext";
 import MyPageHeader from "./myPageHeader";
@@ -36,7 +36,7 @@ const MyPageMain = () => {
             case 'profile' :
                 return <Profile/>;
             case 'address-list':
-                return <AddressList/>;
+                return <AddAdress/>;
             case 'withdrawal':
                 return <Withdrawal/>;
             default :

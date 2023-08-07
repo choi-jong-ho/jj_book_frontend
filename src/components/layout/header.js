@@ -9,11 +9,11 @@ const Header = () => {
     const navigate = useNavigate();
 
     const navigateToLogin = useCallback(() => {
-        navigate('/auth/login');
+        navigate('/member/login');
     }, [navigate]);
 
     const navigateToSignUp = useCallback(() => {
-        navigate('/auth/signUp');
+        navigate('/member/signUp');
     }, [navigate]);
 
     const navigateToMyPage = useCallback(() => {
@@ -43,7 +43,7 @@ const Header = () => {
                             <NavDropdown.Item href="/">홈페이지</NavDropdown.Item>
                             <NavDropdown.Divider/>
                             <NavDropdown.Item href="/mypage/main">마이페이지(임시)</NavDropdown.Item>
-                            <NavDropdown.Item href="/auth/signUp">회원가입</NavDropdown.Item>
+                            <NavDropdown.Item href="/member/signUp">회원가입</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                     {user?.userName && (

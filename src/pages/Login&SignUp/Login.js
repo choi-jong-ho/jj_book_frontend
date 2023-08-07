@@ -23,7 +23,7 @@ const Login = () => {
         };
 
         try {
-            const response = await axios.post('/auth/login', formData, {
+            const response = await axios.post('/member/login', formData, {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true, // 쿠키를 받기 위한 옵션
             });

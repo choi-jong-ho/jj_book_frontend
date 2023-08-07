@@ -26,10 +26,6 @@ export const AuthProvider = ({children}) => {
             handleLoginCheck();
         }
 
-        const value = {
-            state: {isLoggedIn,  user},
-            actions: {setIsLoggedIn,  setUser},
-        }
     }, []);
 ;
     return (

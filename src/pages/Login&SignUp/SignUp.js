@@ -40,7 +40,7 @@ const SignUp = () => {
         });
 
         try {
-            const response = await axios.post('/auth/signup', formData);
+            const response = await axios.post('/member/signup', formData);
 
             console.log('response', response);
 
