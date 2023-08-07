@@ -1,13 +1,12 @@
 import React, {useState, useRef, useEffect} from "react";
 import {Button} from 'react-bootstrap';
 import '../../css/slider/imgSlider.css';
-// import { debounce } from 'lodash';
 
 const ImgSlider = () => {
     const slideRef = useRef();
     const [slideWidth, setSlideWidth] = useState(0);
-    let curSlide = 1;
-    let testArr = ['1', '2', '3', '4', '5']
+    const [curSlide, setCurSlide] = useState(1);
+    let testArr = ['1', '2', '3', '4', '5'];
 
     // 나중에 창의 크기 변화에 따라 슬라이드의 크기도 같이 변화 기능 추가하기 위한 중간 단계 코드
 
@@ -29,59 +28,44 @@ const ImgSlider = () => {
     // }, []);
 
     useEffect(() => {
-        setSlideWidth(slideRef.current.clientWidth);
+        setSlideWidth(slideRef.current.clientWidth); // 현재 슬라이드의 너비를 구함
     }, []);
 
     const moveSlide = (direction) => {
-        curSlide += direction;
-        if (curSlide <= testArr.length && curSlide > 0) {
-            const offset = slideWidth * (curSlide - 1);
-            // Array.from(slideRef.current.children).forEach((item) => {
-            //     item.style.left = `-${offset}px`;
-            // });
-            Array.from(document.querySelectorAll(".slide_item")).forEach((item) => {
-                item.style.left = `-${offset}px`;
-            });
-        } else {
-            curSlide -= direction;
+        const newSlide = curSlide + direction;
+
+        if (newSlide <= testArr.length && newSlide > 0) {
+            setCurSlide(newSlide);
         }
     };
 
-    const updatePagination = () => {
-        Array.from(document.querySelectorAll(".slide_pagination > li")).forEach(
-            (item, index) => {
-                if (index === curSlide - 1) {
-                    item.classList.add("active");
-                } else {
-                    item.classList.remove("active");
-                }
-            }
-        );
-    };
-
     const handlePaginationClick = (index) => {
-        curSlide = index + 1;
-        const offset = slideWidth * (curSlide - 1);
-        Array.from(slideRef.current.children).forEach((item) => {
-            item.style.left = `-${offset}px`;
-        });
-
-        updatePagination();
+        setCurSlide(index + 1);
     };
 
     return (
         <div className='slide-wrap'>
             <Button className="slide_prev_button slide_button" onClick={() => moveSlide(-1)}>◀</Button>
             <div ref={slideRef} className='slide'>
-                {
-                    testArr.map((x) => {
-                        return <div className='slide_item' key={x}>{x}</div>
-                    })
-                }
+                {testArr.map((x, index) => (
+                    <div
+                        className='slide_item'
+                        key={x}
+                        style={{
+                            transform: `translateX(${-slideWidth * (curSlide - 1)}px)`,
+                        }}
+                    >
+                        {x}
+                    </div>
+                ))}
             </div>
             <ul className="slide_pagination">
-                {Array.from({length: testArr.length}).map((_, index) => (
-                    <li key={index} onClick={() => handlePaginationClick(index)}>
+                {testArr.map((_, index) => (
+                    <li
+                        key={index}
+                        onClick={() => handlePaginationClick(index)}
+                        className={index === curSlide - 1 ? 'active' : ''}
+                    >
                         •
                     </li>
                 ))}

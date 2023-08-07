@@ -52,7 +52,7 @@ const SignUp = () => {
                 setError('회원 가입에 실패하였습니다. 회원 정보를 다시 입력해주세요.');
             }
             console.log(e);
-            navigate('/auth/signUp');
+            // navigate('/auth/signup');
         }
     };
 
@@ -130,10 +130,10 @@ const SignUp = () => {
                         type="text"
                         value={userName}
                         onChange={(e) => setUserName(e.target.value)}
-                        isInvalid={validation.userName !== ''}
+                        isInvalid={validation.name !== ''}
                     />
                     <Form.Control.Feedback type="invalid" className='sign-err-msg'>
-                        {validation.userName}
+                        {validation.name}
                     </Form.Control.Feedback>
                 </Form.Group>
 
@@ -150,30 +150,30 @@ const SignUp = () => {
                     </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group className='info-box'>
-                    <Form.Label>거주지</Form.Label>
-                    <Form.Control
-                        className='address'
-                        type="text"
-                        value={address1}
-                        isInvalid={validation.address !== ''}
-                        disabled={true}
-                    />
-                    <AddressSearch address={address1} setAddress={setAddress1} validation={validation}/>
-                </Form.Group>
+                {/*<Form.Group className='info-box'>*/}
+                {/*    <Form.Label>거주지</Form.Label>*/}
+                {/*    <Form.Control*/}
+                {/*        className='address'*/}
+                {/*        type="text"*/}
+                {/*        value={address1}*/}
+                {/*        isInvalid={validation.address !== ''}*/}
+                {/*        disabled={true}*/}
+                {/*    />*/}
+                {/*    <AddressSearch address={address1} setAddress={setAddress1} validation={validation}/>*/}
+                {/*</Form.Group>*/}
 
-                {/* 주소 값이 있을 때만 상세 주소 입력 상자 표시 */}
-                {address1 && (
-                    <Form.Group className='info-box'>
-                        <Form.Label>상세 주소</Form.Label>
-                        <Form.Control
-                            type="text"
-                            value={address2}
-                            onChange={(e) => setAddress2(e.target.value)}
-                            placeholder="상세 주소를 입력해주세요"
-                        />
-                    </Form.Group>
-                )}
+                {/*/!* 주소 값이 있을 때만 상세 주소 입력 상자 표시 *!/*/}
+                {/*{address1 && (*/}
+                {/*    <Form.Group className='info-box'>*/}
+                {/*        <Form.Label>상세 주소</Form.Label>*/}
+                {/*        <Form.Control*/}
+                {/*            type="text"*/}
+                {/*            value={address2}*/}
+                {/*            onChange={(e) => setAddress2(e.target.value)}*/}
+                {/*            placeholder="상세 주소를 입력해주세요"*/}
+                {/*        />*/}
+                {/*    </Form.Group>*/}
+                {/*)}*/}
                 <Button
                     variant="primary"
                     type="submit"
