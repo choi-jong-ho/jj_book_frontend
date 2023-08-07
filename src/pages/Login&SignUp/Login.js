@@ -17,16 +17,29 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formData = {
-            email,
-            password,
-        };
+        // const formData = {
+        //     email,
+        //     password,
+        // };
+
+        // form 데이터 형식으로 보내기
+        const formData = new FormData();
+
+        formData.append('email', email);
+        formData.append('password', password);
 
         try {
+            // const response = await axios.post('/member/login', formData, {
+            //     headers: { 'Content-Type': 'application/json' },
+            //     withCredentials: true, // 쿠키를 받기 위한 옵션
+            // });
+
             const response = await axios.post('/member/login', formData, {
-                headers: { 'Content-Type': 'application/json' },
-                withCredentials: true, // 쿠키를 받기 위한 옵션
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
             });
+
             const data = response.data;
             const timer = calculateRemainingTime(7);
             loginTokenHandler(data.accessToken, timer);
