@@ -4,6 +4,8 @@ import '../../css/slider/imgSlider.css';
 
 const ImgSlider = () => {
     const slideRef = useRef();
+    const loopInterval = useRef(null);
+
     const [slideWidth, setSlideWidth] = useState(0);
     const [curSlide, setCurSlide] = useState(1);
     // 드래그(스와이프) 이벤트를 위한 변수 초기화
@@ -13,25 +15,6 @@ const ImgSlider = () => {
     const [slides, setSlides] = useState([]);
 
     let testArr = ['1', '2', '3', '4', '5'];
-
-    // 나중에 창의 크기 변화에 따라 슬라이드의 크기도 같이 변화 기능 추가하기 위한 중간 단계 코드
-
-    // useEffect(() => {
-    //     const slide = slideRef.current;
-    //
-    //     const handleResize = debounce(() => {
-    //         setSlideWidth(slide.clientWidth);
-    //     }, 300);
-    //
-    //     window.addEventListener("resize", handleResize);
-    //
-    //     // 컴포넌트가 마운트될 때 초기 slideWidth를 설정합니다.
-    //     handleResize();
-    //
-    //     return () => {
-    //         window.removeEventListener("resize", handleResize);
-    //     };
-    // }, []);
 
     useEffect(() => {
         // 무한 슬라이드를 위한 시작, 끝 슬라이드 복사
@@ -48,31 +31,28 @@ const ImgSlider = () => {
         setCurSlide(2);
     }, []);
 
-    // const moveSlide = (direction) => {
-    //     const newSlide = curSlide + direction;
-    //
-    //     if (newSlide <= testArr.length && newSlide > 0) {
-    //         setCurSlide(newSlide);
-    //     }
-    // };
+    const moveToSlide = (direction) => {
+        if (direction === "next") {
+            setCurSlide(curSlide < slides.length - 2 ? curSlide + 1 : 1);
+        }
 
-// 무한 이후 이동
-    const handleNextMove = () => {
-        if (curSlide < slides.length - 2) {
-            setCurSlide(curSlide + 1);
-        } else {
-            setCurSlide(1);
+        if (direction === "prev") {
+            setCurSlide(curSlide > 1 ? curSlide - 1 : slides.length - 2);
         }
     };
 
-// 무한 이전 이동
-    const handlePrevMove = () => {
-        if (curSlide > 1) {
-            setCurSlide(curSlide - 1);
-        } else {
-            setCurSlide(slides.length - 2);
-        }
-    };
+    useEffect(() => {
+        loopInterval.current = setInterval(() => {
+            // handleNextMove();
+            moveToSlide('next');
+        }, 3000);
+
+        // 정리 함수
+        return () => {
+            // 인터벌 중지, 메모리 누수 방지 효과
+            clearInterval(loopInterval.current);
+        };
+    }, [moveToSlide]);
 
     const handlePaginationClick = (index) => {
         setCurSlide(index + 2);
@@ -83,24 +63,29 @@ const ImgSlider = () => {
     };
 
     const handleMouseUp = (e) => {
-        setEndPoint(e.pageX); // 마우스 드래그 끝 위치 저장
-        if (startPoint < endPoint) {
-            // 마우스가 오른쪽으로 드래그 된 경우
-            handlePrevMove();
-        } else if (startPoint > endPoint) {
-            // 마우스가 왼쪽으로 드래그 된 경우
-            handleNextMove();
+        setEndPoint(e.pageX);
+        moveToSlide(startPoint < endPoint ? "prev" : "next");
+    };
+
+    const handleMouseEnterLeave = (enter) => {
+        if (enter) {
+            clearInterval(loopInterval.current);
+        } else {
+            loopInterval.current = setInterval(() => moveToSlide("next"), 3000);
         }
     };
 
     return (
         <div className='slide-wrap'>
-            <Button className="slide_prev_button slide_button" onClick={handlePrevMove}>◀</Button>
+            <Button className="slide_prev_button slide_button" onClick={() => moveToSlide('prev')}>◀</Button>
             <div
                 ref={slideRef}
                 className='slide'
                 onMouseDown={handleMouseDown}
-                onMouseUp={handleMouseUp}>
+                onMouseUp={handleMouseUp}
+                onMouseEnter={() => handleMouseEnterLeave(true)}
+                onMouseLeave={() => handleMouseEnterLeave(false)}
+            >
                 {slides.map((x, index) => (
                     <div
                         className='slide_item'
@@ -124,7 +109,7 @@ const ImgSlider = () => {
                     </li>
                 ))}
             </ul>
-            <Button className="slide_next_button slide_button" onClick={handleNextMove}>▶</Button>
+            <Button className="slide_next_button slide_button" onClick={() => moveToSlide('next')}>▶</Button>
         </div>
     )
 }

@@ -8,14 +8,14 @@ import axios from "axios";
 const SignUp = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [userName, setUserName] = useState('');
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [address1, setAddress1] = useState('');
     const [phone, setPhone] = useState('');
     const [passwordError, setPasswordError] = useState(false);
     const [address2, setAddress2] = useState('');
     const [error, setError] = useState('');
-    const [validation, setValidation] = useState({address1: '', address2: '', email: '', userName: '', password: '', phone: ''});
+    const [validation, setValidation] = useState({address1: '', address2: '', email: '', name: '', password: '', phone: ''});
 
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
@@ -23,7 +23,7 @@ const SignUp = () => {
         const formData = {
             email,
             password,
-            userName,
+            name,
             phone,
             address1,
             address2,
@@ -34,7 +34,7 @@ const SignUp = () => {
             address1: '',
             address2: '',
             email: '',
-            userName: '',
+            name: '',
             password: '',
             phone: '',
         });
@@ -45,7 +45,7 @@ const SignUp = () => {
             console.log('response', response);
 
             setError('');
-            navigate('/');
+            navigate('/member/login');
         } catch (e) {
             if (e.response.status === 400) {
                 validationResultUpdater(e.response.data);
@@ -128,8 +128,8 @@ const SignUp = () => {
                     <Form.Label>사용자 이름</Form.Label>
                     <Form.Control
                         type="text"
-                        value={userName}
-                        onChange={(e) => setUserName(e.target.value)}
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                         isInvalid={validation.name !== ''}
                     />
                     <Form.Control.Feedback type="invalid" className='sign-err-msg'>

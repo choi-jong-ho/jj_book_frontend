@@ -17,10 +17,6 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // const formData = {
-        //     email,
-        //     password,
-        // };
 
         // form 데이터 형식으로 보내기
         const formData = new FormData();
@@ -29,11 +25,6 @@ const Login = () => {
         formData.append('password', password);
 
         try {
-            // const response = await axios.post('/member/login', formData, {
-            //     headers: { 'Content-Type': 'application/json' },
-            //     withCredentials: true, // 쿠키를 받기 위한 옵션
-            // });
-
             const response = await axios.post('/member/login', formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -45,8 +36,9 @@ const Login = () => {
             loginTokenHandler(data.accessToken, timer);
 
             setIsLoggedIn(true); // 로그인 상태 변경 추가
-            const check = await getUserActionHandler(localStorage.getItem('token'));
-            setUser(check.data); // 받아온 유저 정보 저장
+            // const check = await getUserActionHandler(localStorage.getItem('token'));
+            // console.log('check', check);
+            // setUser(check.data); // 받아온 유저 정보 저장
 
             setError(''); // 에러 메시지 초기화
             navigate('/'); // 로그인 후 페이지 이동
