@@ -20,6 +20,10 @@ const Header = () => {
         navigate('/mypage/main');
     }, [navigate]);
 
+    const navigateToUpload = useCallback(() => {
+        navigate('/product/upload');
+    }, [navigate]);
+
     const handleLogout = () => {
         setIsLoggedIn(false);
         setUser([]);
@@ -46,6 +50,10 @@ const Header = () => {
                             <NavDropdown.Item href="/member/signUp">회원가입</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
+                    <Button onClick={navigateToUpload} variant="outline-dark" type="submit">
+                        <i className="bi-cart-fill me-1"></i>
+                        상품등록
+                    </Button>
                     {user?.userName && (
                         <span>{user?.userName}님</span>
                     )}

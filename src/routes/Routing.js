@@ -6,6 +6,7 @@ import SignUp from "../pages/Login&SignUp/SignUp";
 import MyPageMain from "../pages/myPage/myPageMain";
 import AddAdress from "../pages/myPage/addAdress";
 import Profile from "../pages/myPage/profile";
+import Upload from "../pages/Product/Upload";
 
 const Routing = () => {
     return (
@@ -26,6 +27,7 @@ const Routing = () => {
                 {/*<Route path='profile' element={<Profile/>}/>*/}
                 {/*<Route path="addresslist" element={<AddAdress/>}/>*/}
             </Route>
+            <Route path="/product/upload" element={<Upload/>} />
         </Routes>
     )
 }

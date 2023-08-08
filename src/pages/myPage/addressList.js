@@ -5,3 +5,5 @@ const addressList = () => {
         <div className='addressList-container'></div>
     )
 }
+
+export default addressList;
