@@ -1,0 +1,16 @@
+.item-management-container {
+    display: flex;
+    flex-direction: column;
+    width: 1200px;
+    margin: 5rem auto;
+    flex-grow: 1;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.item-management-wrap {
+    width: 100%;
+
+    margin: 2rem 0;
+}

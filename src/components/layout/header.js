@@ -1,12 +1,20 @@
 import React, {useCallback, useContext} from 'react';
 import {useNavigate} from "react-router-dom";
-import {Navbar, Container, Nav, NavDropdown, Button} from 'react-bootstrap';
+import {Navbar, Container, Button} from 'react-bootstrap';
 import {logoutActionHandler} from '../../store/auth';
 import AuthContext from "../../store/AuthContext";
 
 const Header = () => {
     const {isLoggedIn, setIsLoggedIn, user, setUser} = useContext(AuthContext); // 로그인 상태 관리
     const navigate = useNavigate();
+
+    const navigateToMain = useCallback(() => {
+        navigate('/');
+    }, [navigate]);
+
+    const navigateToItemMng = useCallback(() => {
+        navigate('/admin/item');
+    }, [navigate]);
 
     const navigateToLogin = useCallback(() => {
         navigate('/member/login');
@@ -21,7 +29,11 @@ const Header = () => {
     }, [navigate]);
 
     const navigateToUpload = useCallback(() => {
-        navigate('/product/upload');
+        navigate('/admin/item/new');
+    }, [navigate]);
+
+    const navigateToEdit = useCallback(() => {
+        navigate('/admin/item/13');
     }, [navigate]);
 
     const handleLogout = () => {
@@ -36,20 +48,32 @@ const Header = () => {
                 <Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarSupportedContent"/>
                 <Navbar.Collapse id="navbarSupportedContent">
-                    <Nav
-                        className="me-auto my-2 my-lg-0"
-                        style={{maxHeight: '100px'}}
-                        navbarScroll
-                    >
-                        <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="/mypage">마이페이지(임시)</Nav.Link>
-                        <NavDropdown title="Shop" id="navbarDropdown">
-                            <NavDropdown.Item href="/">홈페이지</NavDropdown.Item>
-                            <NavDropdown.Divider/>
-                            <NavDropdown.Item href="/mypage/main">마이페이지(임시)</NavDropdown.Item>
-                            <NavDropdown.Item href="/member/signUp">회원가입</NavDropdown.Item>
-                        </NavDropdown>
-                    </Nav>
+                    {/*<Nav*/}
+                    {/*    className="me-auto my-2 my-lg-0"*/}
+                    {/*    style={{maxHeight: '100px'}}*/}
+                    {/*    navbarScroll*/}
+                    {/*>*/}
+                    {/*    <Nav.Link href="/">Home</Nav.Link>*/}
+                    {/*    <Nav.Link href="/mypage">마이페이지(임시)</Nav.Link>*/}
+                    {/*    <NavDropdown title="Shop" id="navbarDropdown">*/}
+                    {/*        <NavDropdown.Item href="/">홈페이지</NavDropdown.Item>*/}
+                    {/*        <NavDropdown.Divider/>*/}
+                    {/*        <NavDropdown.Item href="/mypage/main">마이페이지(임시)</NavDropdown.Item>*/}
+                    {/*        <NavDropdown.Item href="/member/signUp">회원가입</NavDropdown.Item>*/}
+                    {/*    </NavDropdown>*/}
+                    {/*</Nav>*/}
+                    <Button onClick={navigateToMain} variant="outline-dark" type="submit">
+                        <i className="bi-cart-fill me-1"></i>
+                        메인
+                    </Button>
+                    <Button onClick={navigateToItemMng} variant="outline-dark" type="submit">
+                        <i className="bi-cart-fill me-1"></i>
+                        상품 관리
+                    </Button>
+                    <Button onClick={navigateToEdit} variant="outline-dark" type="submit">
+                        <i className="bi-cart-fill me-1"></i>
+                        상품수정 및 조회
+                    </Button>
                     <Button onClick={navigateToUpload} variant="outline-dark" type="submit">
                         <i className="bi-cart-fill me-1"></i>
                         상품등록

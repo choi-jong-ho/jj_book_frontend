@@ -1,0 +1,20 @@
+.search-container {
+    display: flex;
+    width: 1100px;
+    margin: 0 auto;
+}
+
+.search-form {
+    display: flex;
+    margin: 0 auto;
+}
+
+.search-select {
+    width: 150px;
+    margin-right: 1rem;
+}
+
+.search-bar {
+    width: 250px;
+    margin-right: 1rem;
+}

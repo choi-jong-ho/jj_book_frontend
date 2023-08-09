@@ -1,0 +1,27 @@
+.edit-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-grow: 1;
+    width: 1100px;
+    margin: 0 auto;
+}
+
+.edit-wrap {
+    margin-top: 2rem;
+}
+
+.item-img-wrap {
+    border: gray solid 1px;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.add-img {
+    margin: 1rem;
+}
+
+.img-info-box {
+    padding: 10px;
+}
