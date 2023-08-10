@@ -20,7 +20,7 @@ const ItemPagination = ({ totalPages, currentPage, onPageChange }) => {
     return (
         <div className="item-pagination-container">
             <Pagination>
-                <Pagination.First />
+                {/*<Pagination.First />*/}
                 <Pagination.Prev
                     disabled={currentPage === 0}
                     onClick={() => onPageChange(currentPage - 1)}
@@ -30,7 +30,7 @@ const ItemPagination = ({ totalPages, currentPage, onPageChange }) => {
                     disabled={currentPage === totalPages - 1}
                     onClick={() => onPageChange(currentPage + 1)}
                 />
-                <Pagination.Last />
+                {/*<Pagination.Last />*/}
             </Pagination>
         </div>
     );

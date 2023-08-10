@@ -1,36 +1,62 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Form, Button, Container, FormSelect} from 'react-bootstrap';
 import './SearchBar.css';
+import axios from "axios";
 
-const SearchBar = () => {
-    // const [searchTerm, setSearchTerm] = useState('');
-    // const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+const SearchBar = ({handleFilterChange, handleSearch}) => {
+    // const [searchDateType, setSearchDateType] = useState('all');
+    // const [searchSellStatus, setSearchSellStatus] = useState('전체');
+    // const [searchBy, setSearchBy] = useState('상품명');
+    // const [searchQuery, setSearchQuery] = useState('');
 
-    // const handleSearchChange = (event) => {
-    //     setSearchTerm(event.target.value);
+    // const handleDateTypeChange = (e) => {
+    //     setSearchDateType(e.target.value);
     // };
     //
-    // const handleCategoryChange = (event) => {
-    //     setSelectedCategory(event.target.value);
+    // const handleSellStatusChange = (e) => {
+    //     setSearchSellStatus(e.target.value);
     // };
-
-    // const handleFormSubmit = (event) => {
-    //     event.preventDefault();
-    //     onSearch(searchTerm, selectedCategory);
+    //
+    // const handleSearchByChange = (e) => {
+    //     setSearchBy(e.target.value);
+    // };
+    //
+    // const handleSearchQueryChange = (e) => {
+    //     setSearchQuery(e.target.value);
+    // };
+    //
+    // const handleSubmit = async (e, page = 0) => {
+    //     e.preventDefault();
+    //     try {
+    //         const response = await axios.get('/admin/items', {
+    //             params: {
+    //                 // searchDateType,
+    //                 // searchSellStatus,
+    //                 // searchBy,
+    //                 // query: encodeURIComponent(searchQuery),
+    //                 page,
+    //             },
+    //         });
+    //
+    //         console.log('검색 데이터', response);
+    //
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
     // };
 
     const date = ['전체', '1일', '1주', '1개월', '6개월'];
-    const sellStatus = ['전체', '판매', '품절'];
-    const searchBy = ['상품명', '등록자'];
+    const Status = ['전체', '판매', '품절'];
+    const search = ['상품명', '등록자'];
 
     return (
         <Container className='search-container'>
-            <Form className='search-form' onSubmit={null}>
+            <Form className="search-form" onSubmit={handleSearch}>
                 <Form.Group className="search-select">
                     <FormSelect
                         className="form-select"
-                        // value={selectedCategory}
-                        // onChange={handleCategoryChange}
+                        name="searchDateType"
+                        onChange={handleFilterChange}
                     >
                         {
                             date.map((date, index) => (
@@ -44,13 +70,13 @@ const SearchBar = () => {
                 <Form.Group className="search-select">
                     <FormSelect
                         className="form-select"
-                        // value={selectedCategory}
-                        // onChange={handleCategoryChange}
+                        name="searchSellStatus"
+                        onChange={handleFilterChange}
                     >
                         {
-                            sellStatus.map((sellStatus, index) => (
-                                <option key={index} value={sellStatus}>
-                                    {sellStatus}
+                            Status.map((x, index) => (
+                                <option key={index} value={x}>
+                                    {x}
                                 </option>
                             ))
                         }
@@ -59,13 +85,13 @@ const SearchBar = () => {
                 <Form.Group className="search-select">
                     <FormSelect
                         className="form-select"
-                        // value={selectedCategory}
-                        // onChange={handleCategoryChange}
+                        name="searchBy"
+                        onChange={handleFilterChange}
                     >
                         {
-                            searchBy.map((searchBy, index) => (
-                                <option key={index} value={searchBy}>
-                                    {searchBy}
+                            search.map((x, index) => (
+                                <option key={index} value={x}>
+                                    {x}
                                 </option>
                             ))
                         }
@@ -76,8 +102,8 @@ const SearchBar = () => {
                         type="text"
                         className="form-control"
                         placeholder="검색어를 입력하세요"
-                        // value={searchTerm}
-                        // onChange={handleSearchChange}
+                        name="searchQuery"
+                        onChange={handleFilterChange}
                     />
                 </Form.Group>
                 <Button
