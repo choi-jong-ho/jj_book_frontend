@@ -1,0 +1,11 @@
+/*.product-container {*/
+/*    width: 100%;*/
+/*}*/
+
+.product-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    border: black solid 1px;
+    border-radius: 8px;
+    padding: 10px;
+}

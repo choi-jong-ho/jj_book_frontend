@@ -1,0 +1,11 @@
+.main-container {
+    display: flex;
+    flex-grow: 1;
+    width: 1200px;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.main-wrap {
+    width: 100%;
+}
