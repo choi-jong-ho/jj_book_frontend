@@ -33,7 +33,7 @@ const Header = () => {
     }, [navigate]);
 
     const navigateToEdit = useCallback(() => {
-        navigate('/admin/item/13');
+        navigate('/admin/item/1');
     }, [navigate]);
 
     const handleLogout = () => {

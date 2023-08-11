@@ -1,9 +1,16 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {Table} from 'react-bootstrap';
 // import axios from "axios";
+import { Button } from 'react-bootstrap';
+import {useNavigate} from "react-router-dom";
 import './List.css';
 
 const List = ({itemInfo}) => {
+    const navigate = useNavigate();
+
+    const navigateToEdit = useCallback((itemNumber) => {
+        navigate(`/admin/item/${itemNumber}`);
+    }, [navigate]);
 
     return (
         <div className='list-container'>
@@ -18,6 +25,7 @@ const List = ({itemInfo}) => {
                         <td>등록자</td>
                         <td>상태</td>
                         <td>가격</td>
+                        <td>기능</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -29,6 +37,15 @@ const List = ({itemInfo}) => {
                             <td>{row.createdBy}</td>
                             <td>{row.itemSellStatus}</td>
                             <td>{row.price}</td>
+                            <td>
+                                <Button
+                                variant="secondary"
+                                type="button"
+                                onClick={() => navigateToEdit(row.id)}
+                            >
+                                수정
+                                </Button>
+                            </td>
                         </tr>
                     ))
                     }

@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Form, Button, Container, Alert} from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
+import {Form, Button, Alert} from 'react-bootstrap';
 import './Edit.css';
 import axios from "axios";
 
 const Edit = () => {
+    const { itemId } = useParams();
     const [itemValue, setItemValue] = useState({
         itemSellStatus: 'SELL',
         itemNm: '',
@@ -17,10 +19,11 @@ const Edit = () => {
 
     const [getItemId, setGetItemId] = useState('');
     const [imgIdList, setImgIdList] = useState([]);
+    const [imgData, setImgData] = useState([]);
 
     const getItemInfo = async () => {
         try {
-            const response = await axios.get('/admin/item/13');
+            const response = await axios.get(`/admin/item/${itemId[0]}`);
             console.log('받아온 데이터', response);
             setItemValue({
                 itemSellStatus: response.data.itemSellStatus,
@@ -30,6 +33,8 @@ const Edit = () => {
                 itemDetail: response.data.itemDetail
             }); // 변경된 부분
             setGetItemId(response.data.id);
+            setImgData(response.data.itemImgDtoList[0]);
+            console.log('imgData', imgData);
             let testArr = [];
             response.data.itemImgDtoList.map((x, idx) => {
                 testArr.push(x.id);
@@ -42,6 +47,7 @@ const Edit = () => {
     }
 
     useEffect(() => {
+        console.log('itemId', itemId);
         getItemInfo();
     }, []);
 
@@ -78,7 +84,7 @@ const Edit = () => {
         console.log('formData', formData);
 
         try {
-            const response = await axios.post('/admin/item/13', formData, {
+            const response = await axios.post(`/admin/item/${itemId[0]}`, formData, {
                 headers: {'Content-Type': 'multipart/form-data'},
             });
             console.log('response', response.data);
@@ -176,6 +182,9 @@ const Edit = () => {
                         >
                             이미지 추가
                         </Button>
+                        <div className='img-area'>
+                            <img src={imgData.imgUrl}/>
+                        </div>
                         {
                             itemImgFile.map((_, index) => (
                                 <Form.Group key={index} className="img-info-box">
