@@ -11,43 +11,42 @@ const Edit = () => {
         itemNm: '',
         price: 0,
         stockNumber: 0,
-        itemDetail: ''
+        itemDetail: '',
+        id: 0,
     });
     const [itemImgFile, setItemImgFile] = useState([{}]);
     const [validation, setValidation] = useState({itemDetail: '', itemNm: '', stockNumber: '', price: ''});
     const [error, setError] = useState('');
 
-    const [getItemId, setGetItemId] = useState('');
     const [imgIdList, setImgIdList] = useState([]);
     const [imgData, setImgData] = useState([]);
 
     const getItemInfo = async () => {
         try {
             const response = await axios.get(`/admin/item/${itemId[0]}`);
-            console.log('받아온 데이터', response);
+            console.log('서버에서 받아온 item 데이터', response);
+            const data = response.data;
             setItemValue({
-                itemSellStatus: response.data.itemSellStatus,
-                itemNm: response.data.itemNm,
-                price: response.data.price,
-                stockNumber: response.data.stockNumber,
-                itemDetail: response.data.itemDetail
-            }); // 변경된 부분
-            setGetItemId(response.data.id);
-            setImgData(response.data.itemImgDtoList[0]);
-            console.log('imgData', imgData);
-            let testArr = [];
-            response.data.itemImgDtoList.map((x, idx) => {
-                testArr.push(x.id);
+                itemSellStatus: data.itemSellStatus,
+                itemNm: data.itemNm,
+                price: data.price,
+                stockNumber: data.stockNumber,
+                itemDetail: data.itemDetail,
+                id: data.id
             });
-            console.log('testArr', testArr);
-            setImgIdList(testArr);
+            setImgData(data.itemImgDtoList);
+
+            let itemIdArr = [];
+            data.itemImgDtoList.map((img) => {
+                itemIdArr.push(img.id);
+            });
+            setImgIdList(itemIdArr);
         } catch (e) {
             console.log('데이터 가져오기 에러', e);
         }
     }
 
     useEffect(() => {
-        console.log('itemId', itemId);
         getItemInfo();
     }, []);
 
@@ -55,14 +54,24 @@ const Edit = () => {
         setItemValue({...itemValue, [key]: event.target.value});
     };
 
+    // const handleFileSelect = (event, index) => {
+    //     const updatedSelectedFiles = [...itemImgFile];
+    //     updatedSelectedFiles[index] = event.target.files[0];
+    //     setItemImgFile(updatedSelectedFiles);
+    // };
+
     const handleFileSelect = (event, index) => {
-        const updatedSelectedFiles = [...itemImgFile];
+        const updatedSelectedFiles = [...imgData];
         updatedSelectedFiles[index] = event.target.files[0];
-        setItemImgFile(updatedSelectedFiles);
+        setImgData(updatedSelectedFiles);
     };
 
+    // const handleAddFileInput = () => {
+    //     setItemImgFile([...itemImgFile, {}]);
+    // };
+
     const handleAddFileInput = () => {
-        setItemImgFile([...itemImgFile, {}]);
+        setImgData([...imgData, {}]);
     };
 
     const handleSubmit = async (event) => {
@@ -75,19 +84,19 @@ const Edit = () => {
         formData.append('price', itemValue.price);
         formData.append('stockNumber', itemValue.stockNumber);
         formData.append('itemDetail', itemValue.itemDetail);
-        formData.append('id', getItemId);
+        formData.append('id', itemValue.id);
         formData.append('itemImgIds', imgIdList);
 
         itemImgFile.forEach((file) => {
             formData.append('itemImgFile', file);
         });
-        console.log('formData', formData);
+        console.log('서버에 보내기 전 데이터', formData);
 
         try {
             const response = await axios.post(`/admin/item/${itemId[0]}`, formData, {
                 headers: {'Content-Type': 'multipart/form-data'},
             });
-            console.log('response', response.data);
+            console.log('서버에 보낸 후 데이터', response.data);
             alert('상품 수정 성공');
         } catch (e) {
             console.log('오류 내용', e);
@@ -116,7 +125,7 @@ const Edit = () => {
             <div className="edit-wrap">
                 {error && <Alert variant="danger">{error}</Alert>}
                 <Form onSubmit={handleSubmit}>
-                    <Form.Group>
+                    <Form.Group className='edit-info-box'>
                         <Form.Label>상품 상태</Form.Label>
                         <Form.Select onChange={(e) => handleInputChange(e, 'itemSellStatus')}
                                      value={itemValue.itemSellStatus}>
@@ -124,7 +133,7 @@ const Edit = () => {
                             <option value='SOLD_OUT'>품절</option>
                         </Form.Select>
                     </Form.Group>
-                    <Form.Group className='info-box'>
+                    <Form.Group className='edit-info-box'>
                         <Form.Label>상품명</Form.Label>
                         <Form.Control
                             type="text"
@@ -136,7 +145,7 @@ const Edit = () => {
                             {validation.itemNm}
                         </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group className='info-box'>
+                    <Form.Group className='edit-info-box'>
                         <Form.Label>가격</Form.Label>
                         <Form.Control
                             type="text"
@@ -148,7 +157,7 @@ const Edit = () => {
                             {validation.price}
                         </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group className='info-box'>
+                    <Form.Group className='edit-info-box'>
                         <Form.Label>재고</Form.Label>
                         <Form.Control
                             type="text"
@@ -160,7 +169,7 @@ const Edit = () => {
                             {validation.stockNumber}
                         </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group className='info-box'>
+                    <Form.Group className='edit-info-box'>
                         <Form.Label>상품 상세 내용</Form.Label>
                         <Form.Control
                             as="textarea"
@@ -173,7 +182,7 @@ const Edit = () => {
                             {validation.itemDetail}
                         </Form.Control.Feedback>
                     </Form.Group>
-                    <div className='item-img-wrap'>
+                    <div className='item-img-container'>
                         <Button
                             className='add-img'
                             variant="secondary"
@@ -182,20 +191,21 @@ const Edit = () => {
                         >
                             이미지 추가
                         </Button>
-                        <div className='img-area'>
-                            <img src={imgData.imgUrl}/>
+                        <div className='item-img-wrap'>
+                            {
+                                imgData.map((_, index) => (
+                                    <Form.Group key={index} className="img-info-box">
+                                        <img className='item-img' src={imgData[index]?.imgUrl}/>
+                                        <Form.Label>상품 이미지 {index + 1}</Form.Label>
+                                        <Form.Control
+                                            className='img-control'
+                                            type="file"
+                                            onChange={(event) => handleFileSelect(event, index)}
+                                        />
+                                    </Form.Group>
+                                ))
+                            }
                         </div>
-                        {
-                            itemImgFile.map((_, index) => (
-                                <Form.Group key={index} className="img-info-box">
-                                    <Form.Label>상품 이미지 {index + 1}</Form.Label>
-                                    <Form.Control
-                                        type="file"
-                                        onChange={(event) => handleFileSelect(event, index)}
-                                    />
-                                </Form.Group>
-                            ))
-                        }
                     </div>
                     <Button
                         variant="primary"

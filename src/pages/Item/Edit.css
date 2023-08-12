@@ -12,16 +12,34 @@
     margin-top: 2rem;
 }
 
-.item-img-wrap {
-    border: gray solid 1px;
-    border-radius: 8px;
-    margin-bottom: 2rem;
+.edit-info-box {
+    width: 420px;
+    margin-bottom: 1rem;
 }
 
-.add-img {
-    margin: 1rem;
+.item-img-container {
+    border: gray solid 1px;
+    border-radius: 8px;
+    width: 420px;
+    padding: 10px;
+}
+
+.item-img-wrap {
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+}
+
+.item-img {
+    width: 100px;
+    height: 100px;
 }
 
 .img-info-box {
     padding: 10px;
+    margin-bottom: 1rem;
+}
+
+.img-control {
+    width: 250px;
 }
