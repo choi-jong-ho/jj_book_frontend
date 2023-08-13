@@ -10,6 +10,20 @@
 
 .upload-wrap {
     margin-top: 2rem;
+    width: 600px;
+}
+
+.info-box-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px black solid;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.info-box {
+    margin-bottom: 1rem;
 }
 
 .item-img-wrap {

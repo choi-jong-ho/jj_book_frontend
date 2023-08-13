@@ -1,11 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import { useParams } from 'react-router-dom';
+import React, {useEffect, useState, useRef} from 'react';
+import {useParams} from 'react-router-dom';
 import {Form, Button, Alert} from 'react-bootstrap';
 import './Edit.css';
 import axios from "axios";
 
 const Edit = () => {
-    const { itemId } = useParams();
+    const {itemId} = useParams();
+    const fileInputRefs = useRef([]);
+
     const [itemValue, setItemValue] = useState({
         itemSellStatus: 'SELL',
         itemNm: '',
@@ -14,12 +16,13 @@ const Edit = () => {
         itemDetail: '',
         id: 0,
     });
-    const [itemImgFile, setItemImgFile] = useState([{}]);
     const [validation, setValidation] = useState({itemDetail: '', itemNm: '', stockNumber: '', price: ''});
     const [error, setError] = useState('');
 
     const [imgIdList, setImgIdList] = useState([]);
     const [imgData, setImgData] = useState([]);
+
+    const [previewImage, setPreviewImage] = useState([]);
 
     const getItemInfo = async () => {
         try {
@@ -34,13 +37,24 @@ const Edit = () => {
                 itemDetail: data.itemDetail,
                 id: data.id
             });
-            setImgData(data.itemImgDtoList);
 
             let itemIdArr = [];
-            data.itemImgDtoList.map((img) => {
-                itemIdArr.push(img.id);
+            let getImgUrl = [];
+
+            console.log('data.itemImgDtoList', data.itemImgDtoList);
+
+            const imgList = data.itemImgDtoList.map((x) => {
+                itemIdArr.push(x.id); // 이미지 id를 보내기 위한 list
+                getImgUrl.push(x.imgUrl);
+                setPreviewImage(getImgUrl);
+                const imageBlob = new Blob([x], {type: "image/jpg"});
+                const imageFile = new File([imageBlob], x.oriImgName, {type: "image/jpg", lastModified: Date.now()});
+                return {file: imageFile};
             });
+
             setImgIdList(itemIdArr);
+            setImgData(imgList);
+
         } catch (e) {
             console.log('데이터 가져오기 에러', e);
         }
@@ -54,21 +68,25 @@ const Edit = () => {
         setItemValue({...itemValue, [key]: event.target.value});
     };
 
-    // const handleFileSelect = (event, index) => {
-    //     const updatedSelectedFiles = [...itemImgFile];
-    //     updatedSelectedFiles[index] = event.target.files[0];
-    //     setItemImgFile(updatedSelectedFiles);
-    // };
-
     const handleFileSelect = (event, index) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const updatedImgPreview = [...previewImage];
+                updatedImgPreview[index] = e.target.result;
+                setPreviewImage(updatedImgPreview);
+            }
+
+            reader.readAsDataURL(file);
+        }
         const updatedSelectedFiles = [...imgData];
-        updatedSelectedFiles[index] = event.target.files[0];
+        updatedSelectedFiles[index] = {
+            ...updatedSelectedFiles[index],
+            file: file,
+        };
         setImgData(updatedSelectedFiles);
     };
-
-    // const handleAddFileInput = () => {
-    //     setItemImgFile([...itemImgFile, {}]);
-    // };
 
     const handleAddFileInput = () => {
         setImgData([...imgData, {}]);
@@ -87,26 +105,28 @@ const Edit = () => {
         formData.append('id', itemValue.id);
         formData.append('itemImgIds', imgIdList);
 
-        itemImgFile.forEach((file) => {
-            formData.append('itemImgFile', file);
+        imgData.forEach((imgObj) => {
+            if (imgObj.file) {
+                formData.append('itemImgFile', imgObj.file);
+            }
         });
-        console.log('서버에 보내기 전 데이터', formData);
+
+        // for (const [key, value] of formData.entries()) {
+        //     console.log(key, value)
+        // }
 
         try {
             const response = await axios.post(`/admin/item/${itemId[0]}`, formData, {
                 headers: {'Content-Type': 'multipart/form-data'},
             });
-            console.log('서버에 보낸 후 데이터', response.data);
             alert('상품 수정 성공');
         } catch (e) {
-            console.log('오류 내용', e);
             if (e.response.status === 400) {
                 validationResultUpdater(e.response.data);
                 setError('상품 등록에 실패하였습니다. 다시 입력해주세요.');
             }
-            console.error(error);
-        }
-        ;
+            console.log('오류 내용', e);
+        };
     };
 
     const validationResultUpdater = (data) => {
@@ -125,6 +145,7 @@ const Edit = () => {
             <div className="edit-wrap">
                 {error && <Alert variant="danger">{error}</Alert>}
                 <Form onSubmit={handleSubmit}>
+                    <div className='edit-info-box-wrap'>
                     <Form.Group className='edit-info-box'>
                         <Form.Label>상품 상태</Form.Label>
                         <Form.Select onChange={(e) => handleInputChange(e, 'itemSellStatus')}
@@ -182,10 +203,11 @@ const Edit = () => {
                             {validation.itemDetail}
                         </Form.Control.Feedback>
                     </Form.Group>
+                    </div>
                     <div className='item-img-container'>
                         <Button
                             className='add-img'
-                            variant="secondary"
+                            variant="success"
                             type="button"
                             onClick={handleAddFileInput}
                         >
@@ -193,13 +215,24 @@ const Edit = () => {
                         </Button>
                         <div className='item-img-wrap'>
                             {
-                                imgData.map((_, index) => (
+                                imgData.map((imgObj, index) => (
                                     <Form.Group key={index} className="img-info-box">
-                                        <img className='item-img' src={imgData[index]?.imgUrl}/>
-                                        <Form.Label>상품 이미지 {index + 1}</Form.Label>
+                                        <img className='item-img' src={previewImage[index]} alt='이미지 미리보기'/>
+                                        <Button
+                                            className='img-button'
+                                            variant="secondary"
+                                                onClick={() => fileInputRefs.current[index].click()}>파일 선택</Button>
                                         <Form.Control
                                             className='img-control'
                                             type="file"
+                                            ref={ref => fileInputRefs.current[index] = ref}
+                                            onChange={(event) => handleFileSelect(event, index)}
+                                        />
+                                        <Form.Control
+                                            className='img-text'
+                                            type="text"
+                                            readOnly={true}
+                                            value={imgObj.file.name}
                                             onChange={(event) => handleFileSelect(event, index)}
                                         />
                                     </Form.Group>

@@ -7,6 +7,7 @@ import MyPageMain from "../pages/myPage/myPageMain";
 import Upload from "../pages/Item/Upload";
 import Edit from "../pages/Item/Edit";
 import ItemManagement from "../pages/Item/ItemManagement";
+import ItemDetail from "../pages/Item/ItemDetail";
 
 const Routing = () => {
     return (
@@ -20,8 +21,8 @@ const Routing = () => {
             </Route>
             <Route path="/admin/item/new" element={<Upload/>} />
             <Route path="/admin/item/:itemId" element={<Edit/>} />
-            <Route path="/admin/item" element={<ItemManagement/>}>
-            </Route>
+            <Route path="/admin/item" element={<ItemManagement/>} />
+            <Route path="/admin/item/detail/:itemId" element={<ItemDetail/>} />
         </Routes>
     )
 }

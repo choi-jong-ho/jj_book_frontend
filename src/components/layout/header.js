@@ -32,10 +32,6 @@ const Header = () => {
         navigate('/admin/item/new');
     }, [navigate]);
 
-    const navigateToEdit = useCallback(() => {
-        navigate('/admin/item/1');
-    }, [navigate]);
-
     const handleLogout = () => {
         setIsLoggedIn(false);
         setUser([]);
@@ -69,10 +65,6 @@ const Header = () => {
                     <Button onClick={navigateToItemMng} variant="outline-dark" type="submit">
                         <i className="bi-cart-fill me-1"></i>
                         상품 관리
-                    </Button>
-                    <Button onClick={navigateToEdit} variant="outline-dark" type="submit">
-                        <i className="bi-cart-fill me-1"></i>
-                        상품수정 및 조회
                     </Button>
                     <Button onClick={navigateToUpload} variant="outline-dark" type="submit">
                         <i className="bi-cart-fill me-1"></i>

@@ -16,24 +16,6 @@ const ItemManagement = () => {
         getItemList();
     }, []);
 
-    // const loadData = async () => {
-    //     console.log('filters', filters);
-    //     try {
-    //         const response = await axios.get('/admin/item/list', {
-    //             params: filters
-    //         });
-    //         const { data } = response;
-    //         console.log('response', data);
-    //         if(data[0].content.length === 0) {
-    //             console.log('데이터 없당께');
-    //             setDataNull(false);
-    //         }
-    //     } catch (error) {
-    //         console.log('Error loading data:', error);
-    //         setItems([]);
-    //     }
-    // };
-
     const handleFilterChange = (event) => {
         const { name, value } = event.target;
         setFilters({ ...filters, [name]: value });
@@ -46,9 +28,9 @@ const ItemManagement = () => {
     };
 
     const getItemList = async (newPage) => {
-        console.log('getItemList', filters)
         try {
             let response = {};
+
             if(newPage) {
                 response = await axios.get(`/admin/item/list${newPage}`, {
                     params: filters
@@ -59,19 +41,20 @@ const ItemManagement = () => {
                     params: filters
                 });
             }
-            console.log('받아온 데이터', response);
-            console.log('item 데이터', response.data[0]);
+
             const getData = response.data[0].content;
+
             if(getData.length !== 0) {
-                console.log('데이터 있당께');
                 setDataNull(true);
                 setItems(response.data[0]);
                 setItemInfo(getData);
                 setCurrentPage(response.data[0].number)
             }
+
             if (getData.length === 0) {
                 setDataNull(false);
             }
+
         } catch (e) {
             console.log('상품목록 가져오기 에러', e);
         }

@@ -1,7 +1,15 @@
 .product-wrap {
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     border: black solid 1px;
     border-radius: 8px;
     padding: 10px;
+}
+
+.card-container {
+    width: 17rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
 }

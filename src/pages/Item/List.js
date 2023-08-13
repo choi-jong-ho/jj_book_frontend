@@ -1,6 +1,5 @@
 import React, {useCallback} from "react";
 import {Table} from 'react-bootstrap';
-// import axios from "axios";
 import { Button } from 'react-bootstrap';
 import {useNavigate} from "react-router-dom";
 import './List.css';
@@ -20,9 +19,9 @@ const List = ({itemInfo}) => {
                 <Table className='list-table' bordered hover>
                     <thead>
                     <tr>
-                        <td>상품아이디</td>
                         <td>상품명</td>
                         <td>등록자</td>
+                        <td>등록일</td>
                         <td>상태</td>
                         <td>가격</td>
                         <td>기능</td>
@@ -32,10 +31,10 @@ const List = ({itemInfo}) => {
                     {
                         itemInfo.map(row => (
                         <tr key={row.id}>
-                            <td>{row.id}</td>
                             <td>{row.itemNm}</td>
                             <td>{row.createdBy}</td>
-                            <td>{row.itemSellStatus}</td>
+                            <td>{row.regTime}</td>
+                            <td>{row.itemSellStatus === 'SELL' ? '판매중' : '품절'}</td>
                             <td>{row.price}</td>
                             <td>
                                 <Button

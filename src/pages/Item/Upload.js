@@ -15,12 +15,25 @@ const Upload = () => {
     const [validation, setValidation] = useState({itemDetail: '', itemNm: '', stockNumber: '', price: ''});
     const [error, setError] = useState('');
 
+    const [previewImage, setPreviewImage] = useState([]);
+
 
     const handleInputChange = (event, key) => {
         setItemValue({...itemValue, [key]: event.target.value});
     };
 
     const handleFileSelect = (event, index) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const updatedImgPreview = [...previewImage];
+                updatedImgPreview[index] = e.target.result;
+                setPreviewImage(updatedImgPreview);
+            }
+
+            reader.readAsDataURL(file);
+        }
         const updatedSelectedFiles = [...itemImgFile];
         updatedSelectedFiles[index] = event.target.files[0];
         setItemImgFile(updatedSelectedFiles);
@@ -28,6 +41,8 @@ const Upload = () => {
 
     const handleAddFileInput = () => {
         setItemImgFile([...itemImgFile, {}]);
+        console.log('handleAddFileInput', itemImgFile);
+        console.log('handleAddFileInput', itemImgFile[0].length);
     };
 
     const handleSubmit = async (event) => {
@@ -78,7 +93,8 @@ const Upload = () => {
             <div className="upload-wrap">
                 {error && <Alert variant="danger">{error}</Alert>}
                 <Form onSubmit={handleSubmit}>
-                    <Form.Group>
+                    <div className='info-box-wrap'>
+                    <Form.Group className='info-box'>
                         <Form.Label>상품 상태</Form.Label>
                         <Form.Select onChange={(e) => handleInputChange(e, 'itemSellStatus')}
                                      value={itemValue.itemSellStatus}>
@@ -135,10 +151,11 @@ const Upload = () => {
                             {validation.itemDetail}
                         </Form.Control.Feedback>
                     </Form.Group>
+                    </div>
                     <div className='item-img-wrap'>
                         <Button
                             className='add-img'
-                            variant="secondary"
+                            variant="success"
                             type="button"
                             onClick={handleAddFileInput}
                         >
@@ -147,11 +164,20 @@ const Upload = () => {
                         {
                             itemImgFile.map((_, index) => (
                                 <Form.Group key={index} className="img-info-box">
-                                    <Form.Label>상품 이미지 {index + 1}</Form.Label>
+                                    {
+                                        previewImage[index] !== undefined ? <img className='item-img' src={previewImage[index]} alt='이미지 미리보기'/> : null
+                                    }
                                     <Form.Control
                                         type="file"
                                         onChange={(event) => handleFileSelect(event, index)}
                                     />
+                                    {/*<Form.Control*/}
+                                    {/*    className='img-text'*/}
+                                    {/*    type="text"*/}
+                                    {/*    readOnly={true}*/}
+                                    {/*    value={itemImgFile.file?.name}*/}
+                                    {/*    onChange={(event) => handleFileSelect(event, index)}*/}
+                                    {/*/>*/}
                                 </Form.Group>
                             ))
                         }
