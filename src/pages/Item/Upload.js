@@ -54,6 +54,7 @@ const Upload = () => {
         formData.append('price', itemValue.price);
         formData.append('stockNumber', itemValue.stockNumber);
         formData.append('itemDetail', itemValue.itemDetail);
+        formData.append('useYn', "Y");
 
         itemImgFile.forEach((file) => {
             formData.append('itemImgFile', file);

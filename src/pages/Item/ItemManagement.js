@@ -8,7 +8,7 @@ const ItemManagement = () => {
     const [items, setItems] = useState({});
     const [itemInfo, setItemInfo] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
-    const [filters, setFilters] = useState({ searchDateType: 'all', searchSellStatus: '', searchBy: 'itemNm', searchQuery: '', page: 0 });
+    const [filters, setFilters] = useState({ searchDateType: 'all', searchSellStatus: '', searchBy: 'itemNm', searchQuery: '', page: 0, searchByUseYn: "Y"});
 
     const [dataNull, setDataNull] = useState(false);
 

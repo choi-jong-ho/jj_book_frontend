@@ -1,8 +1,9 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useState} from "react";
 import {Table} from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import {useNavigate} from "react-router-dom";
 import './List.css';
+import axios from "axios";
 
 const List = ({itemInfo}) => {
     const navigate = useNavigate();
@@ -10,6 +11,22 @@ const List = ({itemInfo}) => {
     const navigateToEdit = useCallback((itemNumber) => {
         navigate(`/admin/item/${itemNumber}`);
     }, [navigate]);
+
+    const handleDelete = async (id, useYn) => {
+
+        const formData = {
+            id: id,
+            useYn : useYn,
+        };
+        try {
+            const response = await axios.post('/admin/item/delete', formData);
+            alert('상품 삭제 성공');
+        } catch (e) {
+            if (e.response.status === 400) {
+            }
+            console.log('오류 내용', e);
+        };
+    };
 
     return (
         <div className='list-container'>
@@ -43,6 +60,13 @@ const List = ({itemInfo}) => {
                                 onClick={() => navigateToEdit(row.id)}
                             >
                                 수정
+                                </Button>
+                                <Button
+                                    variant="secondary"
+                                    type="button"
+                                    onClick={() => handleDelete(row.id, "N")}
+                                >
+                                    삭제
                                 </Button>
                             </td>
                         </tr>

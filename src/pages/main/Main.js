@@ -21,6 +21,7 @@ const Main = () => {
                     params: {
                         searchDateType: "all",
                         searchBy: "",
+                        searchByUseYn: "Y",
                     }
                 });
             }
@@ -29,6 +30,7 @@ const Main = () => {
                     params: {
                         searchDateType: "all",
                         searchBy: "",
+                        searchByUseYn: "Y",
                     }
                 });
             }
