@@ -41,8 +41,6 @@ const Edit = () => {
             let itemIdArr = [];
             let getImgUrl = [];
 
-            console.log('data.itemImgDtoList', data.itemImgDtoList);
-
             const imgList = data.itemImgDtoList.map((x) => {
                 itemIdArr.push(x.id); // 이미지 id를 보내기 위한 list
                 getImgUrl.push(x.imgUrl);
@@ -75,6 +73,7 @@ const Edit = () => {
             reader.onload = (e) => {
                 const updatedImgPreview = [...previewImage];
                 updatedImgPreview[index] = e.target.result;
+                console.log('e.target.result', e.target.result);
                 setPreviewImage(updatedImgPreview);
             }
 

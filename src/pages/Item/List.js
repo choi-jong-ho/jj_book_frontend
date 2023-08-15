@@ -55,14 +55,16 @@ const List = ({itemInfo}) => {
                             <td>{row.price}</td>
                             <td>
                                 <Button
-                                variant="secondary"
+                                variant="primary"
+                                className='add-button'ㄹ
                                 type="button"
                                 onClick={() => navigateToEdit(row.id)}
                             >
                                 수정
                                 </Button>
                                 <Button
-                                    variant="secondary"
+                                    variant="danger"
+                                    className='add-button'
                                     type="button"
                                     onClick={() => handleDelete(row.id, "N")}
                                 >
