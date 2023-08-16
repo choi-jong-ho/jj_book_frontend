@@ -26,7 +26,7 @@ const Edit = () => {
 
     const getItemInfo = async () => {
         try {
-            const response = await axios.get(`/admin/item/${itemId[0]}`);
+            const response = await axios.get(`/admin/item/${itemId}`);
             console.log('서버에서 받아온 item 데이터', response);
             const data = response.data;
             setItemValue({

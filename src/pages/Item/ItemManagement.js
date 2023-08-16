@@ -32,7 +32,7 @@ const ItemManagement = () => {
             let response = {};
 
             if(newPage) {
-                response = await axios.get(`/admin/item/list${newPage}`, {
+                response = await axios.get(`/admin/item/list/${newPage}`, {
                     params: filters
                 });
             }
