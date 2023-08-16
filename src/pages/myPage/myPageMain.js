@@ -2,13 +2,13 @@ import React, {useContext, useEffect, useState} from "react";
 import '../../css/pages/myPage/myPageMain.css';
 import Aside from "./aside";
 import Profile from "./profile";
-import AddAdress from "./addAdress";
 import {useNavigate} from "react-router-dom";
 import AuthContext from "../../store/AuthContext";
 import MyPageHeader from "./myPageHeader";
 import MyPageFooter from "./myPageFooter";
 import Withdrawal from "./withfrawal";
 import '../../css/pages/myPage/myPageMain.css'
+import AddAddress from "./addAddress";
 
 const MyPageMain = () => {
     const {isLoggedIn} = useContext(AuthContext);
@@ -36,7 +36,7 @@ const MyPageMain = () => {
             case 'profile' :
                 return <Profile/>;
             case 'address-list':
-                return <AddAdress/>;
+                return <AddAddress />
             case 'withdrawal':
                 return <Withdrawal/>;
             default :
