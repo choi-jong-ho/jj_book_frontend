@@ -1,5 +1,6 @@
 .product-container{
-    margin-top: 2rem;
+    width: 1100px;
+    margin: 2rem auto;
 }
 .product-wrap {
     display: flex;
@@ -9,10 +10,11 @@
     border: black solid 1px;
     border-radius: 8px;
     padding: 10px;
+    margin-bottom: 2rem;
 }
 
 .card-container {
-    width: 17rem;
+    width: 15rem;
     margin-right: 1rem;
     margin-bottom: 1rem;
 }
