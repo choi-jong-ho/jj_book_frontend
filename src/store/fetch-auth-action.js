@@ -38,13 +38,13 @@ const fetchAuth = async (fetchData) => {
             const serverError = err;
             if (serverError && serverError.response) {
                 console.log(serverError.response.data);
-                alert("failed!");
+                alert("isAxiosError!");
                 return null;
             }
         }
 
         console.log(err);
-        alert("failed!");
+        alert("전체적인 failed!");
         return null;
     }
 };

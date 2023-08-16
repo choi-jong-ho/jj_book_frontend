@@ -26,11 +26,22 @@ export const loginTokenHandler = (token, expirationTime) => {
 }
 
 // 유저의 정보를 GET 방식으로 호출하는 함수
-export const getUserActionHandler = (token) => {
-    const URL = '/member/me';
-    const response = GET(URL, createTokenHeader(token));
-    return response;
-}
+// export const getUserActionHandler = (token) => {
+//     const URL = '/member/me';
+//     const response = GET(URL, createTokenHeader(token));
+//     return response;
+// }
+export const getUserActionHandler = async (token) => {
+    try {
+        const URL = '/member/me';
+        const response = await GET(URL, createTokenHeader(token));
+        return response;
+    } catch (error) {
+        console.error("getUserActionHandler 오류 : ", error);
+        // 에러가 발생한 경우에는 null을 반환하거나 적절한 처리를 추가하세요.
+        return null;
+    }
+};
 
 export const logoutActionHandler = () => {
     localStorage.removeItem('token');
