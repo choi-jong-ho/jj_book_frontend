@@ -6,7 +6,7 @@ import AuthContext from "../../store/AuthContext";
 import '../../css/pages/myPage/addressList.css'
 import axios from "axios";
 
-const AddAdress = () => {
+const AddAddress = () => {
     const {isLoggedIn, user} = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -141,4 +141,4 @@ const AddAdress = () => {
     )
 }
 
-export default AddAdress;
+export default AddAddress;
