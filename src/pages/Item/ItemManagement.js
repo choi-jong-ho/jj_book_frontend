@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import './ItemManagement.css';
 import List from './List';
-import ItemPagination from "./ItemPagination";
+import ItemPagination from "../../components/Pagination/ItemPagination";
 import SearchBar from "../../components/Search/SearchBar";
 import axios from "axios";
 const ItemManagement = () => {

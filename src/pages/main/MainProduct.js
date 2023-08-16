@@ -4,7 +4,7 @@ import {Button, Card} from 'react-bootstrap';
 import {useNavigate} from "react-router-dom";
 import './MainProduct.css';
 
-const MainProduct = ({itemInfo}) => {
+const MainProduct = ({itemInfo, imageUrl}) => {
     const navigate = useNavigate();
 
     const navigateToProductDetail = useCallback((itemNumber) => {
@@ -15,9 +15,9 @@ return(
     <div className='product-container'>
         <div className='product-wrap'>
             {
-                itemInfo.map(x => (
+                itemInfo.map((x, index) => (
                     <Card className='card-container'>
-                        <Card.Img variant="top" src='images/sunset.jpg' />
+                        <Card.Img variant="top" src={imageUrl[index]}/>
                         <Card.Body>
                             <Card.Title>{x.itemNm}</Card.Title>
                             <Card.Text>
