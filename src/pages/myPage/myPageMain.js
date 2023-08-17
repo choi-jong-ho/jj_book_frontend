@@ -9,6 +9,8 @@ import MyPageFooter from "./myPageFooter";
 import Withdrawal from "./withfrawal";
 import '../../css/pages/myPage/myPageMain.css'
 import AddAddress from "./addAddress";
+import OrderList from "./OrderList";
+import CartList from "../Cart/CartList";
 
 const MyPageMain = () => {
     const {isLoggedIn} = useContext(AuthContext);
@@ -39,6 +41,10 @@ const MyPageMain = () => {
                 return <AddAddress />
             case 'withdrawal':
                 return <Withdrawal/>;
+            case 'orderList':
+                return <OrderList/>;
+            case 'cartList':
+                return <CartList/>;
             default :
                 return <Profile/>;
         }

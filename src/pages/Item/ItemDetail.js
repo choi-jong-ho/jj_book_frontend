@@ -40,12 +40,11 @@ const ItemDetail = () => {
     }
 
     const orderHandle = async () => {
-        console.log('itemId', itemId);
-        console.log('count', count);
         const formData = {
             itemId: itemId,
             count : count,
         };
+
         try {
             const response = await axios.post('/order/new', formData);
 
@@ -57,14 +56,19 @@ const ItemDetail = () => {
     }
 
     const cartHandle = async () => {
-        // console.log('itemId', itemId);
-        // console.log('count', count);
-        const formData = {
-            itemId: itemId,
-            count : count,
-        };
+        console.log('itemId', itemId);
+        console.log('count', count);
+        const formData = new FormData();
+
+        formData.append('itemId', itemId,);
+        formData.append('count', count);
+
         try {
-            const response = await axios.post('/cart/new', formData);
+            const response = await axios.post('/cart/new', JSON.stringify(formData), {
+                headers: {
+                    "Content-Type": `application/json`,
+                },
+            });
 
             console.log('response', response);
             alert('장바구니에 담았습니다.');

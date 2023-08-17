@@ -10,9 +10,16 @@ const Aside = ({changePage}) => {
                     <div>웹 사이트 로고</div>
                 </li>
                 <div className='menu-list'>
+                    <li className='aside-item'>장바구니
+                        <ul className='sub-title'>
+                            <li className='sub-list' onClick={() => changePage('cartList')}>장바구니</li>
+                            <li className='sub-list'>선물함</li>
+                            <li className='sub-list'>주문취소 목록</li>
+                        </ul>
+                    </li>
                     <li className='aside-item'>주문내역
                         <ul className='sub-title'>
-                            <li className='sub-list'>주문/배송목록</li>
+                            <li className='sub-list' onClick={() => changePage('orderList')}>주문/배송목록</li>
                             <li className='sub-list'>선물함</li>
                             <li className='sub-list'>주문취소 목록</li>
                         </ul>
