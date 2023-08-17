@@ -11,11 +11,14 @@ const AddAddress = () => {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
-    const [address1, setAddress1] = useState('');
-    const [address2, setAddress2] = useState('');
-    const [nickname, setNickname] = useState('');
-    const [isDefault, setIsDefault] = useState('N');
     const [validation, setValidation] = useState({address1: ''});
+    const [addressObj, setAddressObj] = useState({
+        address: '',
+        addressDetail: '',
+        postcode: '',
+        addrCategory: '',
+        repAddYn: 'Y'
+    });
 
     useEffect(() => {
         // checkUser();
@@ -31,26 +34,28 @@ const AddAddress = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         const formData = {
             email,
-            address1,
-            address2,
-            nickname,
-            isDefault,
+            repAddYn: addressObj.repAddYn,
+            address: addressObj.address,
+            addressDetail: addressObj.addressDetail,
+            postcode: addressObj.postcode,
+            addrCategory: addressObj.addrCategory,
         };
 
         // setValidation 새 객체로 초기화하여 이전 검사 결과를 제거합니다.
         setValidation({
             email: '',
-            address1: '',
-            address2: '',
-            nickname: '',
+            address: '',
+            addressDetail: '',
+            addrCategory: '',
             isDefault: '',
         });
 
         try {
 
-            const response = await axios.post('/member/addressreg', formData);
+            const response = await axios.post('/address/new', formData);
 
             console.log('거주지 추가', response);
             navigate('/mypage/main');
@@ -59,33 +64,36 @@ const AddAddress = () => {
         }
     };
 
-    const handleChangeCheckBox = (event) => {
-        setNickname(event.target.value);
+    const handleChangeBasicPath = (event) => {
+        let updateAddressObj = {...addressObj}
+        if (updateAddressObj['repAddYn'] === 'N') {
+            updateAddressObj['repAddYn'] = 'Y';
+        }
+        if (updateAddressObj['repAddYn'] === 'Y') {
+            updateAddressObj['repAddYn'] = 'N';
+        }
     };
 
-    const handleChangeBasicPath = (event) => {
-        if (isDefault === 'N') {
-            setIsDefault('Y');
-        }
-        if (isDefault === 'Y') {
-            setIsDefault('N');
-        }
-    };
+    const handleAddressChange = (e, key) => {
+        let updateAddressObj = {...addressObj}
+        updateAddressObj[key] = e.target.value;
+        setAddressObj(updateAddressObj);
+    }
 
     return (
         <div className="add-address-container">
             <h1>주소지 추가</h1>
-            <Form onSubmit={handleSubmit} className= 'addressList-info'>
-                <AddressSearch address={address1} setAddress={setAddress1} validation={validation}/>
+            <Form onSubmit={handleSubmit} className='addressList-info'>
+                <AddressSearch addressObj={addressObj} setAddressObj={setAddressObj}/>
 
                 {/* 주소 값이 있을 때만 상세 주소 입력 상자 표시 */}
-                {address1 && (
+                {addressObj.address && (
                     <Form.Group className='info-box'>
                         <Form.Label>상세 주소</Form.Label>
                         <Form.Control
                             type="text"
-                            value={address2}
-                            onChange={(e) => setAddress2(e.target.value)}
+                            value={addressObj.addressDetail}
+                            onChange={(e) => handleAddressChange(e, 'addressDetail')}
                             placeholder="상세 주소를 입력해주세요"
                         />
                     </Form.Group>
@@ -98,25 +106,25 @@ const AddAddress = () => {
                             className='check-box'
                             type="radio"
                             label='집'
-                            value="집"
-                            checked={nickname === '집'}
-                            onChange={(e) => handleChangeCheckBox(e)}
+                            value="1"
+                            checked={addressObj.addrCategory === '1'}
+                            onChange={(e) => handleAddressChange(e, 'addrCategory')}
                         />
                         <Form.Check
                             className='check-box'
                             type="radio"
                             label='회사'
-                            value="회사"
-                            checked={nickname === '회사'}
-                            onChange={(e) => handleChangeCheckBox(e)}
+                            value="2"
+                            checked={addressObj.addrCategory === '2'}
+                            onChange={(e) => handleAddressChange(e, 'addrCategory')}
                         />
                         <Form.Check
                             className='check-box'
                             type="radio"
                             label='친적'
-                            value="친적"
-                            checked={nickname === '친적'}
-                            onChange={(e) => handleChangeCheckBox(e)}
+                            value="3"
+                            checked={addressObj.addrCategory === '3'}
+                            onChange={(e) => handleAddressChange(e, 'addrCategory')}
                         />
                     </div>
                 </Form.Group>

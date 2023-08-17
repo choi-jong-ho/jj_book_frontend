@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, Fragment} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Form, Button, Container, Alert} from 'react-bootstrap';
 import AddressSearch from "../../modal/AddressSearch";
@@ -10,29 +10,46 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [address1, setAddress1] = useState('');
     const [phone, setPhone] = useState('');
     const [passwordError, setPasswordError] = useState(false);
-    const [address2, setAddress2] = useState('');
+    const [validation, setValidation] = useState({
+        address: '',
+        addressDetail: '',
+        email: '',
+        name: '',
+        password: '',
+        phone: ''
+    });
     const [error, setError] = useState('');
-    const [validation, setValidation] = useState({address1: '', address2: '', email: '', name: '', password: '', phone: ''});
+    // 주소 데이터
+    const [addressObj, setAddressObj] = useState({
+        address: '',
+        addressDetail: '',
+        postcode: '',
+        addrCategory: '',
+        repAddYn: 'Y'
+    });
 
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         const formData = {
             email,
             password,
             name,
             phone,
-            address1,
-            address2,
+            repAddYn: addressObj.repAddYn,
+            address: addressObj.address,
+            addressDetail: addressObj.addressDetail,
+            postcode: addressObj.postcode,
+            addrCategory: addressObj.addrCategory,
         };
 
         // setValidation 새 객체로 초기화하여 이전 검사 결과를 제거합니다.
         setValidation({
-            address1: '',
-            address2: '',
+            address: '',
+            addressDetail: '',
             email: '',
             name: '',
             password: '',
@@ -79,6 +96,12 @@ const SignUp = () => {
         setPasswordError(currentPassword !== comparingPassword);
     };
 
+    const handleAddressChange = (e, key) => {
+        let updateAddressObj = {...addressObj}
+        updateAddressObj[key] = e.target.value;
+        setAddressObj(updateAddressObj);
+    }
+
 
     return (
         <Container className="container-SignUp">
@@ -116,7 +139,7 @@ const SignUp = () => {
                     <Form.Control
                         type="password"
                         value={confirmPassword}
-                        onChange={(e)=> handlePasswordChange(e, true)}
+                        onChange={(e) => handlePasswordChange(e, true)}
                         isInvalid={passwordError}
                     />
                     <Form.Control.Feedback type="invalid">
@@ -155,24 +178,58 @@ const SignUp = () => {
                     <Form.Control
                         className='address'
                         type="text"
-                        value={address1}
+                        value={addressObj.address}
                         isInvalid={validation.address !== ''}
                         disabled={true}
                     />
-                    <AddressSearch address={address1} setAddress={setAddress1} validation={validation}/>
+                    <AddressSearch addressObj={addressObj} setAddressObj={setAddressObj}/>
+                    <Form.Control.Feedback type="invalid" className='sign-err-msg'>
+                        {validation.address}
+                    </Form.Control.Feedback>
                 </Form.Group>
 
                 {/* 주소 값이 있을 때만 상세 주소 입력 상자 표시 */}
-                {address1 && (
-                    <Form.Group className='info-box'>
-                        <Form.Label>상세 주소</Form.Label>
-                        <Form.Control
-                            type="text"
-                            value={address2}
-                            onChange={(e) => setAddress2(e.target.value)}
-                            placeholder="상세 주소를 입력해주세요"
-                        />
-                    </Form.Group>
+                {addressObj.address && (
+                    <Fragment>
+                        <Form.Group className='info-box'>
+                            <Form.Label>상세 주소</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={addressObj.addressDetail}
+                                onChange={(e) => handleAddressChange(e, 'addressDetail')}
+                                placeholder="상세 주소를 입력해주세요"
+                            />
+                        </Form.Group>
+                        <Form.Group className='info-box'>
+                            <Form.Label>배송지 분류</Form.Label>
+                            <div className='check-box-container'>
+                                <Form.Check
+                                    className='check-box'
+                                    type="radio"
+                                    label='집'
+                                    value="1"
+                                    checked={addressObj.addrCategory === '1'}
+                                    onChange={(e) => handleAddressChange(e, 'addrCategory')}
+                                />
+                                <Form.Check
+                                    className='check-box'
+                                    type="radio"
+                                    label='회사'
+                                    value="2"
+                                    checked={addressObj.addrCategory === '2'}
+                                    onChange={(e) => handleAddressChange(e, 'addrCategory')}
+                                />
+                                <Form.Check
+                                    className='check-box'
+                                    type="radio"
+                                    label='친적'
+                                    value="3"
+                                    checked={addressObj.addrCategory === '3'}
+                                    onChange={(e) => handleAddressChange(e, 'addrCategory')}
+                                />
+                            </div>
+                        </Form.Group>
+                    </Fragment>
                 )}
                 <Button
                     variant="primary"

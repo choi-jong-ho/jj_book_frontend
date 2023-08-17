@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
 import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
 
-const AddressSearch = ({address, setAddress, validation}) => {
+// const AddressSearch = ({address, setAddress, setPostcode}) => {
+const AddressSearch = ({addressObj, setAddressObj}) => {
     const [showPostcode, setShowPostcode] = useState(false);
 
     const handlePostcodeComplete = (data) => {
@@ -20,7 +21,15 @@ const AddressSearch = ({address, setAddress, validation}) => {
             fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
         }
 
-        setAddress(fullAddress);
+        let updateAddressObj = {...addressObj};
+
+        updateAddressObj['address'] = fullAddress;
+        updateAddressObj['postcode'] = data.zonecode;
+
+        setAddressObj(updateAddressObj);
+
+        // setAddress(fullAddress);
+        // setPostcode(data.zonecode)
         setShowPostcode(false);
     };
 
@@ -34,17 +43,16 @@ const AddressSearch = ({address, setAddress, validation}) => {
             <InputGroup>
                 <Form.Control
                     type="text"
-                    value={address}
+                    value={addressObj.address}
                     readOnly
                     onClick={() => handleModalToggle(true)}
                     style={{ cursor: 'pointer' }} // 입력 상자를 클릭하여 검색 모달을 여는 것을 나타내기 위해 마우스 포인터 스타일 변경
-                    isInvalid={validation.address1 !== ''}
                 />
                 {/* 유저가 버튼을 클릭하면 handleShowModal 함수가 호출되어 모달창이 열림 */}
                 <Button onClick={()=> handleModalToggle(true)}>주소 검색</Button>
-                <Form.Control.Feedback type="invalid" className='sign-err-msg'>
-                    {validation.address1}
-                </Form.Control.Feedback>
+                {/*<Form.Control.Feedback type="invalid" className='sign-err-msg'>*/}
+                {/*    {validation.address}*/}
+                {/*</Form.Control.Feedback>*/}
             </InputGroup>
 
             {/* 입력값이 변경되어 모달창이 열릴 때, DaumPostcode 컴포넌트로 주소 검색 기능을 구현 */}

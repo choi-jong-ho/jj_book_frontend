@@ -3,7 +3,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /*justify-content: center;*/
     min-height: 100vh;
     padding: 2rem;
     box-sizing: border-box;
@@ -17,4 +16,10 @@
 
 .address {
     display: none;
+}
+
+.check-box-container {
+    border-radius: 4px;
+    border: 1px grey solid;
+    padding: 6px 12px;
 }
