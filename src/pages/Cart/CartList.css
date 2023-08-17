@@ -1,0 +1,28 @@
+.order-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.order-list-wrap {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.order-item-header {
+    width: 100%;
+}
+
+.order-item-main {
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 8px;
+}
+
+.order-item-img {
+    width: 100px;
+    height: 100px;
+}

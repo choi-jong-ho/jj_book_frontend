@@ -1,17 +1,16 @@
 import React, {useContext, useEffect, useState} from "react";
 import '../../css/pages/myPage/myPageMain.css';
-import Aside from "./aside";
+import MyPageAside from "./MyPageAside";
 import Profile from "./profile";
 import {useNavigate} from "react-router-dom";
 import AuthContext from "../../store/AuthContext";
 import MyPageHeader from "./myPageHeader";
 import MyPageFooter from "./myPageFooter";
-import Withdrawal from "./withfrawal";
+import Withdrawal from "./MemberDelete";
 import '../../css/pages/myPage/myPageMain.css'
 import AddAddress from "./addAddress";
 import OrderList from "./OrderList";
 import CartList from "../Cart/CartList";
-
 const MyPageMain = () => {
     const {isLoggedIn} = useContext(AuthContext);
     const navigate = useNavigate();
@@ -56,7 +55,7 @@ const MyPageMain = () => {
                 <MyPageHeader/>
                 <div className='my-page-main'>
                     <div className='my-page-left'>
-                        <Aside changePage={changePage}/>
+                        <MyPageAside changePage={changePage}/>
                     </div>
                     <div className='my-page-container'>
                         {renderMyPageContent()}

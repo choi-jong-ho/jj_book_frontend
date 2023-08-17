@@ -6,6 +6,7 @@ const AddressSearch = ({address, setAddress, validation}) => {
     const [showPostcode, setShowPostcode] = useState(false);
 
     const handlePostcodeComplete = (data) => {
+        console.log('handlePostcodeComplete', data)
         let fullAddress = data.address;
         let extraAddress = '';
 

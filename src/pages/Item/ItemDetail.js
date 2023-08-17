@@ -58,16 +58,18 @@ const ItemDetail = () => {
     const cartHandle = async () => {
         console.log('itemId', itemId);
         console.log('count', count);
-        const formData = new FormData();
-
-        formData.append('itemId', itemId,);
-        formData.append('count', count);
+        // console.log('itemNm', productValue.itemNm);
+        const formData = {
+            // itemNm: productValue.itemNm,
+            itemId: itemId,
+            count : count
+        };
 
         try {
-            const response = await axios.post('/cart/new', JSON.stringify(formData), {
+            const response = await axios.post('/cart/new', formData, {
                 headers: {
-                    "Content-Type": `application/json`,
-                },
+                    "Content-Type" : "Application/json"
+                }
             });
 
             console.log('response', response);

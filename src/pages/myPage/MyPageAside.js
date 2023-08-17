@@ -1,7 +1,7 @@
 import React from "react";
-import '../../css/pages/myPage/aside.css';
+import '../../css/pages/myPage/MyPageAside.css';
 
-const Aside = ({changePage}) => {
+const MyPageAside = ({changePage}) => {
     return (
         <div className='my-page-aside'>
             <ul>
@@ -13,8 +13,6 @@ const Aside = ({changePage}) => {
                     <li className='aside-item'>장바구니
                         <ul className='sub-title'>
                             <li className='sub-list' onClick={() => changePage('cartList')}>장바구니</li>
-                            <li className='sub-list'>선물함</li>
-                            <li className='sub-list'>주문취소 목록</li>
                         </ul>
                     </li>
                     <li className='aside-item'>주문내역
@@ -43,4 +41,4 @@ const Aside = ({changePage}) => {
     )
 }
 
-export default Aside;
+export default MyPageAside;
