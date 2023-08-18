@@ -2,19 +2,32 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import './OrderList.css';
 import {Button} from "react-bootstrap";
+import ItemPagination from "../../components/Pagination/ItemPagination";
 
 const OrderList = () => {
     const [orderData, setOrderData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [orderObj, setOrderObj] = useState([]);
 
     useEffect(() => {
         getOrderList();
     }, []);
 
-    const getOrderList = async () => {
+    const getOrderList = async (newPage) => {
         try {
-            const response = await axios.get(`/order/list`);
+            let response = {};
+
+            if(newPage) {
+                response = await axios.get(`/order/list/${newPage}`);
+            }
+            if(!newPage) {
+                response = await axios.get('/order/list');
+            }
+
+            // response = await axios.get(`/order/list`);
             console.log('response', response);
             const data = response.data;
+            setOrderObj(data[0]);
             setOrderData(data[0].content);
         } catch (e) {
             console.log('구매 목록 조회 오류', e);
@@ -28,8 +41,13 @@ const OrderList = () => {
         } catch (e) {
             console.log('주문 취소 실패', e);
         }
-
     }
+
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+        getOrderList(newPage);
+    };
+
     return (
         <div className='order-list-container'>
             <h2>구매이력 조회</h2>
@@ -38,7 +56,9 @@ const OrderList = () => {
                     orderData.map(item => (
                         <div className='order-list-wrap'>
                             <div className='order-item-header'>
-                                {item.orderDate} 주문
+                                <div className='order-item-time'>
+                                    {item.orderDate} 주문
+                                </div>
                                 {
                                     item.orderStatus === 'ORDER' ? (
                                         <Button
@@ -54,7 +74,9 @@ const OrderList = () => {
                                 }
                             </div>
                             <div className='order-item-main'>
-                                <div className='order-item-img'></div>
+                                <div className='order-item-img'>
+                                    <img className='order-item-img' src={item.orderItemDtoList[0].imgUrl}/>
+                                </div>
                                 <div className='order-item-info'>
                                     <h2>{item.orderItemDtoList[0].itemNm}</h2>
                                     <span>가격: {item.orderItemDtoList[0].orderPrice} 수량: {item.orderItemDtoList[0].count}</span>
@@ -67,6 +89,7 @@ const OrderList = () => {
 
                 ) : (<div>구매한 이력이 없습니다.</div>)
             }
+                <ItemPagination totalPages={orderObj.totalPages} currentPage={currentPage} onPageChange={handlePageChange}/>
         </div>
     )
 }
