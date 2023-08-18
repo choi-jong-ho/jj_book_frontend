@@ -5,6 +5,8 @@ import {useNavigate} from "react-router-dom";
 import AuthContext from "../../store/AuthContext";
 import '../../css/pages/myPage/addressList.css'
 import axios from "axios";
+import addressList from "./AddressList";
+import AddressList from "./AddressList";
 
 const AddAddress = () => {
     const {isLoggedIn, user} = useContext(AuthContext);
@@ -20,8 +22,12 @@ const AddAddress = () => {
         repAddYn: 'Y'
     });
 
+    // getADD
+    const [addrData, setAddrData] = useState([]);
+
     useEffect(() => {
         // checkUser();
+        getAddrList();
     }, []);
 
     const checkUser = () => {
@@ -63,6 +69,24 @@ const AddAddress = () => {
             console.log('에러 발생');
         }
     };
+
+    const getAddrList = async (newPage) => {
+        try {
+            let response = {};
+
+            if(newPage) {
+                response = await axios.get(`/address/list/${newPage}`);
+            }
+            if(!newPage) {
+                response = await axios.get('/address/list');
+            }
+            console.log('주소 가져오기 response', response);
+            const data = response.data[0].content;
+            setAddrData(data);
+        } catch (e) {
+            console.log('주소목록 조회 오류', e);
+        }
+    }
 
     const handleChangeBasicPath = (event) => {
         let updateAddressObj = {...addressObj}
@@ -145,6 +169,7 @@ const AddAddress = () => {
                     추가하기
                 </Button>
             </Form>
+            <AddressList addrData={addrData}/>
         </div>
     )
 }

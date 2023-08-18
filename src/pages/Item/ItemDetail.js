@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 import './ItemDetail.css';
 import axios from "axios";
 
 const ItemDetail = () => {
     const {itemId} = useParams();
+    const navigate = useNavigate();
     const [count, setCount] = useState(1);
     const [payment, setPayment] = useState(0);
 
@@ -42,7 +43,7 @@ const ItemDetail = () => {
     const orderHandle = async () => {
         const formData = {
             itemId: itemId,
-            count : count,
+            count: count,
         };
 
         try {
@@ -56,32 +57,34 @@ const ItemDetail = () => {
     }
 
     const cartHandle = async () => {
-        console.log('itemId', itemId);
-        console.log('count', count);
-        // console.log('itemNm', productValue.itemNm);
         const formData = {
-            // itemNm: productValue.itemNm,
             itemId: itemId,
-            count : count
+            count: count
         };
 
         try {
             const response = await axios.post('/cart/new', formData, {
                 headers: {
-                    "Content-Type" : "Application/json"
+                    "Content-Type": "Application/json"
                 }
             });
-
-            console.log('response', response);
-            alert('장바구니에 담았습니다.');
+            checkCart();
         } catch (e) {
             console.log('장바구니 담기 실패', e);
         }
     }
 
+    const checkCart = () => {
+        if (window.confirm("장바구니로 이동하시겠습니까?")) {
+            navigate('/mypage/main');
+        } else {
+            alert('장바구니에 성공적으로 담겼습니다.');
+        }
+    };
+
+
     useEffect(() => {
         getItemInfo();
-        console.log('itemId', itemId);
     }, []);
 
     useEffect(() => {

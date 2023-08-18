@@ -48,8 +48,40 @@ const OrderList = () => {
         getOrderList(newPage);
     };
 
+    const test = async (newPage) => {
+        try {
+            // const formData = {
+            //     size: 5
+            // }
+
+            const formData = new FormData();
+            formData.append('size', '5');
+
+            let response = {};
+            if(newPage) {
+                response = await axios.get(`/order/list/${newPage}`, formData);
+            }
+            if(!newPage) {
+                response = await axios.get('/order/list', formData);
+            }
+
+            // response = await axios.get(`/order/list`);
+            console.log('response', response);
+            const data = response.data;
+            setOrderObj(data[0]);
+            setOrderData(data[0].content);
+        } catch (e) {
+            console.log('구매 목록 조회 오류', e);
+        }
+    }
+
     return (
         <div className='order-list-container'>
+            {/*<Button*/}
+            {/*    onClick={()=> test}*/}
+            {/*>*/}
+            {/*    테스트 버튼*/}
+            {/*</Button>*/}
             <h2>구매이력 조회</h2>
             {
                 orderData ? (

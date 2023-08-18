@@ -1,10 +1,11 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {Form, Button, Alert} from 'react-bootstrap';
 import './Edit.css';
 import axios from "axios";
 
 const Edit = () => {
+    const navigate = useNavigate();
     const {itemId} = useParams();
     const fileInputRefs = useRef([]);
 
@@ -27,7 +28,6 @@ const Edit = () => {
     const getItemInfo = async () => {
         try {
             const response = await axios.get(`/admin/item/${itemId}`);
-            console.log('서버에서 받아온 item 데이터', response);
             const data = response.data;
             setItemValue({
                 itemSellStatus: data.itemSellStatus,
@@ -73,7 +73,6 @@ const Edit = () => {
             reader.onload = (e) => {
                 const updatedImgPreview = [...previewImage];
                 updatedImgPreview[index] = e.target.result;
-                console.log('e.target.result', e.target.result);
                 setPreviewImage(updatedImgPreview);
             }
 
@@ -110,22 +109,20 @@ const Edit = () => {
             }
         });
 
-        // for (const [key, value] of formData.entries()) {
-        //     console.log(key, value)
-        // }
-
         try {
             const response = await axios.post(`/admin/item/${itemId[0]}`, formData, {
                 headers: {'Content-Type': 'multipart/form-data'},
             });
             alert('상품 수정 성공');
+            navigate('/admin/item');
         } catch (e) {
             if (e.response.status === 400) {
                 validationResultUpdater(e.response.data);
                 setError('상품 등록에 실패하였습니다. 다시 입력해주세요.');
             }
             console.log('오류 내용', e);
-        };
+        }
+        ;
     };
 
     const validationResultUpdater = (data) => {
@@ -145,63 +142,63 @@ const Edit = () => {
                 {error && <Alert variant="danger">{error}</Alert>}
                 <Form onSubmit={handleSubmit}>
                     <div className='edit-info-box-wrap'>
-                    <Form.Group className='edit-info-box'>
-                        <Form.Label>상품 상태</Form.Label>
-                        <Form.Select onChange={(e) => handleInputChange(e, 'itemSellStatus')}
-                                     value={itemValue.itemSellStatus}>
-                            <option value='SELL'>판매</option>
-                            <option value='SOLD_OUT'>품절</option>
-                        </Form.Select>
-                    </Form.Group>
-                    <Form.Group className='edit-info-box'>
-                        <Form.Label>상품명</Form.Label>
-                        <Form.Control
-                            type="text"
-                            value={itemValue.itemNm}
-                            onChange={(e) => handleInputChange(e, 'itemNm')}
-                            isInvalid={validation.itemNm !== ''}
-                        />
-                        <Form.Control.Feedback type="invalid" className='upload-err-msg'>
-                            {validation.itemNm}
-                        </Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group className='edit-info-box'>
-                        <Form.Label>가격</Form.Label>
-                        <Form.Control
-                            type="text"
-                            value={itemValue.price}
-                            onChange={(e) => handleInputChange(e, 'price')}
-                            isInvalid={validation.price !== ''}
-                        />
-                        <Form.Control.Feedback type="invalid" className='upload-err-msg'>
-                            {validation.price}
-                        </Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group className='edit-info-box'>
-                        <Form.Label>재고</Form.Label>
-                        <Form.Control
-                            type="text"
-                            value={itemValue.stockNumber}
-                            onChange={(e) => handleInputChange(e, 'stockNumber')}
-                            isInvalid={validation.stockNumber !== ''}
-                        />
-                        <Form.Control.Feedback type="invalid" className='upload-err-msg'>
-                            {validation.stockNumber}
-                        </Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group className='edit-info-box'>
-                        <Form.Label>상품 상세 내용</Form.Label>
-                        <Form.Control
-                            as="textarea"
-                            rows={5}
-                            value={itemValue.itemDetail}
-                            onChange={(e) => handleInputChange(e, 'itemDetail')}
-                            isInvalid={validation.itemDetail !== ''}
-                        />
-                        <Form.Control.Feedback type="invalid" className='upload-err-msg'>
-                            {validation.itemDetail}
-                        </Form.Control.Feedback>
-                    </Form.Group>
+                        <Form.Group className='edit-info-box'>
+                            <Form.Label>상품 상태</Form.Label>
+                            <Form.Select onChange={(e) => handleInputChange(e, 'itemSellStatus')}
+                                         value={itemValue.itemSellStatus}>
+                                <option value='SELL'>판매</option>
+                                <option value='SOLD_OUT'>품절</option>
+                            </Form.Select>
+                        </Form.Group>
+                        <Form.Group className='edit-info-box'>
+                            <Form.Label>상품명</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={itemValue.itemNm}
+                                onChange={(e) => handleInputChange(e, 'itemNm')}
+                                isInvalid={validation.itemNm !== ''}
+                            />
+                            <Form.Control.Feedback type="invalid" className='upload-err-msg'>
+                                {validation.itemNm}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group className='edit-info-box'>
+                            <Form.Label>가격</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={itemValue.price}
+                                onChange={(e) => handleInputChange(e, 'price')}
+                                isInvalid={validation.price !== ''}
+                            />
+                            <Form.Control.Feedback type="invalid" className='upload-err-msg'>
+                                {validation.price}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group className='edit-info-box'>
+                            <Form.Label>재고</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={itemValue.stockNumber}
+                                onChange={(e) => handleInputChange(e, 'stockNumber')}
+                                isInvalid={validation.stockNumber !== ''}
+                            />
+                            <Form.Control.Feedback type="invalid" className='upload-err-msg'>
+                                {validation.stockNumber}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group className='edit-info-box'>
+                            <Form.Label>상품 상세 내용</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                rows={5}
+                                value={itemValue.itemDetail}
+                                onChange={(e) => handleInputChange(e, 'itemDetail')}
+                                isInvalid={validation.itemDetail !== ''}
+                            />
+                            <Form.Control.Feedback type="invalid" className='upload-err-msg'>
+                                {validation.itemDetail}
+                            </Form.Control.Feedback>
+                        </Form.Group>
                     </div>
                     <div className='item-img-container'>
                         <Button
@@ -220,7 +217,7 @@ const Edit = () => {
                                         <Button
                                             className='img-button'
                                             variant="secondary"
-                                                onClick={() => fileInputRefs.current[index].click()}>파일 선택</Button>
+                                            onClick={() => fileInputRefs.current[index].click()}>파일 선택</Button>
                                         <Form.Control
                                             className='img-control'
                                             type="file"
