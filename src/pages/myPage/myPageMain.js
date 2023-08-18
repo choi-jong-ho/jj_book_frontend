@@ -10,7 +10,7 @@ import Withdrawal from "./MemberDelete";
 import '../../css/pages/myPage/myPageMain.css'
 import AddAddress from "./addAddress";
 import OrderList from "./OrderList";
-import CartList from "../Cart/CartList";
+import Cart from "../Cart/Cart";
 const MyPageMain = () => {
     const {isLoggedIn} = useContext(AuthContext);
     const navigate = useNavigate();
@@ -42,8 +42,8 @@ const MyPageMain = () => {
                 return <Withdrawal/>;
             case 'orderList':
                 return <OrderList/>;
-            case 'cartList':
-                return <CartList/>;
+            case 'cart':
+                return <Cart/>;
             default :
                 return <Profile/>;
         }

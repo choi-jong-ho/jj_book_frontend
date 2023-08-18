@@ -1,6 +1,5 @@
-import React, {useCallback, useState} from "react";
-import {Table} from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
+import React, {useCallback} from "react";
+import {Table, Button} from 'react-bootstrap';
 import {useNavigate} from "react-router-dom";
 import './List.css';
 import axios from "axios";
@@ -16,7 +15,7 @@ const List = ({itemInfo}) => {
 
         const formData = {
             id: id,
-            useYn : useYn,
+            useYn: useYn,
         };
         try {
             const response = await axios.post('/admin/item/delete', formData);
@@ -33,20 +32,20 @@ const List = ({itemInfo}) => {
             <div className='list-title'>
                 <h1>상품 목록</h1>
             </div>
-                <Table className='list-table' bordered hover>
-                    <thead>
-                    <tr>
-                        <td>상품명</td>
-                        <td>등록자</td>
-                        <td>등록일</td>
-                        <td>상태</td>
-                        <td>가격</td>
-                        <td>기능</td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        itemInfo.map(row => (
+            <Table className='list-table' bordered hover>
+                <thead>
+                <tr>
+                    <td>상품명</td>
+                    <td>등록자</td>
+                    <td>등록일</td>
+                    <td>상태</td>
+                    <td>가격</td>
+                    <td>기능</td>
+                </tr>
+                </thead>
+                <tbody>
+                {
+                    itemInfo.map(row => (
                         <tr key={row.id}>
                             <td>{row.itemNm}</td>
                             <td>{row.createdBy}</td>
@@ -55,12 +54,12 @@ const List = ({itemInfo}) => {
                             <td>{row.price}</td>
                             <td>
                                 <Button
-                                variant="primary"
-                                className='add-button'ㄹ
-                                type="button"
-                                onClick={() => navigateToEdit(row.id)}
-                            >
-                                수정
+                                    variant="primary"
+                                    className='add-button' ㄹ
+                                    type="button"
+                                    onClick={() => navigateToEdit(row.id)}
+                                >
+                                    수정
                                 </Button>
                                 <Button
                                     variant="danger"
@@ -73,9 +72,9 @@ const List = ({itemInfo}) => {
                             </td>
                         </tr>
                     ))
-                    }
-                    </tbody>
-                </Table>
+                }
+                </tbody>
+            </Table>
         </div>
     )
 

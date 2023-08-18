@@ -12,7 +12,7 @@ const MyPageAside = ({changePage}) => {
                 <div className='menu-list'>
                     <li className='aside-item'>장바구니
                         <ul className='sub-title'>
-                            <li className='sub-list' onClick={() => changePage('cartList')}>장바구니</li>
+                            <li className='sub-list' onClick={() => changePage('cart')}>장바구니</li>
                         </ul>
                     </li>
                     <li className='aside-item'>주문내역

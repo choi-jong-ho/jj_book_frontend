@@ -1,60 +1,50 @@
-import React, {useEffect, useState} from "react";
-import axios from "axios";
+import React from "react";
+import {Table, Button} from 'react-bootstrap';
 import './CartList.css';
-import {Button} from "react-bootstrap";
 
-const CartList = () => {
-    const [cartData, setCartData] = useState([]);
+const CartList = ({cartData}) => {
 
-    useEffect(() => {
-        getCartList();
-    }, []);
-
-    const getCartList = async () => {
-        try {
-            const response = await axios.get(`/cart/list`);
-            console.log('response', response);
-            const data = response.data;
-            console.log('data[0].content[0]', data[0].content[0]);
-            console.log('data[0].content[0]', typeof data[0].content[0]);
-            setCartData(data[0].content[0].cartItemDtoList);
-        } catch (e) {
-            console.log('장바구니 목록 조회 오류', e);
-        }
-    }
-
-    const cartCancel = async (orderId) => {
-        try {
-            const response = await axios.get(`/cart/list`);
-        } catch (e) {
-            console.log('장바구니 페이지네이션 불러오기 실패', e);
-        }
-
-    }
     return (
-        <div className='order-list-container'>
-            <h2>장바구니 목록</h2>
-            {
-                cartData ? (
+        <div className='cart-list-container'>
+            <Table className='list-table' bordered hover>
+                <thead>
+                <tr>
+                    <td className='cart-list-td'>
+                        <input type="checkbox" id='checkAll' />전체 선택
+                    </td>
+                    <td className='cart-list-td'>상품정보</td>
+                    <td className='cart-list-td'>상품금액</td>
+                </tr>
+                </thead>
+                <tbody>
+                {
                     cartData.map(item => (
-                            <div className='order-list-wrap'>
-                                <div className='order-item-header'>
+                        <tr key={item.itemId}>
+                            <td>
+                                <div className='cart-list-item-checkBox'>
+                                    <input type='checkbox' value={item.itemId}/>
                                 </div>
-                                <div className='order-item-main'>
-                                    <div className='order-item-img'>
-                                        <img className='order-item-img' src={item.imgUrl}/>
-                                    </div>
-                                    <div className='order-item-info'>
-                                        <h3>{item.itemNm}</h3>
-                                        <span>수량: {item.count}</span>
-                                    </div>
+                            </td>
+                            <td>
+                                <div className='cart-item-warp'>
+                                <img className='cart-list-item-img' src={item.imgUrl} alt="장바구니 상품 이미지"/>
+                                <div className='order-item-info'>
+                                    <h3>{item.itemNm}</h3>
+                                    <span>수량: {item.count}</span>
+                                    <span>가격: {item.price}</span>
                                 </div>
                             </div>
-                        )
-                    )
-
-                ) : (<div>구매한 이력이 없습니다.</div>)
-            }
+                            </td>
+                            <td>
+                                <div className='cart-list-item-total-price'>
+                                    {item.price}
+                                </div>
+                            </td>
+                        </tr>
+                    ))
+                }
+                </tbody>
+            </Table>
         </div>
     )
 }
