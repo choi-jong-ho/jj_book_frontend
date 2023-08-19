@@ -1,7 +1,7 @@
 import React from 'react';
 import ScrollToTop from './pages/util/scrollTop';
 import Routing from "./routes/Routing";
-import Header from "./components/layout/header";
+import Header from "./components/layout/Header";
 import Footer from "./components/layout/footer";
 import { Fragment } from "react";
 import './css/App.css'

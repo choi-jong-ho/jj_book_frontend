@@ -39,11 +39,12 @@
     list-style: none;
 }
 
-.mylink {
+.nav-link  {
     text-decoration: none;
-    color: black;
+    padding: 4px;
 }
 
-/*.sub-title{*/
-/*    font-weight: bold;*/
-/*}*/
+.active {
+    background: yellowgreen;
+    border-radius: 8px;
+}

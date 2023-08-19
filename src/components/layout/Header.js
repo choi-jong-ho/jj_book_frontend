@@ -25,7 +25,7 @@ const Header = () => {
     }, [navigate]);
 
     const navigateToMyPage = useCallback(() => {
-        navigate('/mypage/main');
+        navigate('/mypage/profile');
     }, [navigate]);
 
     const navigateToUpload = useCallback(() => {

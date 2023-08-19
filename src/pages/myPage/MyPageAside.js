@@ -1,7 +1,8 @@
 import React from "react";
+import { NavLink  } from 'react-router-dom';
 import '../../css/pages/myPage/MyPageAside.css';
 
-const MyPageAside = ({changePage}) => {
+const MyPageAside = () => {
     return (
         <div className='my-page-aside'>
             <ul>
@@ -12,21 +13,21 @@ const MyPageAside = ({changePage}) => {
                 <div className='menu-list'>
                     <li className='aside-item'>장바구니
                         <ul className='sub-title'>
-                            <li className='sub-list' onClick={() => changePage('cart')}>장바구니</li>
+                            <li className='sub-list'><NavLink to='/mypage/cart' className="nav-link" activeClassName="active-link">장바구니</NavLink></li>
                         </ul>
                     </li>
                     <li className='aside-item'>주문내역
                         <ul className='sub-title'>
-                            <li className='sub-list' onClick={() => changePage('orderList')}>주문/배송목록</li>
-                            <li className='sub-list'>선물함</li>
-                            <li className='sub-list'>주문취소 목록</li>
+                            <li className='sub-list'><NavLink to='/mypage/orderList' className="nav-link" activeClassName="active-link">주문/배송목록</NavLink></li>
+                            {/*<li className='sub-list'><NavLink to=''>선물함</NavLink></li>*/}
+                            {/*<li className='sub-list'><Link to='/'>주문취소 목록</Link></li>*/}
                         </ul>
                     </li>
                     <li className='aside-item'>회원정보관리
                         <ul className='sub-title'>
-                            <li className='sub-list' onClick={() => changePage('profile')}>회원정보 수정</li>
-                            <li className='sub-list' onClick={() => changePage('address-list')}>배송주소록</li>
-                            <li className='sub-list' onClick={() => changePage('withdrawal')}>회원 탈퇴</li>
+                            <li className='sub-list'><NavLink to='/mypage/profile' className="nav-link">회원정보 수정</NavLink></li>
+                            <li className='sub-list'><NavLink to='/mypage/addressList' className="nav-link">배송주소록</NavLink></li>
+                            <li className='sub-list'><NavLink to='/mypage/withdrawal' className="nav-link">회원 탈퇴</NavLink></li>
                         </ul>
                     </li>
                     <li className='aside-item'>고객센터
