@@ -32,10 +32,22 @@ const Login = () => {
             });
 
             const data = response.data;
+            console.log('로그인', response);
+            // console.log('로그인 데이터', response.config);
+            //
+            // response.config.data.forEach((value, key) => {
+            //     console.log(`${key}: ${value}`);
+            // });
+
+            const test = response.config.data
+
+            for (let entries of test.keys()) console.log(entries);
             const timer = calculateRemainingTime(7);
             loginTokenHandler(data.accessToken, timer);
 
             setIsLoggedIn(true); // 로그인 상태 변경 추가
+            // getMemberEmail(); // 이메일 요청
+            getMemberInfo();
 
             setError(''); // 에러 메시지 초기화
             navigate('/'); // 로그인 후 페이지 이동
@@ -44,6 +56,16 @@ const Login = () => {
             setError('로그인하려면 유효한 아이디 또는 비밀번호를 입력하세요.');
         }
     };
+
+    const getMemberInfo = async () => {
+        try {
+            const response = await axios.get('/member/info');
+            console.log('유저 정보', response);
+            setUser(response.data);
+        } catch (e) {
+            console.log('유저 정보 가져오기 오류', e);
+        }
+    }
 
     return (
         <Container className="container-Login">

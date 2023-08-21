@@ -4,13 +4,15 @@ import MyPageHeader from "./myPageHeader";
 import MyPageFooter from "./myPageFooter";
 import {Route, Routes} from 'react-router-dom';
 import Profile from "./profile";
-import AddAddress from "./addAddress";
+import MyPageAddress from "./MyPageAddress";
 import Withdrawal from "./MemberDelete";
 import OrderList from "./OrderList";
 import Cart from "../Cart/Cart";
 import '../../css/pages/myPage/myPageMain.css';
 import AuthContext from "../../store/AuthContext";
 import {useNavigate} from "react-router-dom";
+import AddrUpload from "./AddrUpload";
+import AddrEdit from "./AddrEdit";
 
 const MyPageMain = () => {
     const {isLoggedIn} = useContext(AuthContext);
@@ -38,7 +40,9 @@ const MyPageMain = () => {
                         <Routes>
                             <Route path="/" element={<Profile/>}/>
                             <Route path="/profile" element={<Profile/>} />
-                            <Route path="/addressList" element={<AddAddress/>}/>
+                            <Route path="/address" element={<MyPageAddress/>}/>
+                            <Route path="/addrupload" element={<AddrUpload/>}/>
+                            <Route path="/addrEdit/:addrId" element={<AddrEdit/>} />
                             <Route path="/withdrawal" element={<Withdrawal/>}/>
                             <Route path="/orderList" element={<OrderList/>}/>
                             <Route path="/cart" element={<Cart/>}/>

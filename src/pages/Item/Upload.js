@@ -24,8 +24,8 @@ const Upload = () => {
         setItemValue({...itemValue, [key]: event.target.value});
     };
 
-    const handleFileSelect = (event, index) => {
-        const file = event.target.files[0];
+    const handleFileSelect = (e, index) => {
+        const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = (e) => {
@@ -37,7 +37,7 @@ const Upload = () => {
             reader.readAsDataURL(file);
         }
         const updatedSelectedFiles = [...itemImgFile];
-        updatedSelectedFiles[index] = event.target.files[0];
+        updatedSelectedFiles[index] = e.target.files[0];
         setItemImgFile(updatedSelectedFiles);
     };
 
@@ -127,7 +127,7 @@ const Upload = () => {
                             </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className='info-box'>
-                            <Form.Label>재고</Form.Label>ㅣ
+                            <Form.Label>재고</Form.Label>
                             <Form.Control
                                 type="text"
                                 value={itemValue.stockNumber}
@@ -153,14 +153,6 @@ const Upload = () => {
                         </Form.Group>
                     </div>
                     <div className='item-img-wrap'>
-                        <Button
-                            className='add-img'
-                            variant="success"
-                            type="button"
-                            onClick={handleAddFileInput}
-                        >
-                            이미지 추가
-                        </Button>
                         {
                             itemImgFile.map((_, index) => (
                                 <Form.Group key={index} className="img-info-box">
@@ -175,6 +167,14 @@ const Upload = () => {
                                 </Form.Group>
                             ))
                         }
+                        <Button
+                            className='add-img'
+                            variant="success"
+                            type="button"
+                            onClick={handleAddFileInput}
+                        >
+                            이미지 추가
+                        </Button>
                     </div>
                     <Button
                         variant="primary"

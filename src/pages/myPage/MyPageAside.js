@@ -26,7 +26,7 @@ const MyPageAside = () => {
                     <li className='aside-item'>회원정보관리
                         <ul className='sub-title'>
                             <li className='sub-list'><NavLink to='/mypage/profile' className="nav-link">회원정보 수정</NavLink></li>
-                            <li className='sub-list'><NavLink to='/mypage/addressList' className="nav-link">배송주소록</NavLink></li>
+                            <li className='sub-list'><NavLink to='/mypage/address' className="nav-link">배송주소록</NavLink></li>
                             <li className='sub-list'><NavLink to='/mypage/withdrawal' className="nav-link">회원 탈퇴</NavLink></li>
                         </ul>
                     </li>

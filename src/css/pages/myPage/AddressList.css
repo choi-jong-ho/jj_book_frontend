@@ -1,0 +1,8 @@
+.address-list-td {
+    text-align: center;
+}
+
+.address-list-item {
+    display: flex;
+    flex-direction: column;
+}

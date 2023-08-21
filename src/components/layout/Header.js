@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {Navbar, Container, Button} from 'react-bootstrap';
 import {logoutActionHandler} from '../../store/auth';
 import AuthContext from "../../store/AuthContext";
+import './Header.css';
 
 const Header = () => {
     const {isLoggedIn, setIsLoggedIn, user, setUser} = useContext(AuthContext); // 로그인 상태 관리
@@ -41,7 +42,7 @@ const Header = () => {
     return (
         <Navbar bg='light' expand="lg">
             <Container className="px-4 px-lg-5">
-                <Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
+                <Navbar.Brand href="/"><img className='header-logo' src='images/jjBook.png'/></Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarSupportedContent"/>
                 <Navbar.Collapse id="navbarSupportedContent">
                     {/*<Nav*/}

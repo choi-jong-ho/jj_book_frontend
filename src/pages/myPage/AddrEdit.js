@@ -1,101 +1,89 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Form, Button, Container} from 'react-bootstrap';
+import {Form, Button} from 'react-bootstrap';
 import AddressSearch from "../../modal/AddressSearch";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import AuthContext from "../../store/AuthContext";
-import '../../css/pages/myPage/addressList.css'
+import './AddrUpload.css';
 import axios from "axios";
-import addressList from "./AddressList";
-import AddressList from "./AddressList";
 
-const AddAddress = () => {
+const AddrEdit = () => {
+    const {addrId} = useParams();
     const {isLoggedIn, user} = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const [email, setEmail] = useState('');
-    const [validation, setValidation] = useState({address1: ''});
     const [addressObj, setAddressObj] = useState({
+        id: 0,
         address: '',
         addressDetail: '',
         postcode: '',
         addrCategory: '',
-        repAddYn: 'Y'
+        repAddYn: 'N'
     });
-
-    // getADD
-    const [addrData, setAddrData] = useState([]);
-
-    useEffect(() => {
-        // checkUser();
-        getAddrList();
-    }, []);
 
     const checkUser = () => {
         if (!isLoggedIn) {
-            navigate('/auth/login');
-        } else {
-            setEmail(user.email);
+            navigate('/member/login');
         }
     }
 
-    const handleSubmit = async (e) => {
+    useEffect(() => {
+        console.log('user', user);
+        getAddrData();
+        // checkUser();
+    }, []);
+
+    const isFormValid = () => {
+        return addressObj.address.length > 0 &&
+            addressObj.addressDetail.length > 0
+            // && addressObj.addrCategory.length > 0
+    };
+
+    const getAddrData = async () => {
+        try {
+            const response = await axios.get(`/address/${addrId}`);
+            console.log('주소 가져오기 response', response);
+            setAddressObj(response.data);
+        } catch (e) {
+            console.log('기본 가져오기 실패', e);
+        }
+    }
+
+    const addrEditHandle = async (e) => {
         e.preventDefault();
 
+        if (!isFormValid()) {
+            return; // 입력값의 길이가 유효하지 않으면 아무 작업도 실행하지 않음
+        }
+
         const formData = {
-            email,
+            email: user.username,
             repAddYn: addressObj.repAddYn,
             address: addressObj.address,
             addressDetail: addressObj.addressDetail,
             postcode: addressObj.postcode,
             addrCategory: addressObj.addrCategory,
+            id: addressObj.id,
         };
 
-        // setValidation 새 객체로 초기화하여 이전 검사 결과를 제거합니다.
-        setValidation({
-            email: '',
-            address: '',
-            addressDetail: '',
-            addrCategory: '',
-            isDefault: '',
-        });
-
         try {
+            const response = await axios.post(`/address/${addressObj.id}`, formData);
 
-            const response = await axios.post('/address/new', formData);
-
-            console.log('거주지 추가', response);
-            navigate('/mypage/main');
+            console.log('거주지 수정', response);
+            navigate('/mypage/address');
         } catch (error) {
-            console.log('에러 발생');
+            console.log('거주지 수정 에러 발생');
         }
     };
 
-    const getAddrList = async (newPage) => {
-        try {
-            let response = {};
-
-            if(newPage) {
-                response = await axios.get(`/address/list/${newPage}`);
-            }
-            if(!newPage) {
-                response = await axios.get('/address/list');
-            }
-            console.log('주소 가져오기 response', response);
-            const data = response.data[0].content;
-            setAddrData(data);
-        } catch (e) {
-            console.log('주소목록 조회 오류', e);
-        }
-    }
-
     const handleChangeBasicPath = (event) => {
         let updateAddressObj = {...addressObj}
-        if (updateAddressObj['repAddYn'] === 'N') {
-            updateAddressObj['repAddYn'] = 'Y';
+        if (updateAddressObj.repAddYn === 'N') {
+            updateAddressObj.repAddYn = 'Y';
+        } else if (updateAddressObj.repAddYn === 'Y') {
+            updateAddressObj.repAddYn = 'N';
         }
-        if (updateAddressObj['repAddYn'] === 'Y') {
-            updateAddressObj['repAddYn'] = 'N';
-        }
+        console.log('반응을 안해?', updateAddressObj);
+        setAddressObj(updateAddressObj);
     };
 
     const handleAddressChange = (e, key) => {
@@ -106,10 +94,9 @@ const AddAddress = () => {
 
     return (
         <div className="add-address-container">
-            <h1>주소지 추가</h1>
-            <Form onSubmit={handleSubmit} className='addressList-info'>
+            <h1>주소지 수정</h1>
+            <Form onSubmit={addrEditHandle} className='addressList-info'>
                 <AddressSearch addressObj={addressObj} setAddressObj={setAddressObj}/>
-
                 {/* 주소 값이 있을 때만 상세 주소 입력 상자 표시 */}
                 {addressObj.address && (
                     <Form.Group className='info-box'>
@@ -122,7 +109,6 @@ const AddAddress = () => {
                         />
                     </Form.Group>
                 )}
-
                 <Form.Group className='info-box'>
                     <Form.Label>배송지 분류</Form.Label>
                     <div className='check-box-container'>
@@ -152,7 +138,6 @@ const AddAddress = () => {
                         />
                     </div>
                 </Form.Group>
-
                 <Form.Group className='info-box'>
                     <Form.Label>기본 배송지로 저장</Form.Label>
                     <Form.Check
@@ -161,17 +146,16 @@ const AddAddress = () => {
                         onChange={handleChangeBasicPath}
                     />
                 </Form.Group>
-
                 <Button
                     variant="primary"
                     type="submit"
+                    disabled={!isFormValid()}
                 >
-                    추가하기
+                    수정하기
                 </Button>
             </Form>
-            <AddressList addrData={addrData}/>
         </div>
     )
 }
 
-export default AddAddress;
+export default AddrEdit;
