@@ -3,6 +3,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 import './ItemDetail.css';
 import axios from "axios";
+import ReviewWrite from "../Review/ReviewWrite";
 
 const ItemDetail = () => {
     const {itemId} = useParams();
@@ -22,18 +23,21 @@ const ItemDetail = () => {
     const getItemInfo = async () => {
         try {
             const response = await axios.get(`/admin/item/${itemId}`);
-            console.log('서버에서 받아온 item 데이터', response);
+            console.log('서버에서 받아온 detail', response);
             const data = response.data;
             setProductValue({
+                id: data.id,
                 itemSellStatus: data.itemSellStatus,
                 itemNm: data.itemNm,
                 price: data.price,
                 stockNumber: data.stockNumber,
                 itemDetail: data.itemDetail,
-                id: data.id
+                imgData: data.itemImgDtoList[0]
             });
 
             setPayment(count * data.price);
+
+            console.log('data.itemImgDtoList[0]', data.itemImgDtoList[0]);
 
         } catch (e) {
             console.log('상품 데이터 가져오기 에러', e);
@@ -99,7 +103,9 @@ const ItemDetail = () => {
         <div className='detail-container'>
             <div className='detail-wrap'>
                 <div className='product-atf'>
-                    <div className='product-img-section'></div>
+                    <div className='product-img-section'>
+                        {/*<img src={productValue.imgData.imgUrl} alt='상품 이미지'/>*/}
+                    </div>
                     <div className='product-info'>
                         <div className='item-info'>
                             <span>
@@ -138,6 +144,10 @@ const ItemDetail = () => {
                 <div className='product-detail'>
                     <h2>상품 상세 설명</h2>
                     <p>{productValue.itemDetail}</p>
+                </div>
+                {/*임시 공간*/}
+                <div>
+                    <ReviewWrite productValue={productValue}/>
                 </div>
             </div>
         </div>
