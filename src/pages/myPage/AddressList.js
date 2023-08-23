@@ -1,11 +1,33 @@
-import React, {useCallback} from "react"
+import React, {useCallback, useEffect, useState} from "react"
 import {useNavigate} from 'react-router-dom';
 import {Table, Button} from "react-bootstrap";
 import axios from "axios";
 import '../../css/pages/myPage/AddressList.css';
 
-const AddressList = ({addrData}) => {
+const AddressList = () => {
     const navigate = useNavigate();
+    const [addrData, setAddrData] = useState([]);
+
+    useEffect(() => {
+        getAddrList();
+    }, []);
+
+    const getAddrList = async (newPage) => {
+        try {
+            let response = {};
+
+            if(newPage) {
+                response = await axios.get(`/address/list/${newPage}`);
+            }
+            if(!newPage) {
+                response = await axios.get('/address/list');
+            }
+            const data = response.data[0].content;
+            setAddrData(data);
+        } catch (e) {
+            console.log('주소목록 조회 오류', e);
+        }
+    }
 
     const addressDelete = async (addId) => {
         try {
@@ -15,7 +37,7 @@ const AddressList = ({addrData}) => {
             const response = await axios.post(`/address/delete`, formData);
             console.log('response', response);
             alert('주소 삭제가 정상적으로 처리되었습니다.');
-            navigate('/mypage/address');
+            getAddrList();
         } catch (e) {
             console.log('주소 삭제 실패', e);
         }
@@ -26,7 +48,6 @@ const AddressList = ({addrData}) => {
     }, [navigate]);
 
     const primaryAddr = async (add) => {
-        console.log('add', add);
         try {
             const formData = {
                 addrCategory: add.addrCategory,
@@ -39,7 +60,7 @@ const AddressList = ({addrData}) => {
             const response = await axios.post(`/address/${add.id}`, formData);
             console.log('response', response);
             alert('기본 주소 설정 완료');
-            navigate('/mypage/address');
+            getAddrList();
         } catch (e) {
             console.log('기본 주소 설정 실패', e);
         }
