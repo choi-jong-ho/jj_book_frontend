@@ -1,5 +1,5 @@
 import React from "react";
-import '../../css/pages/myPage/myPageFooter.css'
+import '../../css/pages/myPage/MyPageFooter.css'
 
 const MyPageFooter = () => {
     return (

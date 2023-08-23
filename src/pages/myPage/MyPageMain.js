@@ -1,14 +1,14 @@
 import React, {useEffect, useContext} from "react";
 import MyPageAside from "./MyPageAside";
-import MyPageHeader from "./myPageHeader";
-import MyPageFooter from "./myPageFooter";
+import MyPageHeader from "./MyPageHeader";
+import MyPageFooter from "./MyPageFooter";
 import {Route, Routes} from 'react-router-dom';
 import Profile from "./profile";
 import MyPageAddress from "./MyPageAddress";
 import Withdrawal from "./MemberDelete";
 import OrderList from "./OrderList";
 import Cart from "../Cart/Cart";
-import '../../css/pages/myPage/myPageMain.css';
+import '../../css/pages/myPage/MyPageMain.css';
 import AuthContext from "../../store/AuthContext";
 import {useNavigate} from "react-router-dom";
 import AddrUpload from "./AddrUpload";

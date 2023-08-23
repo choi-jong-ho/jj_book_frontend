@@ -1,10 +1,9 @@
-.my-page-header{
-    width: 1100px;
+.my-page-footer{
     height: 154px;
-    margin-bottom: 16px;
+    margin-top: 16px;
 }
 
-.my-page-header-inner {
+.my-page-footer-inner {
     width: 100%;
     height: 100%;
     border-radius: 8px;
