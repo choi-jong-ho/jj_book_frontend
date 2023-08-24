@@ -8,6 +8,11 @@
 
 .cart-list-td {
     text-align: center;
+    min-width: 120px;
+}
+
+.cart-list-label {
+    margin-right: 0.5rem;
 }
 
 .cart-list-item-checkBox {
@@ -24,13 +29,20 @@
 
 .cart-list-item-img {
     margin-right: 1rem;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    object-fit: contain;
 }
 
-.cart-list-item-total-price {
+.cart-item-label {
+    margin-right: 1rem;
+}
+
+.cart-list-item-total-price, .cart-list-func {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100px;
+}
+.cart-list-func {
+    flex-wrap: wrap;
 }
