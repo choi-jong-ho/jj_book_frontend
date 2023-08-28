@@ -10,9 +10,11 @@ const footer = () => {
                 <div className='footer-box'>
                     <div className='footer-box-left'>
                         <h3>(주)더블제이코퍼레이션</h3>
-                        <span>공동대표 장지호, 최종호</span>
-                        <span>사업자등록 123-45-78910</span>
-                        <span>이메일 ruin950521@naver.com</span>
+                        <div className='footer-box-left-corp'>
+                            <span>공동대표 장지호, 최종호</span>
+                            <span>사업자등록 123-45-78910</span>
+                            <span>이메일 ruin950521@naver.com</span>
+                        </div>
                     </div>
                     <div className='footer-box-center'>
                         <h3>고객센터</h3>
@@ -36,17 +38,6 @@ const footer = () => {
                                     </span>
                                     <span>
                                         운영시간에 순서대로 답변드리겠습니다.
-                                    </span>
-                                </div>
-                            </div>
-                            <div className='inquiry-box'>
-                                <Button className='inquiry-button' variant='secondary'>대량주문 문의</Button>
-                                <div className='inquiry-box-sub'>
-                                    <span>
-                                        월~금요일 : 오전9시 - 오후6시
-                                    </span>
-                                    <span>
-                                        점심기간 : 낮12시 - 오후1시
                                     </span>
                                 </div>
                             </div>

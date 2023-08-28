@@ -19,6 +19,12 @@
     margin-right: 2rem;
 }
 
+.footer-box-left-corp {
+    display: flex;
+    flex-direction: column;
+    margin: auto 0;
+}
+
 .inquiry-box {
     display: flex;
     align-items: center;
@@ -37,11 +43,8 @@
 .footer-box-right {
     display: flex;
     padding: 20px;
-}
-
-.footer-box-wrap {
-    width: 100%;
-    height: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 .footer-box > span {
@@ -59,7 +62,7 @@
 .icon-list {
     list-style: none;
     padding: 0;
-    margin-top: 5rem;
+    margin: 0;
 }
 
 .corp-icon {
