@@ -19,6 +19,7 @@ const MyPageAside = () => {
                     <li className='aside-item'>주문내역
                         <ul className='sub-title'>
                             <li className='sub-list'><NavLink to='/mypage/orderList' className="nav-link" activeClassName="active-link">주문/배송목록</NavLink></li>
+                            <li className='sub-list'><NavLink to='/mypage/reviewList' className="nav-link" activeClassName="active-link">리뷰목록</NavLink></li>
                             {/*<li className='sub-list'><NavLink to=''>선물함</NavLink></li>*/}
                             {/*<li className='sub-list'><Link to='/'>주문취소 목록</Link></li>*/}
                         </ul>

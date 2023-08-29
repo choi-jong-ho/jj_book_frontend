@@ -32,12 +32,6 @@ const Login = () => {
             });
 
             const data = response.data;
-            console.log('로그인', response);
-            // console.log('로그인 데이터', response.config);
-            //
-            // response.config.data.forEach((value, key) => {
-            //     console.log(`${key}: ${value}`);
-            // });
 
             const test = response.config.data
 
@@ -46,7 +40,6 @@ const Login = () => {
             loginTokenHandler(data.accessToken, timer);
 
             setIsLoggedIn(true); // 로그인 상태 변경 추가
-            // getMemberEmail(); // 이메일 요청
             getMemberInfo();
 
             setError(''); // 에러 메시지 초기화
