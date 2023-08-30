@@ -1,4 +1,43 @@
+.header-container{
+    background-color: #5CEEE6;
+}
+
+.header-wrap {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.header-box {
+    display: flex;
+    align-items: center;
+}
+
+.header-box-left {
+    flex: 1;
+    padding-left: 20px;
+}
+
 .header-logo {
-    width: 80px;
-    height: 80px;
+    cursor: pointer;
+}
+
+.header-box-center {
+    display: flex;
+    flex: 3;
+}
+
+.header-box-right {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    border-left: #2b2f32 2px solid;
+}
+
+.header-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 0.5rem;
+    cursor: pointer;
 }

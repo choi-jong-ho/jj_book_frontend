@@ -1,6 +1,5 @@
-import React, {useCallback, useContext} from 'react';
+import React, {Fragment, useCallback, useContext} from 'react';
 import {useNavigate} from "react-router-dom";
-import {Navbar, Container, Button} from 'react-bootstrap';
 import {logoutActionHandler} from '../../store/auth';
 import AuthContext from "../../store/AuthContext";
 import './Header.css';
@@ -40,64 +39,64 @@ const Header = () => {
     };
 
     return (
-        <Navbar bg='light' expand="lg">
-            <Container className="px-4 px-lg-5">
-                <Navbar.Brand href="/"><img className='header-logo' src='images/jjBook.png'/></Navbar.Brand>
-                <Navbar.Toggle aria-controls="navbarSupportedContent"/>
-                <Navbar.Collapse id="navbarSupportedContent">
-                    {/*<Nav*/}
-                    {/*    className="me-auto my-2 my-lg-0"*/}
-                    {/*    style={{maxHeight: '100px'}}*/}
-                    {/*    navbarScroll*/}
-                    {/*>*/}
-                    {/*    <Nav.Link href="/">Home</Nav.Link>*/}
-                    {/*    <Nav.Link href="/mypage">마이페이지(임시)</Nav.Link>*/}
-                    {/*    <NavDropdown title="Shop" id="navbarDropdown">*/}
-                    {/*        <NavDropdown.Item href="/">홈페이지</NavDropdown.Item>*/}
-                    {/*        <NavDropdown.Divider/>*/}
-                    {/*        <NavDropdown.Item href="/mypage/main">마이페이지(임시)</NavDropdown.Item>*/}
-                    {/*        <NavDropdown.Item href="/member/signUp">회원가입</NavDropdown.Item>*/}
-                    {/*    </NavDropdown>*/}
-                    {/*</Nav>*/}
-                    <Button onClick={navigateToMain} variant="outline-dark" type="submit">
-                        <i className="bi-cart-fill me-1"></i>
-                        메인
-                    </Button>
-                    <Button onClick={navigateToItemMng} variant="outline-dark" type="submit">
-                        <i className="bi-cart-fill me-1"></i>
-                        상품 관리
-                    </Button>
-                    <Button onClick={navigateToUpload} variant="outline-dark" type="submit">
-                        <i className="bi-cart-fill me-1"></i>
-                        상품등록
-                    </Button>
-                    {user?.userName && (
-                        <span>{user?.userName}님</span>
-                    )}
-                    {isLoggedIn ? (
-                        <Button onClick={handleLogout} variant="outline-dark ml-1" type="submit">
-                            <i className="bi-cart-fill"></i>
-                            로그아웃
-                        </Button>
-                    ) : (
-                        <>
-                            <Button onClick={navigateToLogin} variant="outline-dark" type="submit">
-                                <i className="bi-cart-fill me-1"></i>
-                                로그인
-                            </Button>
-                            <Button onClick={navigateToSignUp} variant="outline-dark" type="submit">
-                                <i className="bi-cart-fill me-1"></i>
-                                회원가입
-                            </Button>
-                        </>
-                    )}
-                    <Button onClick={navigateToMyPage} variant="outline-dark" type="submit">
-                        <i className="bi-cart-fill me-1"></i>
-                        마이페이지
-                    </Button>
-                </Navbar.Collapse>
-            </Container>
-        </Navbar>
+        <div className='header-container'>
+            <div className='header-wrap'>
+                <div className='header-box'>
+                    <div className='header-box-left'>
+                        <img className='header-logo' width="70" height="70"
+                             src="https://img.icons8.com/external-goofy-color-kerismaker/96/external-library-education-goofy-color-kerismaker.png"
+                             alt="external-library-education-goofy-color-kerismaker" onClick={navigateToMain}/>
+                    </div>
+                    <div className='header-box-center'>
+                        <div className='header-item'>
+                            <img onClick={navigateToItemMng} width="30" height="30"
+                                 src="https://img.icons8.com/wired/64/list--v1.png"
+                                 alt="상품 관리"/>
+                            상품관리
+                        </div>
+                        <div className='header-item'>
+                            <img onClick={navigateToUpload} width="30" height="30"
+                                 src="https://img.icons8.com/isometric-line/50/experimental-product-isometric-line.png"
+                                 alt="상품 등록"/>
+                            상품등록
+                        </div>
+                    </div>
+                    <div className='header-box-right'>
+                        {isLoggedIn ? (
+                            <Fragment>
+                                <div className='header-item'>
+                                    <img onClick={handleLogout} width="30" height="30"
+                                         src="https://img.icons8.com/external-dreamstale-lineal-dreamstale/32/external-logout-interface-dreamstale-lineal-dreamstale.png"
+                                         alt="로그아웃"/>
+                                    로그아웃
+                                </div>
+                                <div className='header-item'>
+                                    <img onClick={navigateToMyPage} width="30" height="30"
+                                         src="https://img.icons8.com/dotty/80/user-location.png"
+                                         alt="마이페이지"/>
+                                    마이페이지
+                                </div>
+                            </Fragment>
+                        ) : (
+                            <Fragment>
+                                <div className='header-item'>
+                                    <img onClick={navigateToLogin} width="30" height="30"
+                                         src="https://img.icons8.com/external-bearicons-detailed-outline-bearicons/64/external-login-call-to-action-bearicons-detailed-outline-bearicons-1.png"
+                                         alt="로그인"/>
+                                    로그인
+                                </div>
+                                <div className='header-item'>
+                                    <img onClick={navigateToSignUp} width="30" height="30"
+                                         src="https://img.icons8.com/external-bearicons-detailed-outline-bearicons/64/external-sign-up-call-to-action-bearicons-detailed-outline-bearicons-1.png"
+                                         alt="회원가입"/>
+                                    회원가입
+                                </div>
+                            </Fragment>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };
 
