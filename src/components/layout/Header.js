@@ -48,14 +48,14 @@ const Header = () => {
                              alt="external-library-education-goofy-color-kerismaker" onClick={navigateToMain}/>
                     </div>
                     <div className='header-box-center'>
-                        <div className='header-item'>
-                            <img onClick={navigateToItemMng} width="30" height="30"
+                        <div className='header-item' onClick={navigateToItemMng}>
+                            <img width="30" height="30"
                                  src="https://img.icons8.com/wired/64/list--v1.png"
                                  alt="상품 관리"/>
                             상품관리
                         </div>
-                        <div className='header-item'>
-                            <img onClick={navigateToUpload} width="30" height="30"
+                        <div className='header-item' onClick={navigateToUpload}>
+                            <img width="30" height="30"
                                  src="https://img.icons8.com/isometric-line/50/experimental-product-isometric-line.png"
                                  alt="상품 등록"/>
                             상품등록
@@ -64,14 +64,14 @@ const Header = () => {
                     <div className='header-box-right'>
                         {isLoggedIn ? (
                             <Fragment>
-                                <div className='header-item'>
-                                    <img onClick={handleLogout} width="30" height="30"
+                                <div className='header-item' onClick={handleLogout}>
+                                    <img width="30" height="30"
                                          src="https://img.icons8.com/external-dreamstale-lineal-dreamstale/32/external-logout-interface-dreamstale-lineal-dreamstale.png"
                                          alt="로그아웃"/>
                                     로그아웃
                                 </div>
-                                <div className='header-item'>
-                                    <img onClick={navigateToMyPage} width="30" height="30"
+                                <div className='header-item' onClick={navigateToMyPage}>
+                                    <img width="30" height="30"
                                          src="https://img.icons8.com/dotty/80/user-location.png"
                                          alt="마이페이지"/>
                                     마이페이지
@@ -79,16 +79,16 @@ const Header = () => {
                             </Fragment>
                         ) : (
                             <Fragment>
-                                <div className='header-item'>
-                                    <img onClick={navigateToLogin} width="30" height="30"
+                                <div className='header-item' onClick={navigateToLogin}>
+                                    <img width="30" height="30"
                                          src="https://img.icons8.com/external-bearicons-detailed-outline-bearicons/64/external-login-call-to-action-bearicons-detailed-outline-bearicons-1.png"
                                          alt="로그인"/>
                                     로그인
                                 </div>
-                                <div className='header-item'>
-                                    <img onClick={navigateToSignUp} width="30" height="30"
+                                <div className='header-item' onClick={navigateToSignUp}>
+                                    <img width="30" height="30"
                                          src="https://img.icons8.com/external-bearicons-detailed-outline-bearicons/64/external-sign-up-call-to-action-bearicons-detailed-outline-bearicons-1.png"
-                                         alt="회원가입"/>
+                                         alt="회원가입" id='회원가입'/>
                                     회원가입
                                 </div>
                             </Fragment>

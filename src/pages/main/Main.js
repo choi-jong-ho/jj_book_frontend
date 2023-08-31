@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 // import MainTop from "./mainTop";
-// import ImgSlider from "../../components/silder/ImgSlider";
 import './Main.css';
 import MainProduct from "./MainProduct";
 import axios from "axios";
 import SearchBar from "../../components/Search/SearchBar";
 import ItemPagination from "../../components/Pagination/ItemPagination";
+import AutoImgSlider from "../../components/Silder/AutoImgSlider";
 
 const Main = () => {
     const [items, setItems] = useState({});
@@ -78,11 +78,15 @@ const Main = () => {
     return (
         <div className='main-container'>
             <div className='main-wrap'>
-                {/*<ImgSlider />*/}
-                {/*<MainTop/>*/}
-                <SearchBar handleFilterChange={handleFilterChange} handleSearch={handleSearch}/>
-                <MainProduct itemInfo={itemInfo} imageUrl={imageUrl}/>
-                <ItemPagination totalPages={items.totalPages} currentPage={currentPage} onPageChange={handlePageChange}/>
+                <div className='main-top'>
+                    <AutoImgSlider />
+                </div>
+                <div className='main-center'>
+                    <SearchBar handleFilterChange={handleFilterChange} handleSearch={handleSearch}/>
+                    <MainProduct itemInfo={itemInfo} imageUrl={imageUrl}/>
+                    <ItemPagination totalPages={items.totalPages} currentPage={currentPage} onPageChange={handlePageChange}/>
+                </div>
+                <div className='main-bottom'></div>
             </div>
         </div>
     )
