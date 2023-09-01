@@ -46,11 +46,11 @@ const footer = () => {
                     <div className='footer-box-right'>
                         <div className='footer-box-wrap'>
                             <ul className='icon-list'>
-                                <li className='corp-icon'><img className='icon-img' src='images/instagram.png' alt='소셜 및 검색 엔진 이미지'/></li>
-                                <li className='corp-icon'><img className='icon-img' src='images/facebook.png' alt='소셜 및 검색 엔진 이미지'/></li>
-                                <li className='corp-icon'><img className='icon-img' src='images/kakao.png' alt='소셜 및 검색 엔진 이미지'/></li>
-                                <li className='corp-icon'><img className='icon-img' src='images/twitter.png' alt='소셜 및 검색 엔진 이미지'/></li>
-                                <li className='corp-icon'><img className='icon-img' src='images/naver.png' alt='소셜 및 검색 엔진 이미지'/></li>
+                                <li className='corp-icon'><img className='icon-img' src='/images/item/instagram.png' alt='소셜 및 검색 엔진 이미지'/></li>
+                                <li className='corp-icon'><img className='icon-img' src='/images/item/facebook.png' alt='소셜 및 검색 엔진 이미지'/></li>
+                                <li className='corp-icon'><img className='icon-img' src='/images/item/kakao.png' alt='소셜 및 검색 엔진 이미지'/></li>
+                                <li className='corp-icon'><img className='icon-img' src='/images/item/twitter.png' alt='소셜 및 검색 엔진 이미지'/></li>
+                                <li className='corp-icon'><img className='icon-img' src='/images/item/naver.png' alt='소셜 및 검색 엔진 이미지'/></li>
                             </ul>
                         </div>
                     </div>
