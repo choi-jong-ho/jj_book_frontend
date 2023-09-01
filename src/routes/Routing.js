@@ -18,6 +18,7 @@ const Routing = () => {
             <Route path="/" element={<Main/>}/>
             <Route path="/member/login" element={<Login/>}/>
             <Route path="/member/signup" element={<SignUp/>}/>
+            <Route path="/admin/item/detail/:itemId" element={<ItemDetail/>} />
 
             {/*로그인 필요*/}
             <Route element={<PrivateRoute/>}>
@@ -29,7 +30,6 @@ const Routing = () => {
                 <Route path="/admin/item/new" element={<Upload/>} />
                 <Route path="/admin/item/:itemId" element={<Edit/>} />
                 <Route path="/admin/item" element={<ItemManagement/>} />
-                <Route path="/admin/item/detail/:itemId" element={<ItemDetail/>} />
             </Route>
 
         </Routes>
