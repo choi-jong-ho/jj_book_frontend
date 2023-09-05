@@ -1,6 +1,6 @@
 import React, {Fragment, useCallback, useContext} from 'react';
 import {useNavigate} from "react-router-dom";
-import {logoutActionHandler} from '../../store/auth';
+import {logoutActionHandler} from '../../store/Auth';
 import AuthContext from "../../store/AuthContext";
 import './Header.css';
 

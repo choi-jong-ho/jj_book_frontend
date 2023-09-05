@@ -1,13 +1,14 @@
-import React, { useState, useContext  } from 'react';
-import { useNavigate  } from 'react-router-dom';
+import React, {useState, useContext} from 'react';
+import {useNavigate} from 'react-router-dom';
 import AuthContext from "../../store/AuthContext";
 import {Form, Button, Container, Alert} from 'react-bootstrap';
 import '../../css/pages/Login&SignUp/Login.css';
-import {calculateRemainingTime, loginTokenHandler} from '../../store/auth'
+import {loginItemSetting} from '../../store/Auth'
 
 import axios from 'axios';
+
 const Login = () => {
-    const { setIsLoggedIn, setUser } = useContext(AuthContext); // 로그인 상태 관리를 위한 AuthContext 추가
+    const {setIsLoggedIn, setUser} = useContext(AuthContext); // 로그인 상태 관리를 위한 AuthContext 추가
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -25,22 +26,13 @@ const Login = () => {
         formData.append('password', password);
 
         try {
-            const response = await axios.post('/member/login', formData, {
+            await axios.post('/member/login', formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             });
 
-            const data = response.data;
-
-            const test = response.config.data
-
-            for (let entries of test.keys()) console.log(entries);
-            const timer = calculateRemainingTime(7);
-            loginTokenHandler(data.accessToken, timer);
-
-            setIsLoggedIn(true); // 로그인 상태 변경 추가
-            getMemberInfo();
+            await getMemberInfo();
 
             setError(''); // 에러 메시지 초기화
             navigate('/'); // 로그인 후 페이지 이동
@@ -53,8 +45,10 @@ const Login = () => {
     const getMemberInfo = async () => {
         try {
             const response = await axios.get('/member/info');
-            console.log('유저 정보', response);
+            localStorage.setItem('user', JSON.stringify(response.data));
+            setIsLoggedIn(true);
             setUser(response.data);
+            loginItemSetting();
         } catch (e) {
             console.log('유저 정보 가져오기 오류', e);
         }
@@ -84,7 +78,6 @@ const Login = () => {
                         required
                     />
                 </Form.Group>
-
                 <Button variant="primary" type="submit">
                     로그인하기
                 </Button>

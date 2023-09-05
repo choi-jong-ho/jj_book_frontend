@@ -24,13 +24,6 @@ export const loginTokenHandler = (token, expirationTime) => {
     const remainingTime = calculateRemainingTime(expirationTime);
     return remainingTime;
 }
-
-// 유저의 정보를 GET 방식으로 호출하는 함수
-// export const getUserActionHandler = (token) => {
-//     const URL = '/member/me';
-//     const response = GET(URL, createTokenHeader(token));
-//     return response;
-// }
 export const getUserActionHandler = async (token) => {
     try {
         const URL = '/member/me';
@@ -44,7 +37,20 @@ export const getUserActionHandler = async (token) => {
 };
 
 export const logoutActionHandler = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('expirationTime');
+    // localStorage.removeItem('token');
+    // localStorage.removeItem('expirationTime');
+    localStorage.removeItem('user');
 };
 
+export const loginItemSetting = () => {
+    let now = new Date() // 현재 날짜와 시간
+    const timeLimit = 1000 * 60 * 60 * 3; // 3시간
+    localStorage.setItem('expirationTime', now + timeLimit);
+}
+
+export const loginExpiration = () => {
+    let now = new Date() // 현재 날짜와 시간
+    const getLoginExpiration = localStorage.getItem('expirationTime');
+
+    if (now > getLoginExpiration) localStorage.removeItem('expirationTime');
+}
