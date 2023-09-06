@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './AutoImgSlider.css';
 
 const AutoImgSlider = () => {
-    const testArr = ['images/slide/도서1.png', 'images/slide/도서2.png', 'images/slide/도서3.png', 'images/slide/도서4.png', 'images/slide/도서5.png'];
+    const testArr = ['/images/item/book1.png', '/images/item/book2.png', '/images/item/book3.png', '/images/item/book4.png', '/images/item/book5.png'];
 
     const [curSlide, setCurSlide] = useState(0);
 

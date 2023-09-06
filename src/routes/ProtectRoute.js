@@ -1,12 +1,13 @@
-import React, {useContext} from "react";
+import React from "react";
 import {Navigate, Outlet} from "react-router-dom";
-import AuthContext from "../store/AuthContext";
 
 const ProtectRoute = () => {
-    const {isLoggedIn, user} = useContext(AuthContext);
+    const user = localStorage.getItem('user');
+    const userData = JSON.parse(user);
+    console.log('user', userData);
 
-    if(isLoggedIn) {
-        if (user.authorities[0].authority === "ROLE_ADMIN") {
+    if(user) {
+        if (userData.authorities[0].authority === "ROLE_ADMIN") {
             return <Outlet />
         } else {
             alert('기능을 사용할 권한이 없습니다. 죄송합니다.');
