@@ -1,0 +1,43 @@
+.review-wrap {
+    width: 600px;
+    margin: 2rem auto;
+}
+
+.review-rating, .review-detail {
+    margin-bottom: 2rem;
+}
+
+.review-rating {
+    display: flex;
+    align-items: center;
+    width: 250px;
+    height: 70px;
+    margin-bottom: 0.5rem;
+}
+
+.null-star {
+    font-size: 34px;
+}
+
+.rating-title {
+    font-weight: bold;
+    margin-right: 1rem;
+}
+
+.fill-star {
+    position: absolute;
+    overflow: hidden;
+    color: yellow;
+    margin-left: -170px;
+}
+
+.star-input-box {
+    margin-top: -3.5rem;
+}
+
+.star-input {
+    width: 170px;
+    height: 60px;
+    cursor: pointer;
+    opacity: 0;
+}

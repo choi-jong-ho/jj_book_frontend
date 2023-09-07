@@ -1,0 +1,30 @@
+.review-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.review-item-price{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.review-item-func {
+    text-align: center;
+}
+
+.review-item-detail {
+    max-height: 100px;
+    overflow: auto;
+}
+
+.review-list-td:nth-child(3) {
+    max-width: 170px;
+}
+
+.review-list-td:nth-child(4) {
+    max-width: 250px;
+}

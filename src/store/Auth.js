@@ -43,13 +43,13 @@ export const logoutActionHandler = () => {
 };
 
 export const loginItemSetting = () => {
-    let now = new Date() // 현재 날짜와 시간
+    let now = new Date().getTime(); // 현재 날짜와 시간
     const timeLimit = 1000 * 60 * 60 * 3; // 3시간
     localStorage.setItem('expirationTime', now + timeLimit);
 }
 
 export const loginExpiration = () => {
-    let now = new Date() // 현재 날짜와 시간
+    let now = new Date().getTime(); // 현재 날짜와 시간
     const getLoginExpiration = localStorage.getItem('expirationTime');
 
     if (now > getLoginExpiration) localStorage.removeItem('expirationTime');

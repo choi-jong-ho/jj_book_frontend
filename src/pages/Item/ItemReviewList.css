@@ -1,0 +1,9 @@
+.product-review-table {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid gray;
+}
+
+.review-content {
+    width: 600px;
+}
