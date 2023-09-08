@@ -6,33 +6,26 @@
     padding: 20px;
 }
 
-.order-list-wrap {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+.order-list-title {
     margin-bottom: 2rem;
 }
 
-.order-item-header {
-    display: flex;
-    width: 100%;
-    margin: 10px;
-}
-
-.order-item-time {
-    margin-right: 1rem;
-}
-
-.order-item-main {
-    display: flex;
-    width: 100%;
-    padding: 15px;
-    border: 1px solid black;
-    border-radius: 8px;
+.order-list-td:nth-child(1) {
+    width: 200px;
 }
 
 .order-item-img {
-    width: 100px;
+    width: 100%;
     height: 100px;
-    margin-right: 2rem;
+}
+
+.order-item-price{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.order-item-func {
+    display: flex;
+    justify-content: space-evenly;
 }
