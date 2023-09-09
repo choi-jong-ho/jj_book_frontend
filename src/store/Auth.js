@@ -52,5 +52,8 @@ export const loginExpiration = () => {
     let now = new Date().getTime(); // 현재 날짜와 시간
     const getLoginExpiration = localStorage.getItem('expirationTime');
 
-    if (now > getLoginExpiration) localStorage.removeItem('expirationTime');
+    if (now > getLoginExpiration) {
+        localStorage.removeItem('expirationTime');
+        localStorage.removeItem('user');
+    }
 }

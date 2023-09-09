@@ -1,9 +1,9 @@
-import React, {useEffect, useContext} from "react";
+import React from "react";
 import MyPageAside from "./MyPageAside";
 import MyPageHeader from "./MyPageHeader";
 import MyPageFooter from "./MyPageFooter";
 import {Route, Routes} from 'react-router-dom';
-import Profile from "./profile";
+import Profile from "./Profile";
 import MyPageAddress from "./MyPageAddress";
 import Withdrawal from "./MemberDelete";
 import OrderList from "./OrderList";
