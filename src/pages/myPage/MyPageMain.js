@@ -13,6 +13,7 @@ import AddrUpload from "./AddrUpload";
 import AddrEdit from "./AddrEdit";
 import ReviewWrite from "../Review/ReviewWrite";
 import ReviewList from "../Review/ReviewList";
+import ReviewEdit from "../Review/ReviewEdit";
 
 const MyPageMain = () => {
 
@@ -35,6 +36,7 @@ const MyPageMain = () => {
                             <Route path="/orderList" element={<OrderList/>}/>
                             <Route path="/cart" element={<Cart/>}/>
                             <Route path="/review/:orderId" element={<ReviewWrite/>}/>
+                            <Route path="/review/edit/:reviewId" element={<ReviewEdit/>}/>
                             <Route path="/reviewList" element={<ReviewList/>}/>
                         </Routes>
                     </div>
