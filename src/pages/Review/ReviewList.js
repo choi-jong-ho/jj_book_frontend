@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {Button, Table} from "react-bootstrap";
 import './ReviewList.css';
 
 const ReviewList = () => {
+    const navigate = useNavigate();
     const [reviewData, setReviewData] = useState([]);
 
     useEffect(() => {
@@ -18,6 +20,23 @@ const ReviewList = () => {
             setReviewData(data[0].content);
         } catch (e) {
             console.log('리뷰 리스트 가져오기 실패', e);
+        }
+    }
+
+    const goToReviewEdit = (reviewId, data) => {
+        navigate(`/mypage/review/edit/${reviewId}`, {state: {data: data, id: reviewId}});
+    }
+    
+    const reviewDelete = async (reviewId) => {
+        try {
+            const formData = {
+                reviewId : reviewId
+            }
+            await axios.post(`/review/delete`, formData);
+            alert('리뷰 삭제 성공');
+            await getReviewList();
+        } catch (e) {
+            console.log('리뷰 삭제 실패', e);
         }
     }
     return (
@@ -67,11 +86,13 @@ const ReviewList = () => {
                                             <div className='review-item-func'>
                                                 <Button
                                                     variant="success"
+                                                    onClick={() => goToReviewEdit(review.reviewId, review.reviewItemDtoList[0])}
                                                 >
                                                     수정
                                                 </Button>
                                                 <Button
                                                     variant="danger"
+                                                    onClick={() => {reviewDelete(review.reviewId)}}
                                                 >
                                                     삭제
                                                 </Button>
