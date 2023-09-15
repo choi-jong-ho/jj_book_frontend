@@ -10,6 +10,8 @@ import ItemManagement from "../pages/Item/ItemManagement";
 import ItemDetail from "../pages/Item/ItemDetail";
 import PrivateRoute from "./PrivateRoute";
 import ProtectRoute from "./ProtectRoute";
+import NaverCallback from "../pages/Login&SignUp/NaverCallback";
+import KakaoCallback from "../pages/Login&SignUp/KakaoCallback";
 
 const Routing = () => {
     return (
@@ -19,6 +21,8 @@ const Routing = () => {
             <Route path="/member/login" element={<Login/>}/>
             <Route path="/member/signup" element={<SignUp/>}/>
             <Route path="/admin/item/detail/:itemId" element={<ItemDetail/>} />
+            <Route path="/naverlogin" element={<NaverCallback/>} />
+            <Route path="/kakaoAuth" element={<KakaoCallback/>} />
 
             {/*로그인 필요*/}
             <Route element={<PrivateRoute/>}>

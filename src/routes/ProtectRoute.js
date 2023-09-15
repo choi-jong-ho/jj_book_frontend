@@ -7,7 +7,7 @@ const ProtectRoute = () => {
     console.log('user', userData);
 
     if(user) {
-        if (userData.authorities[0].authority === "ROLE_ADMIN") {
+        if (userData.role === "ADMIN") {
             return <Outlet />
         } else {
             alert('기능을 사용할 권한이 없습니다. 죄송합니다.');
