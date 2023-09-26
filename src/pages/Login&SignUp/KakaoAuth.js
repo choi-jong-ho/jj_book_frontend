@@ -1,5 +1,4 @@
-import React, {useEffect} from "react";
-import KakaoLogin from "react-kakao-login";
+import React from "react";
 import './KaKaoAuth.css';
 const KakaoAuth = () =>{
     const JAVA_SCRIPT_API_KEY='139ab3d09d8f122781ceba9017cebae2' //REST API KEY

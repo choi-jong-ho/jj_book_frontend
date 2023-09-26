@@ -1,10 +1,13 @@
-import React, {Fragment, useEffect, useState} from "react";
+import React, {Fragment, useContext, useEffect, useState} from "react";
 import './Profile.css'
 import {Button} from 'react-bootstrap';
 import axios from "axios";
 import {loginItemSetting} from "../../store/Auth";
+import AuthContext from "../../store/AuthContext";
 
 const Profile = () => {
+    const {state} = useContext(AuthContext);
+
     const [userData, setUserData] = useState({});
     const [edit, setEdit] = useState(false);
 
@@ -14,11 +17,16 @@ const Profile = () => {
     }, []);
 
     const profileEdit = async () => {
+        console.log('state.token', state.token);
         const formData = {
             phone: userData.phone
         }
         try {
-            const response = await axios.post('/member/update', formData);
+            const response = await axios.post('/member/update', formData,{
+                headers: {
+                    "X-AUTH-TOKEN" : state.token
+                }
+            });
             console.log('프로파일 수정 성공', response);
             await getMemberInfo();
             window.location.reload();
@@ -29,7 +37,11 @@ const Profile = () => {
 
     const getMemberInfo = async () => {
         try {
-            const response = await axios.get('/member/info');
+            const response = await axios.get('/member/info', {
+                headers: {
+                    "X-AUTH-TOKEN" : state.token
+                }
+            });
             localStorage.setItem('user', JSON.stringify(response.data));
             setUserData(response.data);
             loginItemSetting();

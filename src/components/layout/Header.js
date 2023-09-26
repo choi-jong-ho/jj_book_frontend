@@ -5,7 +5,7 @@ import AuthContext from "../../store/AuthContext";
 import './Header.css';
 
 const Header = () => {
-    const {isLoggedIn, setIsLoggedIn, user, setUser} = useContext(AuthContext); // 로그인 상태 관리
+    const {state, actions} = useContext(AuthContext); // 로그인 상태 관리
     const navigate = useNavigate();
 
     const navigateToMain = useCallback(() => {
@@ -33,8 +33,8 @@ const Header = () => {
     }, [navigate]);
 
     const handleLogout = () => {
-        setIsLoggedIn(false);
-        setUser([]);
+        actions.setIsLoggedIn(false);
+        actions.setUser('');
         logoutActionHandler();
     };
 
@@ -62,7 +62,7 @@ const Header = () => {
                         </div>
                     </div>
                     <div className='header-box-right'>
-                        {isLoggedIn ? (
+                        {state.isLoggedIn ? (
                             <Fragment>
                                 <div className='header-item' onClick={handleLogout}>
                                     <img width="30" height="30"

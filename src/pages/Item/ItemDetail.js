@@ -1,11 +1,13 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {useNavigate, useParams} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 import './ItemDetail.css';
 import axios from "axios";
 import ItemReviewList from "./ItemReviewList";
+import AuthContext from "../../store/AuthContext";
 
 const ItemDetail = () => {
+    const { state } = useContext(AuthContext);
     const {itemId} = useParams();
     const navigate = useNavigate();
     const [count, setCount] = useState(1);
@@ -40,7 +42,12 @@ const ItemDetail = () => {
         };
 
         try {
-            const response = await axios.post('/order/new', formData);
+            const response = await axios.post('/order/new', formData, {
+                headers: {
+                    "Content-Type": "Application/json",
+                    "X-AUTH-TOKEN" : state.token,
+                }
+            });
 
             console.log('response', response);
             alert('주문 성공했습니다.');
@@ -57,7 +64,8 @@ const ItemDetail = () => {
         try {
             await axios.post('/cart/new', formData, {
                 headers: {
-                    "Content-Type": "Application/json"
+                    "Content-Type": "Application/json",
+                    "X-AUTH-TOKEN" : state.token,
                 }
             });
             alert('장바구니에 성공적으로 담겼습니다.');

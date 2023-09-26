@@ -5,9 +5,10 @@ const ProtectRoute = () => {
     const user = localStorage.getItem('user');
     const userData = JSON.parse(user);
     console.log('user', userData);
+    console.log('user123', userData.authorities[0]);
 
-    if(user) {
-        if (userData.role === "ADMIN") {
+    if(userData) {
+        if (userData.authorities[0].authority === "ADMIN") {
             return <Outlet />
         } else {
             alert('기능을 사용할 권한이 없습니다. 죄송합니다.');

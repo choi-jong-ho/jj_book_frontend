@@ -1,13 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 // import MainTop from "./mainTop";
 import './Main.css';
 import MainProduct from "./MainProduct";
 import axios from "axios";
 import SearchBar from "../../components/Search/SearchBar";
 import ItemPagination from "../../components/Pagination/ItemPagination";
-import AutoImgSlider from "../../components/Silder/AutoImgSlider";
+import AutoImgSlider from "../../components/silder/AutoImgSlider";
+import AuthContext from "../../store/AuthContext";
 
 const Main = () => {
+    const {state} = useContext(AuthContext);
+
     const [items, setItems] = useState({});
     const [itemInfo, setItemInfo] = useState([]);
     const [filters, setFilters] = useState({ searchDateType: 'all', searchSellStatus: '', searchBy: 'itemNm', searchQuery: '', page: 0, searchByUseYn: "Y"});
