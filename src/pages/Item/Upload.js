@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Form, Button, Alert} from 'react-bootstrap';
 import './Upload.css';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import AuthContext from "../../store/AuthContext";
 
 const Upload = () => {
+    const { state } = useContext(AuthContext);
     const navigate = useNavigate();
     const [itemValue, setItemValue] = useState({
         itemSellStatus: 'SELL',
@@ -45,7 +47,7 @@ const Upload = () => {
         setItemImgFile([...itemImgFile, {}]);
     };
 
-    const handleSubmit = async (event) => {
+    const handleItemUploadSubmit = async (event) => {
         event.preventDefault();
 
         const formData = new FormData();
@@ -62,7 +64,10 @@ const Upload = () => {
 
         try {
             const response = await axios.post('/admin/item/new', formData, {
-                headers: {'Content-Type': 'multipart/form-data'},
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'X-AUTH-TOKEN' : state.token
+                },
             });
             alert('상품 등록 성공');
             navigate('/admin/item');
@@ -73,8 +78,7 @@ const Upload = () => {
                 setError('상품 등록에 실패하였습니다. 다시 입력해주세요.');
             }
             console.error(error);
-        }
-        ;
+        };
     };
 
     const validationResultUpdater = (data) => {
@@ -92,7 +96,7 @@ const Upload = () => {
             <h1>상품 등록 </h1>
             <div className="upload-wrap">
                 {error && <Alert variant="danger">{error}</Alert>}
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleItemUploadSubmit}>
                     <div className='info-box-wrap'>
                         <Form.Group className='info-box'>
                             <Form.Label>상품 상태</Form.Label>

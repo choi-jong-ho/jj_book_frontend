@@ -3,9 +3,9 @@ import {Navigate, Outlet} from "react-router-dom";
 
 const PrivateRoute = () => {
 
-    const user = localStorage.getItem('user');
+    const token = localStorage.getItem('login-token');
 
-    if (user) return <Outlet/>;
+    if (token) return <Outlet/>;
 
     const confirmNavigation = window.confirm("로그인이 필요한 페이지입니다.\n로그인 페이지로 이동하시겠습니까?");
 

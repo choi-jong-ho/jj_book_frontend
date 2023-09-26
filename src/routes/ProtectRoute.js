@@ -4,11 +4,9 @@ import {Navigate, Outlet} from "react-router-dom";
 const ProtectRoute = () => {
     const user = localStorage.getItem('user');
     const userData = JSON.parse(user);
-    console.log('user', userData);
-    console.log('user123', userData.authorities[0]);
 
     if(userData) {
-        if (userData.authorities[0].authority === "ADMIN") {
+        if (userData.authorities[0].authority === "ROLE_ADMIN") {
             return <Outlet />
         } else {
             alert('기능을 사용할 권한이 없습니다. 죄송합니다.');

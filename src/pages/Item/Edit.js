@@ -1,10 +1,12 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, useContext} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {Form, Button, Alert} from 'react-bootstrap';
 import './Edit.css';
 import axios from "axios";
+import AuthContext from "../../store/AuthContext";
 
 const Edit = () => {
+    const { state } = useContext(AuthContext);
     const navigate = useNavigate();
     const {itemId} = useParams();
     const fileInputRefs = useRef([]);
@@ -27,7 +29,12 @@ const Edit = () => {
 
     const getItemInfo = async () => {
         try {
-            const response = await axios.get(`/admin/item/${itemId}`);
+            const response = await axios.get(`/admin/item/${itemId}`, {
+                headers: {
+                    'Content-Type': 'Application/json',
+                    'X-AUTH-TOKEN' : state.token
+                },
+            });
             const data = response.data;
             setItemValue({
                 itemSellStatus: data.itemSellStatus,
@@ -75,7 +82,6 @@ const Edit = () => {
                 updatedImgPreview[index] = e.target.result;
                 setPreviewImage(updatedImgPreview);
             }
-
             reader.readAsDataURL(file);
         }
         const updatedSelectedFiles = [...imgData];
@@ -90,7 +96,7 @@ const Edit = () => {
         setImgData([...imgData, {}]);
     };
 
-    const handleSubmit = async (event) => {
+    const handleItemEditSubmit = async (event) => {
         event.preventDefault();
 
         const formData = new FormData();
@@ -101,7 +107,8 @@ const Edit = () => {
         formData.append('stockNumber', itemValue.stockNumber);
         formData.append('itemDetail', itemValue.itemDetail);
         formData.append('id', itemValue.id);
-        formData.append('itemImgIds', imgIdList);
+        formData.append('itemImgIds', imgIdList); // 오류 발견 해당 이미지의 이미지 번호를 보냄
+                                                        // 왜 이렇게 코드를 사용했는지 모르겠음
 
         imgData.forEach((imgObj) => {
             if (imgObj.file) {
@@ -110,8 +117,11 @@ const Edit = () => {
         });
 
         try {
-            const response = await axios.post(`/admin/item/${itemId[0]}`, formData, {
-                headers: {'Content-Type': 'multipart/form-data'},
+            await axios.post(`/admin/item/${itemId[0]}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    "X-AUTH-TOKEN" : state.token
+                },
             });
             alert('상품 수정 성공');
             navigate('/admin/item');
@@ -121,8 +131,7 @@ const Edit = () => {
                 setError('상품 등록에 실패하였습니다. 다시 입력해주세요.');
             }
             console.log('오류 내용', e);
-        }
-        ;
+        };
     };
 
     const validationResultUpdater = (data) => {
@@ -140,7 +149,7 @@ const Edit = () => {
             <h1>상품 수정</h1>
             <div className="edit-wrap">
                 {error && <Alert variant="danger">{error}</Alert>}
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleItemEditSubmit}>
                     <div className='edit-info-box-wrap'>
                         <Form.Group className='edit-info-box'>
                             <Form.Label>상품 상태</Form.Label>

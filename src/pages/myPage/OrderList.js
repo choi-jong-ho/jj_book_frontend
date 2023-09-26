@@ -6,6 +6,7 @@ import {Button, Table} from "react-bootstrap";
 import ItemPagination from "../../components/Pagination/ItemPagination";
 
 const OrderList = () => {
+    const getToken = localStorage.getItem('login-token');
     const navigate = useNavigate();
     const [orderData, setOrderData] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
@@ -20,13 +21,22 @@ const OrderList = () => {
             let response = {};
 
             if (newPage) {
-                response = await axios.get(`/order/list/${newPage}`);
+                response = await axios.get(`/order/list/${newPage}`, {
+                    headers: {
+                        "Content-Type": "Application/json",
+                        "X-AUTH-TOKEN" : getToken,
+                    }
+                });
             }
             if (!newPage) {
-                response = await axios.get('/order/list');
+                response = await axios.get('/order/list', {
+                    headers: {
+                        "Content-Type": "Application/json",
+                        "X-AUTH-TOKEN" : getToken,
+                    }
+                });
             }
 
-            console.log('response', response);
             const data = response.data;
 
             setOrderObj(data[0]);
@@ -38,7 +48,12 @@ const OrderList = () => {
 
     const orderCancel = async (orderId) => {
         try {
-            const response = await axios.post(`/order/${orderId}/cancel`);
+            await axios.post(`/order/${orderId}/cancel`, {
+                headers: {
+                    "Content-Type": "Application/json",
+                    "X-AUTH-TOKEN" : getToken,
+                }
+            });
             alert('주문 취소 완료되었습니다.');
         } catch (e) {
             console.log('주문 취소 실패', e);
@@ -125,7 +140,9 @@ const OrderList = () => {
                         }
                         </tbody>
                     </Table>
-                ) : (<div>구매한 이력이 없습니다.</div>)
+                ) : (
+                    <div>구매한 이력이 없습니다.</div>
+                )
             }
             <ItemPagination totalPages={orderObj.totalPages} currentPage={currentPage} onPageChange={handlePageChange}/>
         </div>

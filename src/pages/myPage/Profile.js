@@ -24,6 +24,7 @@ const Profile = () => {
         try {
             const response = await axios.post('/member/update', formData,{
                 headers: {
+                    "Content-Type": "Application/json",
                     "X-AUTH-TOKEN" : state.token
                 }
             });
@@ -39,6 +40,7 @@ const Profile = () => {
         try {
             const response = await axios.get('/member/info', {
                 headers: {
+                    "Content-Type": "Application/json",
                     "X-AUTH-TOKEN" : state.token
                 }
             });

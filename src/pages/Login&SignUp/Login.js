@@ -10,7 +10,7 @@ import NaverLogin from "./NaverLogin";
 import KakaoAuth from "./KakaoAuth";
 
 const Login = () => {
-    const {state, actions} = useContext(AuthContext); // 로그인 상태 관리를 위한 AuthContext 추가
+    const { actions} = useContext(AuthContext); // 로그인 상태 관리를 위한 AuthContext 추가
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -18,7 +18,7 @@ const Login = () => {
 
     const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
+    const handleLoginSubmit = async (e) => {
         e.preventDefault();
 
         const formData = {
@@ -28,6 +28,7 @@ const Login = () => {
 
         try {
             const response = await axios.post('/member/login', formData);
+            localStorage.setItem('login-token', JSON.stringify(response.data));
             actions.setIsLoggedIn(true);
             actions.setToken(response.data);
             await getMemberInfo(response.data);
@@ -64,7 +65,7 @@ const Login = () => {
             <div className="login-wrap">
                 <h2>로그인</h2>
                 {error && <Alert variant="danger">{error}</Alert>}
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleLoginSubmit}>
                     <Form.Group className='login-box'>
                         <Form.Label>아이디</Form.Label>
                         <Form.Control

@@ -36,9 +36,9 @@ export const getUserActionHandler = async (token) => {
     }
 };
 
+// 로그아웃
 export const logoutActionHandler = () => {
-    // localStorage.removeItem('token');
-    // localStorage.removeItem('expirationTime');
+    localStorage.removeItem('login-token');
     localStorage.removeItem('user');
 };
 
@@ -48,6 +48,7 @@ export const loginItemSetting = () => {
     localStorage.setItem('expirationTime', now + timeLimit);
 }
 
+// 만료 시간 경과
 export const loginExpiration = () => {
     let now = new Date().getTime(); // 현재 날짜와 시간
     const getLoginExpiration = localStorage.getItem('expirationTime');
@@ -55,5 +56,6 @@ export const loginExpiration = () => {
     if (now > getLoginExpiration) {
         localStorage.removeItem('expirationTime');
         localStorage.removeItem('user');
+        localStorage.removeItem('login-token');
     }
 }

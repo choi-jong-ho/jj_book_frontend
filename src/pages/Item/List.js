@@ -1,25 +1,33 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useContext} from "react";
 import {Table, Button} from 'react-bootstrap';
 import {useNavigate} from "react-router-dom";
 import './List.css';
 import axios from "axios";
+import AuthContext from "../../store/AuthContext";
 
 const List = ({itemInfo}) => {
+    const { state } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const navigateToEdit = useCallback((itemNumber) => {
         navigate(`/admin/item/${itemNumber}`);
     }, [navigate]);
 
-    const handleDelete = async (id, useYn) => {
+    const handleItemDelete = async (id, useYn) => {
 
         const formData = {
             id: id,
             useYn: useYn,
         };
         try {
-            const response = await axios.post('/admin/item/delete', formData);
+            await axios.post('/admin/item/delete', formData, {
+                headers: {
+                    'Content-Type': 'Application/json',
+                    'X-AUTH-TOKEN' : state.token
+                },
+            });
             alert('상품 삭제 성공');
+            navigate('/admin/item');
         } catch (e) {
             if (e.response.status === 400) {
             }
@@ -65,7 +73,7 @@ const List = ({itemInfo}) => {
                                     variant="danger"
                                     className='add-button'
                                     type="button"
-                                    onClick={() => handleDelete(row.id, "N")}
+                                    onClick={() => handleItemDelete(row.id, "N")}
                                 >
                                     삭제
                                 </Button>
