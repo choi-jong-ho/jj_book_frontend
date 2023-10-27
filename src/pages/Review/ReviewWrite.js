@@ -1,10 +1,12 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect, useRef, useContext} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {Button, Form} from "react-bootstrap";
 import axios from "axios";
 import './ReviewWrite.css';
+import AuthContext from "../../store/AuthContext";
 
 const ReviewWrite = () => {
+    const { state } = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
     const itemId = location.state.id;
@@ -27,7 +29,10 @@ const ReviewWrite = () => {
 
         try {
             await axios.post('/review/new', formData, {
-                headers: {'Content-Type': 'multipart/form-data'},
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    "X-AUTH-TOKEN" : state.token,
+                },
             });
             alert('리뷰 등록 성공');
             navigate(`/admin/item/detail/${itemId}`);

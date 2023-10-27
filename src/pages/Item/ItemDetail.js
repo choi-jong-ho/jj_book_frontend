@@ -8,7 +8,6 @@ import AuthContext from "../../store/AuthContext";
 
 const ItemDetail = () => {
     const { state } = useContext(AuthContext);
-    const getToken = localStorage.getItem('login-token');
     const {itemId} = useParams();
     const navigate = useNavigate();
     const [count, setCount] = useState(1);
@@ -21,8 +20,7 @@ const ItemDetail = () => {
         try {
             const response = await axios.get(`/item/${itemId}`, {
                 headers: {
-                    "Content-Type": "Application/json",
-                    "X-AUTH-TOKEN" : getToken,
+                    "X-AUTH-TOKEN" : state.token,
                 }
             });
             const data = response.data;

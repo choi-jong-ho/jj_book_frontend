@@ -1,12 +1,14 @@
-import React, {Fragment, useEffect, useState} from "react";
+import React, {Fragment, useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import './OrderList.css';
 import {Button, Table} from "react-bootstrap";
 import ItemPagination from "../../components/Pagination/ItemPagination";
+import AuthContext from "../../store/AuthContext";
 
 const OrderList = () => {
     const getToken = localStorage.getItem('login-token');
+    const { state } = useContext(AuthContext);
     const navigate = useNavigate();
     const [orderData, setOrderData] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
@@ -23,16 +25,14 @@ const OrderList = () => {
             if (newPage) {
                 response = await axios.get(`/order/list/${newPage}`, {
                     headers: {
-                        "Content-Type": "Application/json",
-                        "X-AUTH-TOKEN" : getToken,
+                        "X-AUTH-TOKEN" : state.token
                     }
                 });
             }
             if (!newPage) {
                 response = await axios.get('/order/list', {
                     headers: {
-                        "Content-Type": "Application/json",
-                        "X-AUTH-TOKEN" : getToken,
+                        "X-AUTH-TOKEN" : state.token
                     }
                 });
             }
@@ -51,7 +51,7 @@ const OrderList = () => {
             await axios.post(`/order/${orderId}/cancel`, {
                 headers: {
                     "Content-Type": "Application/json",
-                    "X-AUTH-TOKEN" : getToken,
+                    "X-AUTH-TOKEN" : state.token,
                 }
             });
             alert('주문 취소 완료되었습니다.');
