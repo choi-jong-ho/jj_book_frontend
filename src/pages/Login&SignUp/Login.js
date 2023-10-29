@@ -26,8 +26,8 @@ const Login = () => {
 
     try {
       const response = await axios.post('/member/login', formData);
+      console.log('로그인 데이터', response);
       localStorage.setItem('login-token', JSON.stringify(response.data));
-      actions.setIsLoggedIn(true);
       actions.setToken(response.data);
       await getMemberInfo(response.data);
 
@@ -41,17 +41,16 @@ const Login = () => {
   const getMemberInfo = async (token) => {
     try {
       const response = await axios.get('/member/info', {
-        headers: {
-          'Content-Type': 'Application/json',
-          'X-AUTH-TOKEN': token,
-        },
+        headers: { 'X-AUTH-TOKEN': token },
       });
       localStorage.setItem('user', JSON.stringify(response.data));
+      console.log('로그인된 유저 데이터', response);
       localStorage.setItem(
         'authorities',
         response.data.authorities[0].authority
       );
       actions.setUser(response.data);
+      actions.setAuthorities(response.data.authorities[0].authority);
       loginItemSetting();
       navigate('/'); // 로그인 후 페이지 이동
     } catch (e) {

@@ -1,13 +1,12 @@
-import React, { Fragment, useCallback } from 'react';
+import React, { Fragment, useCallback, useContext } from 'react';
+import AuthContext from '../../store/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Header.css';
 
 const Header = () => {
+  const { state, actions } = useContext(AuthContext);
   const navigate = useNavigate();
-
-  const ROLE = localStorage.getItem('authorities');
-  const USER = localStorage.getItem('user');
 
   const navigateToMain = useCallback(() => {
     navigate('/');
@@ -36,25 +35,30 @@ const Header = () => {
   const handleLogout = async () => {
     // 카카오 로그아웃
     const ACCESS_TOKEN = localStorage.getItem('access_Token');
-    try {
-      const response = await axios.post(
-        `https://kapi.kakao.com/v1/user/logout`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${ACCESS_TOKEN}`,
-            'Content-type': 'application/x-www-form-urlencoded',
-          },
+    if (ACCESS_TOKEN) {
+      try {
+        const response = await axios.post(
+          `https://kapi.kakao.com/v1/user/logout`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${ACCESS_TOKEN}`,
+              'Content-type': 'application/x-www-form-urlencoded',
+            },
+          }
+        );
+        console.log('카카오 로그아웃', response);
+      } catch (e) {
+        // 이미 만료된 토큰일 경우
+        if (e.response.data.code === -401) {
+          navigate('/');
         }
-      );
-      console.log('카카오 로그아웃', response);
-    } catch (e) {
-      // 이미 만료된 토큰일 경우
-      if (e.response.data.code === -401) {
-        navigate('/');
+        console.log('카카오 로그아웃 오류', e);
       }
-      console.log('카카오 로그아웃 오류', e);
     }
+    actions.setToken('');
+    actions.setUser(null);
+    actions.setAuthorities('');
     localStorage.clear();
   };
 
@@ -73,7 +77,7 @@ const Header = () => {
             />
           </div>
           <div className='header-box-center'>
-            {ROLE == 'ROLE_ADMIN' ? (
+            {state.authorities == 'ROLE_ADMIN' ? (
               <Fragment>
                 <div
                   className='header-item'
@@ -103,7 +107,7 @@ const Header = () => {
             ) : null}
           </div>
           <div className='header-box-right'>
-            {USER ? (
+            {state.token ? (
               <Fragment>
                 <div
                   className='header-item'
