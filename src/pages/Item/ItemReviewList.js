@@ -41,7 +41,7 @@ const ItemReviewList = () => {
                 {
                     reviewData.map(review => (
                         <tr>
-                            <td>작성자 아이디 추가 필요</td>
+                            <td className='review-writer'>{review.email}</td>
                             <td>
                                 <div className='null-star'>★★★★★
                                     <span className='fill-star'
