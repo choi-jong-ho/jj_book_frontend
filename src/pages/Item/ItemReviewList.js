@@ -39,7 +39,7 @@ const ItemReviewList = () => {
 
     try {
       console.log('reviewId', reviewId);
-      const response = await axios.post(
+      await axios.post(
         `/${check}/${reviewId}`,
         {},
         {
@@ -70,7 +70,7 @@ const ItemReviewList = () => {
       msg = '싫어요';
     }
     try {
-      const response = await axios.post(
+      await axios.post(
         `/${check}/cancel/${reviewId}`,
         {},
         {
