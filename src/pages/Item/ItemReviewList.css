@@ -1,9 +1,28 @@
 .product-review-table {
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid gray;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid gray;
 }
 
 .review-content {
-    width: 600px;
+  width: 500px;
+}
+
+.like-button,
+.unlike-button {
+  position: relative;
+  border: none;
+  display: inline-block;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  color: azure;
+}
+
+.like-button {
+  background-color: #f199bc;
+}
+
+.unlike-button {
+  background-color: gray;
 }
