@@ -86,7 +86,7 @@ const Header = () => {
                   <img
                     width='30'
                     height='30'
-                    src='/images/header/item-add.png'
+                    src='/images/item/item-add.png'
                     alt='상품 관리'
                   />
                   상품관리
@@ -98,7 +98,7 @@ const Header = () => {
                   <img
                     width='30'
                     height='30'
-                    src='/images/header/list-check.png'
+                    src='/images/item/list-check.png'
                     alt='상품 등록'
                   />
                   상품등록
