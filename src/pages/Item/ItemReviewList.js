@@ -16,10 +16,13 @@ const ItemReviewList = () => {
     };
     try {
       const response = await axios.get(`/review/listAll`, {
+        headers: {
+          'Content-Type': 'Application/json',
+          'X-AUTH-TOKEN': state.token,
+        },
         params: formData,
       });
       setReviewData(response.data[0].content);
-      console.log('reviewAll', response);
     } catch (e) {
       console.log('상품 리뷰 가져오기 에러', e);
     }
@@ -29,18 +32,15 @@ const ItemReviewList = () => {
     reviewAll();
   }, []);
 
-  const likeUnLikeButton = async (reviewId, check) => {
-    let msg = '';
-    if (check == 'like') {
-      msg = '좋아요';
-    } else {
-      msg = '싫어요';
+  const likeUnLikeButton = async (reviewId) => {
+    if (!state.token) {
+      window.alert('로그인이 필요한 기능입니다.');
+      return;
     }
 
     try {
-      console.log('reviewId', reviewId);
       await axios.post(
-        `/${check}/${reviewId}`,
+        `/like/${reviewId}`,
         {},
         {
           headers: {
@@ -53,25 +53,24 @@ const ItemReviewList = () => {
     } catch (e) {
       if (e.response.status == 400) {
         if (
-          window.confirm(`이미 ${msg} 버튼을 누르셨습니다. 취소하시겠습니까?`)
+          window.confirm(`이미 좋아요 버튼을 누르셨습니다. 취소하시겠습니까?`)
         ) {
-          cancelButton(reviewId, check);
+          cancelButton(reviewId);
         }
       }
-      console.log(`리뷰 ${msg} 실패`, e);
+      console.log(`리뷰 좋아요 실패`, e);
     }
   };
 
-  const cancelButton = async (reviewId, check) => {
-    let msg = '';
-    if (check == 'like') {
-      msg = '좋아요';
-    } else {
-      msg = '싫어요';
+  const cancelButton = async (reviewId) => {
+    if (!state.token) {
+      window.alert('로그인이 필요한 기능입니다.');
+      return;
     }
+
     try {
       await axios.post(
-        `/${check}/cancel/${reviewId}`,
+        `/like/cancel/${reviewId}`,
         {},
         {
           headers: {
@@ -82,7 +81,7 @@ const ItemReviewList = () => {
       );
       reviewAll();
     } catch (e) {
-      console.log(`리뷰 ${msg} 실패`, e);
+      console.log(`리뷰 좋아요 취소 실패`, e);
     }
   };
 
@@ -120,17 +119,9 @@ const ItemReviewList = () => {
                 <td className='review-button'>
                   <button
                     className='like-button'
-                    onClick={() => likeUnLikeButton(review.reviewId, 'like')}
+                    onClick={() => likeUnLikeButton(review.reviewId)}
                   >
                     ♡ 좋아요 {review.likeCount}
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className='unlike-button'
-                    onClick={() => likeUnLikeButton(review.reviewId, 'notlike')}
-                  >
-                    ♥ 싫어요 {review.notLikeCount}
                   </button>
                 </td>
               </tr>
