@@ -50,7 +50,7 @@ const Main = () => {
         let imgUrl = [];
         for (const ids of itemIds) {
             try {
-                const response = await axios.get(`/admin/item/${ids}`);
+                const response = await axios.get(`/item/${ids}`);
                 console.log('서버에서 받아온 item 데이터', response);
                 const data = response.data;
                 imgUrl.push(data.itemImgDtoList[0].imgUrl);
